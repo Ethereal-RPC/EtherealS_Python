@@ -1,0 +1,2 @@
+class BaseUserToken:
+    serverKey = None

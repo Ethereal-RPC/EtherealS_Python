@@ -1,0 +1,2 @@
+class IAuthoritable:
+    authority = None
