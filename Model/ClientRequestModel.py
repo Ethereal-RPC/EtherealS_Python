@@ -2,28 +2,29 @@ import threading
 
 
 class ClientRequestModel:
-    result = None
-    jsonRpc = None
-    methodId = None
-    params = None
-    id = None
-    service = None
-    sign = threading.Event()
+    Result = None
+    JsonRpc = None
+    MethodId = None
+    Params: list = None
+    Id = None
+    Service = None
+    Sign = threading.Event()
 
     def __init__(self, json_rpc, service, method_id, params):
-        self.jsonRpc = json_rpc
-        self.service = service
-        self.methodId = method_id
-        self.params = params
+        super().__init__()
+        self.JsonRpc = json_rpc
+        self.Service = service
+        self.MethodId = method_id
+        self.Params = params
 
     def set(self, result):
-        self.result = result
-        self.sign.set()
+        self.Result = result
+        self.Sign.set()
 
     def get(self, timeout):
-        while self.result is None:
+        while self.Result is None:
             if timeout == -1:
-                self.sign.wait()
+                self.Sign.wait()
             else:
-                self.sign.wait(timeout)
-        return self.result
+                self.Sign.wait(timeout)
+        return self.Result

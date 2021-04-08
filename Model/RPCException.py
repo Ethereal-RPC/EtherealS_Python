@@ -7,10 +7,11 @@ class ErrorCode(Enum):
     NotFoundRequest = 3
     RegisterError = 4
     NotFoundNetConfig = 5
+    NotFoundBaseUserToken = 6
 
 
 class RPCException(Exception):
     ErrorCode = ErrorCode.RegisterError
 
     def __init__(self, code, msg):
-        Exception.__init__(self, code, msg)
+        super().__init__(code, msg)

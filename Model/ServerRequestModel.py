@@ -1,5 +1,12 @@
 class ServerRequestModel:
-    jsonRpc = None
-    methodId = None
-    params = None
-    service = None
+    JsonRpc = None
+    MethodId = None
+    Params = None
+    Service = None
+
+    def __init__(self, json_rpc, method_id, params, service) -> None:
+        super().__init__()
+        self.JsonRpc = json_rpc
+        self.MethodId = method_id
+        self.Params = params
+        self.Service = service

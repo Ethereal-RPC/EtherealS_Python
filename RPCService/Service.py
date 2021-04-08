@@ -13,10 +13,12 @@ class Service:
     methods = dict()
     paramStart = None
     instance = None
+    key = None
 
-    def register(self, instance, config: ServiceConfig):
+    def register(self, key, instance, config: ServiceConfig):
         self.config = config
         self.instance = instance
+        self.key = key
         if config.tokenEnable:
             self.paramStart = 1
         else:
@@ -30,10 +32,16 @@ class Service:
                 assert isinstance(func, MethodType)
                 method_id = func.__name__
                 if func.__doc__.paramters is None:
-                    params = list(func.__annotations__.values())
+
+                    if func.__annotations__.get("return") is not None:
+                        params = list(func.__annotations__.values()[:-1:])
+                    else:
+                        raise RPCException.RPCException(ErrorCode.RegisterError,
+                                                        "{1}-{0}方法中的返回值为定义！".format(func.__name__, key))
+
                     if self.paramStart == 1 and issubclass(params[0], BaseUserToken):
                         raise RPCException.RPCException(ErrorCode.RegisterError,
-                                                        "{0}方法中的首参数并非继承于BaseUserToken!".format(func.__name__))
+                                                        "{1}-{0}方法中的首参数并非继承于BaseUserToken!".format(func.__name__, key))
                     method_id.join(func.__name__)
                     for param_name in params[self.paramStart::]:
                         abstract_name = self.config.type.abstractName.get(param_name.__name__, None)
