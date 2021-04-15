@@ -20,3 +20,8 @@ def RegisterByConfig(ip: str, port: str, config: NetConfig):
         raise RPCException(RPCException.ErrorCode.RegisterError, "{0}已注册，无法重复注册！".format(key))
     return __cofigs[key]
 
+
+def GetTokens(key: (str, str)):
+    config: NetConfig = __cofigs.get(key, None)
+    if config is not None:
+        return config.tokens

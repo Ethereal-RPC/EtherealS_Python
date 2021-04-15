@@ -4,7 +4,7 @@ from RPCService.Service import Service
 
 
 class NetConfig:
-    __tokens = dict()
+    tokens = dict()
     interceptorEvent = list()
     baseUserToken_instance_method = None
     clientRequestReceive = ServiceCore.ClientRequestReceive

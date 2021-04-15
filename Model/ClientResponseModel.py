@@ -1,13 +1,12 @@
 class ClientResponseModel:
-    JsonRpc = None
-    Result = None
-    Error = None
-    Id = None
-    Service = None
-    ResultType = None
+    JsonRpc: str = None
+    Result: str = None
+    Error: str = None
+    Id: str = None
+    Service: str = None
+    ResultType: str = None
 
-    def __init__(self, json_rpc, result, result_type, request_id, service, error) -> None:
-        super().__init__()
+    def init(self, json_rpc, result, result_type, request_id, service, error):
         self.JsonRpc = json_rpc
         self.Result = result
         self.Error = error

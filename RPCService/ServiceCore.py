@@ -31,11 +31,16 @@ def RegisterByConfig(instance, service_name, ip, port, config):
         service = Service()
         service.register(key, instance, config)
         __service[key] = service
+        return service
+    else:
+        raise RPCException(RPCException.ErrorCode.RegisterError, "{0}-{1}-{2}Service已经注册".format(ip, port,service_name))
 
 
 def UnRegister(key: (str, str, str)):
     if __service.get(key, None) is not None:
         del __service[key]
+        return True
+    return False
 
 
 def ClientRequestReceive(key: (str, str), token: BaseUserToken, request: ClientRequestModel):
@@ -54,8 +59,8 @@ def ClientRequestReceive(key: (str, str), token: BaseUserToken, request: ClientR
                         net_config.clientResponseSend(token, ClientResponseModel("2.0", json.dumps(result), return_name,
                                                                                  request.Id, request.Service, None))
             else:
-                raise RPCException(RPCException.ErrorCode.NotFoundService, "未找到NetConfig{0}".format(key))
+                raise RPCException(RPCException.ErrorCode.RegisterError, "未找到NetConfig{0}".format(key))
         else:
-            raise RPCException(RPCException.ErrorCode.NotFoundService, "未找到方法{0}-{1}-{2}".format(key, request.Service, request.MethodId))
+            raise RPCException(RPCException.ErrorCode.RegisterError, "未找到方法{0}-{1}-{2}".format(key, request.Service, request.MethodId))
     else:
-        raise RPCException(RPCException.ErrorCode.NotFoundService, "未找到服务{0}-{1}".format(key, request.Service))
+        raise RPCException(RPCException.ErrorCode.RegisterError, "未找到服务{0}-{1}".format(key, request.Service))
