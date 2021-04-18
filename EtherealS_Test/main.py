@@ -12,9 +12,6 @@ from RPCNet.NetConfig import NetConfig
 from RPCRequest import RequestCore
 from RPCService import ServiceCore
 
-HOST = '127.0.0.1'  # 要连接的IP地址
-PORT = 28015  # 端口
-
 
 def create_method():
     return BaseUserToken()
@@ -22,7 +19,7 @@ def create_method():
 
 if __name__ == '__main__':
     ip = "127.0.0.1"
-    port = "28015"
+    port = "28014"
     rType = RPCType()
     rType.add(type=str, type_name="String")
     NetCore.RegisterByConfig(ip, port, NetConfig())

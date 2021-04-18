@@ -5,7 +5,7 @@ from twisted.python import log
 from EtherealS_Test.UserRequest import UserRequest
 from Model.BaseUserToken import BaseUserToken
 from Model.ClientRequestModel import ClientRequestModel
-from Model.RPCException import RPCException
+from Model.RPCException import RPCException, ErrorCode
 from Model.RPCType import RPCType
 from NativeServer.ServerConfig import ServerConfig
 from RPCNet import NetCore
@@ -60,21 +60,23 @@ class DataToken(Protocol):
                     self.content.extend(data[reader_index::])
                     return
             # 解析头包
-            body_length = int.from_bytes(data[reader_index:reader_index + body_size:], byteorder='little')
-            pattern = data[reader_index + body_size:reader_index + body_size:]
-            future: bytes = data[reader_index + body_size + pattern_size:reader_index + head_size:]
+            body_length = int.from_bytes(self.content[0:body_size:], byteorder='little')
+            pattern = self.content[body_size:body_size + pattern_size:]
+            future: bytes = data[body_size + pattern_size:head_size:]
             length = body_length + head_size
             if body_length > self.config.buffer_size:
                 self.connectonLost("超出上限")
-                raise RPCException(RPCException.ErrorCode.RuntimeError, "{0}-{1}:{2}用户请求数据量太大,中止接收！"
+                raise RPCException(ErrorCode.RuntimeError, "{0}-{1}:{2}用户请求数据量太大,中止接收！"
                                    .format(self.serverKey, self.transport.getPeer().host,
                                            self.transport.getPeer().port))
+            # 还需要的数据量
+            need_remain = length - self.content.__len__()
             # 判断数据是否能够完全缓冲
-            if length != self.content.__len__() and length < self.content.__len__() + count:
+            if need_remain <= count:
                 # 从读idx到读idx + 还缺x个数据
-                self.content.extend(data[reader_index:reader_index + length - self.content.__len__():])
-                reader_index += length - self.content.__len__()
-                count -= length - self.content.__len__()
+                self.content.extend(data[reader_index:reader_index + need_remain:])
+                reader_index += need_remain
+                count -= need_remain
             else:
                 self.content.extend(data[reader_index::])
                 return
@@ -83,7 +85,7 @@ class DataToken(Protocol):
             request.__dict__ = di
             net_config = NetCore.Get(self.serverKey)
             if net_config is None:
-                raise RPCException(RPCException.ErrorCode.RuntimeError,
+                raise RPCException(ErrorCode.RuntimeError,
                                    "{0}找不到NetConfig".format(self.serverKey))
             if pattern == 0:
                 net_config.clientRequestReceive(self.serverKey, self.token, request)
@@ -101,7 +103,7 @@ class DataToken(Protocol):
             length = body_length + head_size
             if body_length > self.config.buffer_size:
                 self.connectonLost("超出上限")
-                raise RPCException(RPCException.ErrorCode.RuntimeError, "{0}-{1}:{2}用户请求数据量太大,中止接收！"
+                raise RPCException(ErrorCode.RuntimeError, "{0}-{1}:{2}用户请求数据量太大,中止接收！"
                                    .format(self.serverKey, self.transport.getPeer().host,
                                            self.transport.getPeer().port))
             # 判断数据能否直接解析
@@ -115,7 +117,7 @@ class DataToken(Protocol):
             request.__dict__ = di
             net_config = NetCore.Get(self.serverKey)
             if net_config is None:
-                raise RPCException(RPCException.ErrorCode.RuntimeError,
+                raise RPCException(ErrorCode.RuntimeError,
                                    "{0}找不到NetConfig".format(self.serverKey))
             if pattern == 0:
                 net_config.clientRequestReceive(self.serverKey, self.token, request)
