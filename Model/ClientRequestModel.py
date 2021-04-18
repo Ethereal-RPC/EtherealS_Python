@@ -2,20 +2,15 @@ import threading
 
 
 class ClientRequestModel:
-    Result = None
-    JsonRpc = None
-    MethodId = None
-    Params: list = None
-    Id = None
-    Service = None
-    Sign = threading.Event()
 
-    def __init__(self, json_rpc, service, method_id, params):
-        super().__init__()
-        self.JsonRpc = json_rpc
-        self.Service = service
-        self.MethodId = method_id
-        self.Params = params
+    def __init__(self):
+        self.Result = None
+        self.JsonRpc = None
+        self.MethodId = None
+        self.Params: list = None
+        self.Id = None
+        self.Service = None
+        self.Sign = threading.Event()
 
     def set(self, result):
         self.Result = result

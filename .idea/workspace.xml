@@ -2,23 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4347f87-ef34-416b-9252-3ebe096a1668" name="Default Changelist" comment="Net Request Server Model 四个部分完成&#10;还缺NativeServer">
-      <change afterPath="$PROJECT_DIR$/NativeServer/Client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NativeServer/DataToken.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NativeServer/ServerConfig.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NativeServer/ServerCore.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NativeServer/SocketListener.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NativeServer/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Utils/BytesBuilder.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Utils/JsonTool.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EtherealS_Test/UserRequest.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EtherealS_Test/UserService.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EtherealS_Test/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Decorator/RPCRequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/Decorator/RPCRequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Decorator/RPCService.py" beforeDir="false" afterPath="$PROJECT_DIR$/Decorator/RPCService.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/BaseUserToken.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/BaseUserToken.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/ClientRequestModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/ClientRequestModel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/ClientResponseModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/ClientResponseModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/Error.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Error.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/RPCException.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/RPCException.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RPCType.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/RPCType.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/ServerRequestModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/ServerRequestModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NativeServer/Client.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NativeServer/DataToken.py" beforeDir="false" afterPath="$PROJECT_DIR$/NativeServer/DataToken.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NativeServer/ServerConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/NativeServer/ServerConfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NativeServer/ServerCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/NativeServer/ServerCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NativeServer/SocketListener.py" beforeDir="false" afterPath="$PROJECT_DIR$/NativeServer/SocketListener.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NativeServer/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/NativeServer/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RPCNet/NetConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCNet/NetConfig.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RPCNet/NetCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCNet/NetCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RPCRequest/Request.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCRequest/Request.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RPCRequest/RequestConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCRequest/RequestConfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RPCRequest/RequestCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCRequest/RequestCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RPCService/Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCService/Service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RPCService/ServiceConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCService/ServiceConfig.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RPCService/ServiceCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCService/ServiceCore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Utils/JsonTool.py" beforeDir="false" afterPath="$PROJECT_DIR$/Utils/JsonTool.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +45,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="alpha" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -57,42 +74,24 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/EtherealS_Test" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mzh\PycharmProjects\EtherealS\EtherealS_Test" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\mzh\PycharmProjects\EtherealS\Utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="Client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="EtherealS" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NativeServer" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NativeServer/Client.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.main (1)">
     <configuration name="DataToken" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EtherealS" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -106,7 +105,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\mzh\PycharmProjects\EtherealS\NativeServer\DataToken.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NativeServer/DataToken.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -115,7 +114,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="JsonTool" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="NetCore" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EtherealS" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -123,12 +122,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NativeServer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/RPCNet" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\mzh\PycharmProjects\EtherealS\Utils\JsonTool.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/RPCNet/NetCore.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -137,17 +136,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="JsonTool" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="RPCType" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EtherealS" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NativeServer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Model" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\mzh\PycharmProjects\EtherealS\Utils\JsonTool.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Model/RPCType.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -178,6 +180,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="EtherealS" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/EtherealS_Test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/EtherealS_Test/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EtherealS" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -200,35 +221,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="tcp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="EtherealS" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv/Lib/site-packages/twisted/internet" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/Lib/site-packages/twisted/internet/tcp.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.Client" />
+        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.DataToken" />
-        <item itemvalue="Python.JsonTool" />
-        <item itemvalue="Python.JsonTool" />
+        <item itemvalue="Python.NetCore" />
+        <item itemvalue="Python.RPCType" />
+        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -249,6 +248,10 @@
       <workItem from="1618282180488" duration="5207000" />
       <workItem from="1618317823752" duration="2534000" />
       <workItem from="1618398336091" duration="1193000" />
+      <workItem from="1618493865023" duration="453000" />
+      <workItem from="1618561799064" duration="1044000" />
+      <workItem from="1618623951935" duration="27337000" />
+      <workItem from="1618717744281" duration="12036000" />
     </task>
     <task id="LOCAL-00001" summary="Net Request Server Model 四个部分完成&#10;还缺NativeServer">
       <created>1617889941782</created>
@@ -264,7 +267,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617889985692</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="1.阶段性保存">
+      <created>1618494060470</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1618494060470</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,7 +285,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="alpha" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -284,13 +306,31 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Net Request Server Model 四个部分完成&#10;还缺NativeServer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Net Request Server Model 四个部分完成&#10;还缺NativeServer" />
+    <MESSAGE value="1.阶段性保存" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.阶段性保存" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Model/RPCType.py</url>
+          <line>7</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/EtherealS$Client.coverage" NAME="Client Coverage Results" MODIFIED="1618118103017" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
+    <SUITE FILE_PATH="coverage/EtherealS$Client.coverage" NAME="Client Coverage Results" MODIFIED="1618629583876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
     <SUITE FILE_PATH="coverage/EtherealS$MyJSONEncoder__1_.coverage" NAME="MyJSONEncoder (1) Coverage Results" MODIFIED="1618118539921" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
-    <SUITE FILE_PATH="coverage/EtherealS$SocketListener.coverage" NAME="SocketListener Coverage Results" MODIFIED="1618132929338" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
-    <SUITE FILE_PATH="coverage/EtherealS$main.coverage" NAME="main Coverage Results" MODIFIED="1617886288871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/EtherealS$SocketListener.coverage" NAME="SocketListener Coverage Results" MODIFIED="1618629765146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
+    <SUITE FILE_PATH="coverage/EtherealS$ServerCore.coverage" NAME="ServerCore Coverage Results" MODIFIED="1618649010163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
     <SUITE FILE_PATH="coverage/EtherealS$jsondecode.coverage" NAME="jsondecode Coverage Results" MODIFIED="1618117782997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
+    <SUITE FILE_PATH="coverage/EtherealS$main.coverage" NAME="main Coverage Results" MODIFIED="1618652435155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/EtherealS$NetCore.coverage" NAME="NetCore Coverage Results" MODIFIED="1618655068099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RPCNet" />
+    <SUITE FILE_PATH="coverage/EtherealS$DataToken.coverage" NAME="DataToken Coverage Results" MODIFIED="1618723516110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
+    <SUITE FILE_PATH="coverage/EtherealS$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1618649070179" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
+    <SUITE FILE_PATH="coverage/EtherealS$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1618730442989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EtherealS_Test" />
+    <SUITE FILE_PATH="coverage/EtherealS$RPCType.coverage" NAME="RPCType Coverage Results" MODIFIED="1618653846770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Model" />
   </component>
 </project>

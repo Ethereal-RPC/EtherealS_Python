@@ -3,31 +3,36 @@ import json
 from Model.RPCException import RPCException, ErrorCode
 
 
-def deserialize(_json):
-    return json.loads(_json)
+def deserialize(cls, _json):
+    instance = cls()
+    di = json.loads(_json)
+    try:
+        instance.__dict__ = di
+    except:
+        instance = di
+    return instance
 
 
 class RPCType:
-    abstractName = dict
-    abstractType = dict
-    typeConvert = dict
 
-    def add(self, _type, type_name):
-        self.detect(_type, type_name)
-        self.AbstractName[_type] = type_name
-        self.TypeConvert[type_name] = deserialize
-        self.AbstractType[type_name] = _type
+    def __init__(self):
+        self.abstractType = dict()
+        self.abstractName = dict()
+        self.typeConvert = dict()
 
-    def add(self, _type, type_name, convert):
+    def add(self, **kwargs):
+        _type = kwargs.get("type", None)
+        type_name = kwargs.get("type_name", None)
+        convert = kwargs.get("convert", deserialize)
         self.detect(_type, type_name)
-        self.AbstractName[_type] = type_name
-        self.TypeConvert[type_name] = convert
-        self.AbstractType[type_name] = _type
+        self.abstractName[_type.__name__] = type_name
+        self.typeConvert[type_name] = convert
+        self.abstractType[type_name] = _type
 
     def detect(self, _type, type_name):
-        if self.TypeConvert.get(type_name, None) is not None:
+        if self.typeConvert.get(type_name, None) is not None:
             raise RPCException(ErrorCode.RegisterError, "转换器中已包含" + type_name)
-        if self.AbstractType.get(type_name, None) is not None:
+        if self.abstractType.get(type_name, None) is not None:
             raise RPCException(ErrorCode.RegisterError, "真实类中已包含" + type_name)
-        if self.AbstractName.get(_type, None) is not None:
+        if self.abstractName.get(_type, None) is not None:
             raise RPCException(ErrorCode.RegisterError, "抽象类中已包含" + type_name)

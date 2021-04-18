@@ -1,13 +1,17 @@
 from Model.RPCException import RPCException
-from NativeServer.DataToken import SocketServer
+from NativeServer import SocketListener, ServerConfig
 
 __socket_servers = dict()
 
 
-def Register(ip, port, config):
+def RegisterByMethod(ip, port, create_method) -> SocketListener:
+    return RegisterByConfig(ip, port, ServerConfig.ServerConfig(create_method))
+
+
+def RegisterByConfig(ip, port, config) -> SocketListener:
     key = (ip, port)
     if __socket_servers.get(key, None) is None:
-        __socket_servers[key] = SocketServer((ip, port), config)
+        __socket_servers[key] = SocketListener.SocketListener((ip, port), config)
         return __socket_servers[key]
     else:
         raise RPCException(RPCException.ErrorCode.RegisterError, "{0}-{1}Server已经注册".format(ip, port))

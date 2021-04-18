@@ -7,7 +7,7 @@ class ErrorCode(Enum):
 
 
 class RPCException(Exception):
-    ErrorCode = ErrorCode.RegisterError
 
-    def __init__(self, code, msg):
+    def __init__(self, code: ErrorCode, msg):
         super().__init__(code, msg)
+        self.ErrorCode = ErrorCode.RegisterError

@@ -1,4 +1,6 @@
 class Error:
-    Code = None
-    Message = None
-    Data = None
+    def __init__(self):
+        self.Code = None
+        self.Message = None
+        self.Data = None
+

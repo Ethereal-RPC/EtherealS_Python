@@ -1,34 +1,19 @@
-def RPCService_2(timeout):
+def RPCService(**top_args):
+    paramters = top_args.get("paramters", None)
+    timeout = top_args.get("timeout", -1)
+
     def getFunc(func):
         def Func(*args, **kwargs):
-            func(*args, **kwargs)
-        annotation = ServiceAnnotation()
-        annotation.timeout = timeout
-        Func.__doc__ = annotation
-        return Func
-    return getFunc
+            return func(*args, **kwargs)
 
-
-def RPCService_3(paramters, timeout):
-    def getFunc(func):
-        def Func(*args, **kwargs):
-            func(*args, **kwargs)
-        annotation = ServiceAnnotation()
-        annotation.timeout = timeout
-        annotation.paramters = paramters
-        Func.__doc__ = annotation
-        return Func
-    return getFunc
-
-
-def RPCService_1(paramters):
-    def getFunc(func):
-        def Func(*args, **kwargs):
-            func(*args, **kwargs)
         annotation = ServiceAnnotation()
         annotation.paramters = paramters
+        annotation.timeout = timeout
         Func.__doc__ = annotation
+        Func.__annotations__ = func.__annotations__
+        Func.__name__ = func.__name__
         return Func
+
     return getFunc
 
 

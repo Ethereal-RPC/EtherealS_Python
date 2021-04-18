@@ -6,25 +6,27 @@ from RPCRequest.RequestConfig import RequestConfig
 __requests = dict()
 
 
-def GetByStr(request_name: str, ip: str, port: str) -> Request:
-    return __requests.get((request_name, ip, port), None)
+def GetByStr(ip: str, port: str, request_name: str) -> Request:
+    return __requests.get((ip, port, request_name), None)
 
 
 def GetByKey(key: (str, str, str)) -> Request:
     return __requests.get(key, None)
 
 
-def RegisterByType(service: str, ip: str, port: str, types: RPCType):
-    return RegisterByConfig(service, ip, port, RequestConfig(types))
+def RegisterByType(instance, ip: str, port: str, service: str, types: RPCType):
+    return RegisterByConfig(instance, ip, port, service, RequestConfig(types))
 
 
-def RegisterByConfig(service: str, ip: str, port: str, config: RequestConfig):
-    key = (service, ip, port)
+def RegisterByConfig(instance, ip: str, port: str, service: str, config: RequestConfig):
+    key = (ip, port, service)
     if __requests.get(key, None) is None:
-        __requests[key] = Request(config)
+        request = Request(config)
+        request.register(instance, (ip, port),service, config)
+        __requests[key] = request
     else:
         raise RPCException(RPCException.ErrorCode.RegisterError, "{0}已注册，无法重复注册！".format(key))
-    return __requests[key]
+    return instance
 
 
 def UnRegister(key: (str, str, str)):
