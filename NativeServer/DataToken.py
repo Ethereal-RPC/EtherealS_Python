@@ -1,4 +1,3 @@
-import json
 from twisted.internet.protocol import Protocol
 from twisted.python import log
 
@@ -6,7 +5,7 @@ from EtherealS_Test.UserRequest import UserRequest
 from Model.BaseUserToken import BaseUserToken
 from Model.ClientRequestModel import ClientRequestModel
 from Model.RPCException import RPCException, ErrorCode
-from Model.RPCType import RPCType
+from Model.RPCTypeConfig import RPCTypeConfig
 from NativeServer.ServerConfig import ServerConfig
 from RPCNet import NetCore
 
@@ -80,9 +79,7 @@ class DataToken(Protocol):
             else:
                 self.content.extend(data[reader_index::])
                 return
-            di = json.loads(self.content.decode(self.config.encode))
-            request = ClientRequestModel()
-            request.__dict__ = di
+            request = self.config.clientRequestModelDeserialize(self.content.decode(self.config.encode))
             net_config = NetCore.Get(self.serverKey)
             if net_config is None:
                 raise RPCException(ErrorCode.RuntimeError,
@@ -112,9 +109,7 @@ class DataToken(Protocol):
                 self.content = bytearray(data[reader_index::])
                 return
             # 数据够用
-            di = json.loads(data[reader_index + head_size:reader_index + length].decode(self.config.encode))
-            request = ClientRequestModel()
-            request.__dict__ = di
+            request = self.config.clientRequestModelDeserialize(data[reader_index + head_size:reader_index + length].decode(self.config.encode))
             net_config = NetCore.Get(self.serverKey)
             if net_config is None:
                 raise RPCException(ErrorCode.RuntimeError,

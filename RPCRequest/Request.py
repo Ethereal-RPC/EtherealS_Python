@@ -4,6 +4,7 @@ from types import MethodType
 from Decorator.RPCRequest import RequestAnnotation
 from Model.BaseUserToken import BaseUserToken
 from Model.RPCException import RPCException, ErrorCode
+from Model.RPCType import RPCType
 from Model.ServerRequestModel import ServerRequestModel
 from RPCNet import NetCore
 from RPCRequest.RequestConfig import RequestConfig
@@ -43,14 +44,14 @@ class Request:
                     if annotation.paramters is None:
                         for param_type in params[1::]:
                             if param_type is not None:
-                                abstract_name = self.config.type.abstractName.get(param_type.__name__, None)
-                                if abstract_name is None:
+                                rpc_type: RPCType = self.config.types.typesByType.get(type(param_type), None)
+                                if rpc_type is None:
                                     raise RPCException(ErrorCode.RegisterError,
                                                        "对应的{0}类型的抽象类型尚未注册".format(param_type.__name__))
-                                method_id += "-" + abstract_name
+                                method_id += "-" + rpc_type.name
                     else:
                         for abstract_name in annotation.paramters:
-                            if self.config.type.abstractType.get(abstract_name, None) is None:
+                            if self.config.types.typesByName.get(abstract_name, None) is None:
                                 raise RPCException(ErrorCode.RegisterError,
                                                    "对应的{0}抽象类型对应的实际类型尚未注册".format(abstract_name))
                             method_id += "-" + abstract_name
@@ -58,7 +59,11 @@ class Request:
                     def invoke(*args, **kwargs):
                         for param in args[1::]:
                             parameters = list()
-                            parameters.append(json.dumps(param))
+                            rpc_type: RPCType = self.config.types.typesByType.get(type(param), None)
+                            if rpc_type is None:
+                                raise RPCException(ErrorCode.RegisterError,
+                                                   "对应的{0}类型的抽象类型尚未注册".format(param_type.__name__))
+                            parameters.append(rpc_type.serialize(param))
                             request = ServerRequestModel("2.0", method_id, parameters, request_name)
                             token = args.__getitem__(0)
                             if token is None:

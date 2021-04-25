@@ -1,4 +1,4 @@
-from Model.RPCException import RPCException
+from Model.RPCException import RPCException, ErrorCode
 from NativeServer import SocketListener, ServerConfig
 
 __socket_servers = dict()
@@ -14,7 +14,7 @@ def RegisterByConfig(ip, port, config) -> SocketListener:
         __socket_servers[key] = SocketListener.SocketListener((ip, port), config)
         return __socket_servers[key]
     else:
-        raise RPCException(RPCException.ErrorCode.RegisterError, "{0}-{1}Server已经注册".format(ip, port))
+        raise RPCException(ErrorCode.RegisterError, "{0}-{1}Server已经注册".format(ip, port))
 
 
 def GetByKey(key: (str, str)):

@@ -1,5 +1,5 @@
 from Model.RPCException import RPCException
-from Model.RPCType import RPCType
+from Model.RPCTypeConfig import RPCTypeConfig
 from RPCService.Service import Service
 from RPCService.ServiceConfig import ServiceConfig
 
@@ -14,7 +14,7 @@ def GetByStr(hostname, port, service_name) -> Service:
     return __service.get((hostname, port, service_name), None)
 
 
-def RegisterByType(instance, ip, port, service_name, rpc_type: RPCType):
+def RegisterByType(instance, ip, port, service_name, rpc_type: RPCTypeConfig):
     return RegisterByConfig(instance, ip, port, service_name, ServiceConfig(rpc_type))
 
 

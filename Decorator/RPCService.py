@@ -20,3 +20,4 @@ def RPCService(**top_args):
 class ServiceAnnotation:
     timeout = -1
     paramters = None
+    token = True

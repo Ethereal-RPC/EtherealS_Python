@@ -1,14 +1,13 @@
 from Model.BaseUserToken import BaseUserToken
-from Model.RPCType import RPCType
+from Model.RPCTypeConfig import RPCTypeConfig
 from RPCService import Service
 
 
 class ServiceConfig:
 
-    def __init__(self, _type):
-        self.type = _type
+    def __init__(self, _type: RPCTypeConfig):
+        self.types: RPCTypeConfig = _type
         self.interceptorEvent = list()
-        self.tokenEnable = True
         self.authoritable = False
 
     def OnInterceptor(self, service: Service, method: classmethod, token: BaseUserToken) -> bool:

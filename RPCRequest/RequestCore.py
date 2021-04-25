@@ -1,5 +1,5 @@
 from Model.RPCException import RPCException
-from Model.RPCType import RPCType
+from Model.RPCTypeConfig import RPCTypeConfig
 from RPCRequest.Request import Request
 from RPCRequest.RequestConfig import RequestConfig
 
@@ -14,7 +14,7 @@ def GetByKey(key: (str, str, str)) -> Request:
     return __requests.get(key, None)
 
 
-def RegisterByType(instance, ip: str, port: str, service: str, types: RPCType):
+def RegisterByType(instance, ip: str, port: str, service: str, types: RPCTypeConfig):
     return RegisterByConfig(instance, ip, port, service, RequestConfig(types))
 
 
@@ -22,7 +22,7 @@ def RegisterByConfig(instance, ip: str, port: str, service: str, config: Request
     key = (ip, port, service)
     if __requests.get(key, None) is None:
         request = Request(config)
-        request.register(instance, (ip, port),service, config)
+        request.register(instance, (ip, port), service, config)
         __requests[key] = request
     else:
         raise RPCException(RPCException.ErrorCode.RegisterError, "{0}已注册，无法重复注册！".format(key))

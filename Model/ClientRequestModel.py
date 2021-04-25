@@ -6,7 +6,7 @@ class ClientRequestModel:
     def __init__(self):
         self.Result = None
         self.JsonRpc = None
-        self.MethodId = None
+        self.MethodId: str = None
         self.Params: list = None
         self.Id = None
         self.Service = None

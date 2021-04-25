@@ -35,21 +35,21 @@ class SocketListener(ServerFactory):
     def SendClientResponse(self, token: BaseUserToken, response: ClientResponseModel):
         transport: ITransport = token.net
         if transport is not None:
-            body = json.dumps(response, cls=JsonTool.JSONEncoder).encode(self.config.encode)
+            body = self.config.clientResponseModelSerialize(response).encode(self.config.encode)
             content = bytearray()
             content.extend(body.__len__().to_bytes(4, "little"))
             content.extend(int.to_bytes(1, 1, "little"))
             content.extend(bytes(27))
             content.extend(body)
-            transport.write(bytes(content))
+            transport.write(content)
 
     def SendServerRequest(self, token: BaseUserToken, request: ServerRequestModel):
         transport: ITransport = token.net
         if transport is not None:
-            body = json.dumps(request, cls=JsonTool.JSONEncoder).encode(self.config.encode)
+            body = self.config.serverRequestModelSerialize(request).encode(self.config.encode)
             content = bytearray()
             content.extend(body.__len__().to_bytes(4, "little"))
             content.extend(int.to_bytes(0, 1, "little"))
             content.extend(bytes(27))
             content.extend(body)
-            transport.write(bytes(content))
+            transport.write(content)
