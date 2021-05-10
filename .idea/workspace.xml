@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c4347f87-ef34-416b-9252-3ebe096a1668" name="Default Changelist" comment="Net Request Server Model 四个部分完成&#10;还缺NativeServer" />
+    <list default="true" id="c4347f87-ef34-416b-9252-3ebe096a1668" name="Default Changelist" comment="Net Request Server Model 四个部分完成&#10;还缺NativeServer">
+      <change afterPath="$PROJECT_DIR$/RPCNet/Net.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NativeServer/DataToken.py" beforeDir="false" afterPath="$PROJECT_DIR$/NativeServer/DataToken.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RPCNet/NetConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCNet/NetConfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RPCNet/NetCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCNet/NetCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RPCRequest/RequestCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCRequest/RequestCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RPCService/ServiceCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPCService/ServiceCore.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -227,7 +235,12 @@
       <workItem from="1618717744281" duration="12163000" />
       <workItem from="1618731110026" duration="2359000" />
       <workItem from="1619102855687" duration="808000" />
-      <workItem from="1619320302427" duration="7622000" />
+      <workItem from="1619320302427" duration="7673000" />
+      <workItem from="1619413858865" duration="596000" />
+      <workItem from="1619491745630" duration="74000" />
+      <workItem from="1620301537205" duration="115000" />
+      <workItem from="1620527523657" duration="633000" />
+      <workItem from="1620630771768" duration="1325000" />
     </task>
     <task id="LOCAL-00001" summary="Net Request Server Model 四个部分完成&#10;还缺NativeServer">
       <created>1617889941782</created>
@@ -271,7 +284,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619340159150</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="1.序列化都转为自定义序列化&#10;2.支持Token自主抉择是否填入">
+      <created>1619343559854</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1619343559855</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

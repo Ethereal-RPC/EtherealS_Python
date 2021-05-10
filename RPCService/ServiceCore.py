@@ -1,17 +1,22 @@
-from Model.RPCException import RPCException
+from Model.RPCException import RPCException, ErrorCode
 from Model.RPCTypeConfig import RPCTypeConfig
+from RPCNet import NetCore
 from RPCService.Service import Service
 from RPCService.ServiceConfig import ServiceConfig
 
-__service = dict()
+
+def GetByKey(key: (str, str, str)) -> Service:
+    net = NetCore.Get((key[0], key[1]))
+    if net is None:
+        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(key[0], key[1]))
+    return net.services.get(key[2], None)
 
 
-def GetByKey(key) -> Service:
-    return __service.get(key, None)
-
-
-def GetByStr(hostname, port, service_name) -> Service:
-    return __service.get((hostname, port, service_name), None)
+def GetByStr(ip, port, service_name) -> Service:
+    net = NetCore.Get((ip, port))
+    if net is None:
+        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(ip, port))
+    return net.services.get(service_name)
 
 
 def RegisterByType(instance, ip, port, service_name, rpc_type: RPCTypeConfig):
@@ -19,19 +24,24 @@ def RegisterByType(instance, ip, port, service_name, rpc_type: RPCTypeConfig):
 
 
 def RegisterByConfig(instance, ip, port, service_name, config):
-    key = (ip, port, service_name)
-    if __service.get(key, None) is None:
+    net = NetCore.Get((ip, port))
+    if net is None:
+        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(ip, port))
+    if net.services.get(service_name, None) is None:
         service = Service()
-        service.register(key, service_name, instance, config)
-        __service[key] = service
+        service.register((ip, port), service_name, instance, config)
+        net.services[service_name] = service
         return service
     else:
-        raise RPCException(RPCException.ErrorCode.RegisterError, "{0}-{1}-{2}Service已经注册"
+        raise RPCException(ErrorCode.RegisterError, "{0}-{1}-{2}Service已经注册"
                            .format(ip, port, service_name))
 
 
 def UnRegister(key: (str, str, str)):
-    if __service.get(key, None) is not None:
-        del __service[key]
+    net = NetCore.Get((key[0], key[1]))
+    if net is None:
+        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(key[0], key[1]))
+    if net.services.get(key, None) is not None:
+        del net.services[key]
         return True
     return False

@@ -32,6 +32,7 @@ class DataToken(Protocol):
     def connectionMade(self):
         self.token = self.config.create_method.__call__()
         self.token.net = self.transport
+        self.token.serverKey = self.serverKey
         if self.token.connect_event.__len__() > 0:
             self.token.connect_event()
         print("Client connection from {0}".format(self.serverKey))
@@ -85,7 +86,7 @@ class DataToken(Protocol):
                 raise RPCException(ErrorCode.RuntimeError,
                                    "{0}找不到NetConfig".format(self.serverKey))
             if pattern == 0:
-                net_config.clientRequestReceive(self.serverKey, self.token, request)
+                net_config.clientRequestReceive(self.token, request)
                 self.content = None
         # Content内没有了数据,开始尝试直接读取缓冲区数据,之所以这样写，是减少数据copy次数，能够一次性读取的就一次性读取并释放
         while reader_index < write_index:
@@ -115,5 +116,5 @@ class DataToken(Protocol):
                 raise RPCException(ErrorCode.RuntimeError,
                                    "{0}找不到NetConfig".format(self.serverKey))
             if pattern == 0:
-                net_config.clientRequestReceive(self.serverKey, self.token, request)
+                net_config.clientRequestReceive(self.token, request)
             reader_index += length
