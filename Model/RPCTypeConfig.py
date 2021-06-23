@@ -36,6 +36,6 @@ class RPCTypeConfig:
 
     def detect(self, _type, type_name):
         if self.typesByName.get(type_name, None) is not None:
-            raise RPCException(ErrorCode.RegisterError, "真实类中已包含" + type_name)
+            raise RPCException(ErrorCode.Core, "真实类中已包含" + type_name)
         if self.typesByType.get(_type, None) is not None:
-            raise RPCException(ErrorCode.RegisterError, "抽象类中已包含" + type_name)
+            raise RPCException(ErrorCode.Core, "抽象类中已包含" + type_name)

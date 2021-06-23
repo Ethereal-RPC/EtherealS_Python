@@ -11,20 +11,14 @@ from RPCNet import NetCore
 from RPCNet.NetConfig import NetConfig
 from RPCRequest import RequestCore
 from RPCService import ServiceCore
+from Utils.Event import Event
 
 
-def create_method():
-    return BaseUserToken()
+def create_method(**kwargs):
+    print(kwargs.get("p1"))
+    print(kwargs.get("p2"))
+    print(kwargs.get("p3"))
 
 
 if __name__ == '__main__':
-    ip = "127.0.0.1"
-    port = "28014"
-    rType = RPCTypeConfig()
-    rType.add(type=str, type_name="String")
-    NetCore.RegisterByConfig(ip, port, NetConfig())
-    ServiceCore.RegisterByType(UserService(), ip, port, "ServerService", rType)
-    server = ServerCore.RegisterByMethod(ip, port, create_method)
-    server.run()
-    # 配置将日志输出到stdout
-    log.startLogging(sys.stdout)
+    create_method(p1=2, p2=3)

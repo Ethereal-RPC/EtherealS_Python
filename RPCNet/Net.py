@@ -3,6 +3,8 @@ from Model.ClientRequestModel import ClientRequestModel
 from Model.ClientResponseModel import ClientResponseModel
 from Model.RPCException import RPCException, ErrorCode
 from Model.RPCType import RPCType
+from NativeServer import SocketListener
+from RPCNet.NetConfig import NetConfig
 from RPCService.Service import Service
 
 
@@ -12,8 +14,9 @@ class Net:
         self.clientRequestReceive = self.ClientRequestReceiveProcess
         self.serverRequestSend = None
         self.clientResponseSend = None
-        self.serverKey: (str, str) = None
-        self.config = None
+        self.name: str = None
+        self.server: SocketListener = None
+        self.config: NetConfig = None
         self.services = dict()
         self.requests = dict()
 
@@ -29,7 +32,7 @@ class Net:
                     for i in range(1, params_id.__len__()):
                         rpc_type: RPCType = service.config.types.typesByName.get(params_id[i], None)
                         if rpc_type is None:
-                            raise RPCException(ErrorCode.RegisterError, "RPC中的{0}类型中尚未被注册"
+                            raise RPCException(ErrorCode.Core, "RPC中的{0}类型中尚未被注册"
                                                .format(params_id[i]))
                         params_id[i] = rpc_type.deserialize(params_id[i])
                     if method.__annotations__.__len__() == request.Params.__len__():
@@ -44,7 +47,7 @@ class Net:
                                   None)
                     self.clientResponseSend(token, response)
             else:
-                raise RPCException(ErrorCode.RegisterError,
-                                   "未找到方法{0}-{1}-{2}".format(self.serverKey, request.Service, request.MethodId))
+                raise RPCException(ErrorCode.Core,
+                                   "未找到方法{0}-{1}-{2}".format(self.name, request.Service, request.MethodId))
         else:
-            raise RPCException(ErrorCode.RegisterError, "未找到服务{0}-{1}".format(self.serverKey, request.Service))
+            self.config.OnException(exception=RPCException(ErrorCode.Core, "未找到服务{0}-{1}".format(self.name, request.Service)), net=self)

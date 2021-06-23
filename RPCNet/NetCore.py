@@ -13,17 +13,19 @@ from RPCService.Service import Service
 nets = dict()
 
 
-def Get(key: (str, str)) -> Net:
-    return nets.get(key, None)
+def Get(name):
+    return nets.get(name)
 
 
-def RegisterByConfig(ip: str, port: str, config: NetConfig):
-    key = (ip, port)
-    if nets.get(key, None) is None:
+def Register(**kwargs):
+    name = kwargs.get("name")
+    config: NetConfig = kwargs.get("config")
+    if nets.get(name, None) is None:
         net = Net()
+        net.name = name
         net.config = config
-        nets[key] = net
+        nets[name] = net
     else:
-        raise RPCException(ErrorCode.RegisterError, "{0}已注册，无法重复注册！".format(key))
-    return nets[key]
+        raise RPCException(ErrorCode.Core, "{0}已注册，无法重复注册！".format(name))
+    return nets[name]
 

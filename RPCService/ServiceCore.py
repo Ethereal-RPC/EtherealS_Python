@@ -1,47 +1,54 @@
 from Model.RPCException import RPCException, ErrorCode
 from Model.RPCTypeConfig import RPCTypeConfig
 from RPCNet import NetCore
+from RPCNet.Net import Net
 from RPCService.Service import Service
 from RPCService.ServiceConfig import ServiceConfig
 
 
-def GetByKey(key: (str, str, str)) -> Service:
-    net = NetCore.Get((key[0], key[1]))
+def Get(**kwargs) -> Service:
+    net_name = kwargs.get("net_name")
+    service_name = kwargs.get("service_name")
+    if net_name is not None:
+        net: Net = NetCore.Get(net_name)
+    else:
+        net: Net = kwargs.get("net")
     if net is None:
-        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(key[0], key[1]))
-    return net.services.get(key[2], None)
-
-
-def GetByStr(ip, port, service_name) -> Service:
-    net = NetCore.Get((ip, port))
-    if net is None:
-        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(ip, port))
-    return net.services.get(service_name)
+        raise RPCException(ErrorCode.Runtime, "{0}Net未注册！".format(net_name))
+    return net.services.get(service_name, None)
 
 
 def RegisterByType(instance, ip, port, service_name, rpc_type: RPCTypeConfig):
     return RegisterByConfig(instance, ip, port, service_name, ServiceConfig(rpc_type))
 
 
-def RegisterByConfig(instance, ip, port, service_name, config):
-    net = NetCore.Get((ip, port))
-    if net is None:
-        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(ip, port))
+def RegisterByConfig(**kwargs):
+    instance = kwargs.get("instance")
+    service_name = kwargs.get("request_name")
+    net = kwargs.get("net")
+    if kwargs.get("type_config") is not None:
+        config: ServiceConfig = ServiceConfig(kwargs.get("type_config"))
+    else:
+        config: ServiceConfig = kwargs.get("config")
     if net.services.get(service_name, None) is None:
         service = Service()
-        service.register((ip, port), service_name, instance, config)
+        service.register(net.name, service_name, instance, config)
         net.services[service_name] = service
         return service
     else:
-        raise RPCException(ErrorCode.RegisterError, "{0}-{1}-{2}Service已经注册"
-                           .format(ip, port, service_name))
+        raise RPCException(ErrorCode.Core, "{0}-{1}Service已经注册".format(net.name, service_name))
 
 
-def UnRegister(key: (str, str, str)):
-    net = NetCore.Get((key[0], key[1]))
+def UnRegister(**kwargs):
+    net_name = kwargs.get("net_name")
+    service_name = kwargs.get("service_name")
+    if net_name is not None:
+        net: Net = NetCore.Get(net_name)
+    else:
+        net: Net = kwargs.get("net")
     if net is None:
-        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(key[0], key[1]))
-    if net.services.get(key, None) is not None:
-        del net.services[key]
+        raise RPCException(ErrorCode.Runtime, "{0}Net未注册！".format(net_name))
+    if net.services.get(service_name, None) is not None:
+        del net.services[service_name]
         return True
     return False

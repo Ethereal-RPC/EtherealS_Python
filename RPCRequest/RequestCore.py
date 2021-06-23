@@ -1,45 +1,49 @@
 from Model.RPCException import RPCException, ErrorCode
 from Model.RPCTypeConfig import RPCTypeConfig
 from RPCNet import NetCore
+from RPCNet.Net import Net
 from RPCRequest.Request import Request
 from RPCRequest.RequestConfig import RequestConfig
 
 
-def GetByStr(ip: str, port: str, request_name: str) -> Request:
-    net = NetCore.Get((ip, port))
+def Get(**kwargs) -> Request:
+    net_name = kwargs.get("net_name")
+    request_name = kwargs.get("request_name")
+    if net_name is not None:
+        net: Net = NetCore.Get(net_name)
+    else:
+        net: Net = kwargs.get("net")
     if net is None:
-        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(ip, port))
-    return net.requests.get(request_name, None)
+        raise RPCException(ErrorCode.Runtime, "{0}Net未注册！".format(net_name))
+    return net.services.get(request_name)
 
 
-def GetByKey(key: (str, str, str)) -> Request:
-    net = NetCore.Get((key[0], key[1]))
-    if net is None:
-        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(key[0], key[1]))
-    return net.requests.get(key[2], None)
-
-
-def RegisterByType(instance, ip: str, port: str, service: str, types: RPCTypeConfig):
-    return RegisterByConfig(instance, ip, port, service, RequestConfig(types))
-
-
-def RegisterByConfig(instance, ip: str, port: str, service_name: str, config: RequestConfig):
-    net = NetCore.Get((ip, port))
-    if net is None:
-        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(ip, port))
+def RegisterByConfig(**kwargs):
+    instance = kwargs.get("instance")
+    service_name = kwargs.get("request_name")
+    net = kwargs.get("net")
+    if kwargs.get("type_config") is not None:
+        config: RequestConfig = RequestConfig(kwargs.get("type_config"))
+    else:
+        config: RequestConfig = kwargs.get("config")
     if net.requests.get(service_name, None) is None:
         request = Request(config)
-        request.register(instance, (ip, port), service_name, config)
+        request.register(instance, net.name, service_name, config)
         net.requests[service_name] = request
     else:
-        raise RPCException(ErrorCode.RegisterError, "{0}已注册，无法重复注册！".format((ip,port,service_name)))
+        raise RPCException(ErrorCode.Core, "{0}-{1}已注册，无法重复注册！".format(net.name, service_name))
     return instance
 
 
-def UnRegister(ip: str, port: str, service_name: str):
-    net = NetCore.Get((ip, port))
+def UnRegister(**kwargs):
+    net_name = kwargs.get("net_name")
+    service_name = kwargs.get("service_name")
+    if net_name is not None:
+        net: Net = NetCore.Get(net_name)
+    else:
+        net: Net = kwargs.get("net")
     if net is None:
-        raise RPCException(ErrorCode.RuntimeError, "{0}-{1}Net未注册！".format(ip, port))
+        raise RPCException(ErrorCode.Runtime, "{0}Net未注册！".format(net_name))
     if net.requests.get(service_name, None) is not None:
         del net.requests[service_name]
         return True

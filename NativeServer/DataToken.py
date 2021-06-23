@@ -1,16 +1,10 @@
 from twisted.internet.protocol import Protocol
 from twisted.python import log
-
-from EtherealS_Test.UserRequest import UserRequest
 from Model.BaseUserToken import BaseUserToken
-from Model.ClientRequestModel import ClientRequestModel
 from Model.RPCException import RPCException, ErrorCode
-from Model.RPCTypeConfig import RPCTypeConfig
-from NativeServer.ServerConfig import ServerConfig
+from Model.RPCLog import LogCode
+from NativeServer import ServerConfig
 from RPCNet import NetCore
-
-# 头包
-from RPCRequest import RequestCore
 
 head_size = 32
 body_size = 4
@@ -20,9 +14,9 @@ future_size = 27
 
 class DataToken(Protocol):
 
-    def __init__(self, server_key, config: ServerConfig):
+    def __init__(self, net_name, config: ServerConfig):
         self.config = config
-        self.serverKey = server_key
+        self.net_name = net_name
         # BaseUserToken
         self.token: BaseUserToken = None
         # 组包
@@ -32,16 +26,16 @@ class DataToken(Protocol):
     def connectionMade(self):
         self.token = self.config.create_method.__call__()
         self.token.net = self.transport
-        self.token.serverKey = self.serverKey
+        self.token.net_name = self.net_name
         if self.token.connect_event.__len__() > 0:
             self.token.connect_event()
-        print("Client connection from {0}".format(self.serverKey))
+        self.config.OnLog(code=LogCode.Runtime, message="Client connection from {0}".format(self.serverKey))
 
     # 连接断开事件，可重载，依靠reason区分断开类型
     def connectonLost(self, reason):
         if self.token.disconnect_event.__len__() > 0:
             self.token.disconnect_event()
-        log.msg('Lost client connection. Reason: %s' % reason)
+        self.config.OnLog(code=LogCode.Runtime, message="'Lost client connection. Reason: %s'% reason")
 
     def dataReceived(self, data):
         write_index = data.__len__()
@@ -65,10 +59,10 @@ class DataToken(Protocol):
             future: bytes = data[body_size + pattern_size:head_size:]
             length = body_length + head_size
             if body_length > self.config.buffer_size:
+                self.config.OnException(exception=RPCException(ErrorCode.Runtime, "{0}:{1}用户请求数据量太大,中止接收！"
+                                                     .format(self.net_name, self.transport.getPeer().port)))
                 self.connectonLost("超出上限")
-                raise RPCException(ErrorCode.RuntimeError, "{0}-{1}:{2}用户请求数据量太大,中止接收！"
-                                   .format(self.serverKey, self.transport.getPeer().host,
-                                           self.transport.getPeer().port))
+
             # 还需要的数据量
             need_remain = length - self.content.__len__()
             # 判断数据是否能够完全缓冲
@@ -83,8 +77,8 @@ class DataToken(Protocol):
             request = self.config.clientRequestModelDeserialize(self.content.decode(self.config.encode))
             net_config = NetCore.Get(self.serverKey)
             if net_config is None:
-                raise RPCException(ErrorCode.RuntimeError,
-                                   "{0}找不到NetConfig".format(self.serverKey))
+                self.config.OnException(exception=RPCException(ErrorCode.Runtime,
+                                                               "{0}找不到Net".format(self.net_name)))
             if pattern == 0:
                 net_config.clientRequestReceive(self.token, request)
                 self.content = None
@@ -100,21 +94,21 @@ class DataToken(Protocol):
             future: bytes = data[reader_index + body_size + pattern_size:reader_index + head_size:]
             length = body_length + head_size
             if body_length > self.config.buffer_size:
+                self.config.OnException(exception=RPCException(ErrorCode.Runtime, "{0}:{1}用户请求数据量太大,中止接收！"
+                                                               .format(self.net_name, self.transport.getPeer().port)))
                 self.connectonLost("超出上限")
-                raise RPCException(ErrorCode.RuntimeError, "{0}-{1}:{2}用户请求数据量太大,中止接收！"
-                                   .format(self.serverKey, self.transport.getPeer().host,
-                                           self.transport.getPeer().port))
             # 判断数据能否直接解析
             if length > count:
                 # 数据不够用，放入content
                 self.content = bytearray(data[reader_index::])
                 return
             # 数据够用
-            request = self.config.clientRequestModelDeserialize(data[reader_index + head_size:reader_index + length].decode(self.config.encode))
+            request = self.config.clientRequestModelDeserialize(
+                data[reader_index + head_size:reader_index + length].decode(self.config.encode))
             net_config = NetCore.Get(self.serverKey)
             if net_config is None:
-                raise RPCException(ErrorCode.RuntimeError,
-                                   "{0}找不到NetConfig".format(self.serverKey))
+                self.config.OnException(exception=RPCException(ErrorCode.Runtime,
+                                                               "{0}找不到Net".format(self.net_name)))
             if pattern == 0:
                 net_config.clientRequestReceive(self.token, request)
             reader_index += length

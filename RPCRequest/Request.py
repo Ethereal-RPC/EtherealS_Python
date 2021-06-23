@@ -12,15 +12,14 @@ from RPCRequest.RequestConfig import RequestConfig
 
 class Request:
 
-    def __init__(self, config: RequestConfig
-                 ):
+    def __init__(self, config: RequestConfig):
         self.config = config
-        self.request_name: str = None
-        self.server_key: (str, str) = None
+        self.request_name = None
+        self.net_name = None
 
-    def register(self, instance, server_key: (str, str), request_name: str, config: RequestConfig):
+    def register(self, instance, net_name, request_name: str, config: RequestConfig):
         self.config = config
-        self.server_key = server_key
+        self.net_name = net_name
         self.request_name = request_name
         for method_name in dir(instance):
             func = getattr(instance, method_name)
@@ -37,23 +36,23 @@ class Request:
                         params = types
 
                     if types.__len__() == 0 or not issubclass(types[0], BaseUserToken):
-                        raise RPCException(ErrorCode.RegisterError,
-                                           "{0}-{1}-{2}方法首参非BaseUserToken!".format(server_key, request_name,
-                                                                                   func.__name__))
+                        config.OnException(exception=RPCException(ErrorCode.Core,
+                                           "{0}-{1}-{2}方法首参非BaseUserToken!".format(net_name, request_name,
+                                                                                   func.__name__)), request=self)
 
                     if annotation.paramters is None:
                         for param_type in params[1::]:
                             if param_type is not None:
                                 rpc_type: RPCType = self.config.types.typesByType.get(type(param_type), None)
                                 if rpc_type is None:
-                                    raise RPCException(ErrorCode.RegisterError,
-                                                       "对应的{0}类型的抽象类型尚未注册".format(param_type.__name__))
+                                    config.OnException(code=ErrorCode.Core, message="对应的{0}类型的抽象类型尚未注册"
+                                                       .format(param_type.__name__), request=self)
                                 method_id += "-" + rpc_type.name
                     else:
                         for abstract_name in annotation.paramters:
                             if self.config.types.typesByName.get(abstract_name, None) is None:
-                                raise RPCException(ErrorCode.RegisterError,
-                                                   "对应的{0}抽象类型对应的实际类型尚未注册".format(abstract_name))
+                                config.OnException(code=ErrorCode.Core, message="对应的{0}抽象类型对应的实际类型尚未注册"
+                                                   .format(abstract_name), request=self)
                             method_id += "-" + abstract_name
 
                     def invoke(*args, **kwargs):
@@ -61,20 +60,19 @@ class Request:
                             parameters = list()
                             rpc_type: RPCType = self.config.types.typesByType.get(type(param), None)
                             if rpc_type is None:
-                                raise RPCException(ErrorCode.RegisterError,
-                                                   "对应的{0}类型的抽象类型尚未注册".format(param_type.__name__))
+                                config.OnException(code=ErrorCode.Core, message="对应的{0}类型的抽象类型尚未注册"
+                                                   .format(param_type.__name__), request=self)
                             parameters.append(rpc_type.serialize(param))
                             request = ServerRequestModel("2.0", method_id, parameters, request_name)
                             token = args.__getitem__(0)
                             if token is None:
-                                raise RPCException(ErrorCode.NotFoundNetConfig,
-                                                   "{0}-{1}-{2}方法BaseUserToken为None!".format(server_key, request_name,
-                                                                                             func.__name__))
-                            net_config = NetCore.Get(server_key)
+                                config.OnException(code=ErrorCode.Core, message="{0}-{1}-{2}方法BaseUserToken为None!"
+                                                   .format(net_name, request_name, func.__name__), request=self)
+                            net_config = NetCore.Get(net_name)
                             if net_config is None:
-                                raise RPCException(ErrorCode.NotFoundNetConfig,
+                                config.OnException(code=ErrorCode.Core, message=
                                                    "{0}-{1}-{2}方法在发送请求时，NetConfig为空！"
-                                                   .format(server_key, request_name, request_name))
+                                                   .format(net_name, request_name, request_name), request=self)
                             net_config.serverRequestSend(token, request)
                             return None
 

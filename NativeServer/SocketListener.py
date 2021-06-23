@@ -6,24 +6,20 @@ from twisted.internet.protocol import ServerFactory
 
 from Model.BaseUserToken import BaseUserToken
 from Model.ClientResponseModel import ClientResponseModel
-from Model.RPCException import RPCException
 from Model.ServerRequestModel import ServerRequestModel
 from NativeServer.DataToken import DataToken
 from NativeServer.ServerConfig import ServerConfig
-from RPCNet import NetCore
-from Utils import JsonTool
+from RPCNet.Net import Net
 
 
 class SocketListener(ServerFactory):
 
-    def __init__(self, server_key, config: ServerConfig):
+    def __init__(self, net: Net, server_key, config: ServerConfig):
         self.server_key = server_key
         self.config = config
-        net_config = NetCore.Get(server_key)
-        if net_config is None:
-            raise RPCException(RPCException.ErrorCode.RegisterError, "{0}找不到NetConfig".format(server_key))
-        net_config.serverRequestSend = self.SendServerRequest
-        net_config.clientResponseSend = self.SendClientResponse
+        self.net_name = net.name
+        net.serverRequestSend = self.SendServerRequest
+        net.clientResponseSend = self.SendClientResponse
 
     def buildProtocol(self, addr: Tuple[str, int]) -> "Protocol":
         return DataToken(self.server_key, self.config)
