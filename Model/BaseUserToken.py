@@ -6,7 +6,7 @@ class BaseUserToken:
         self.connect_event = list()
         self.disconnect_event = list()
 
-    def register(self, replace=False):
+    def Register(self, replace=False):
         from RPCNet import NetCore
         tokens = NetCore.GetTokens(self.serverKey)
         if tokens is not None:
@@ -16,18 +16,18 @@ class BaseUserToken:
             tokens[self.key] = self
             return True
 
-    def unRegister(self):
+    def UnRegister(self):
         from RPCNet import NetCore
         tokens = NetCore.GetTokens(self.serverKey)
         if tokens.get(self.key, None) is not None:
             del tokens[self.key]
         return True
 
-    def getTokens(self):
+    def GetTokens(self):
         from RPCNet import NetCore
         return NetCore.GetTokens(self.serverKey)
 
-    def getToken(self, key):
+    def GetToken(self, key):
         from RPCNet import NetCore
         tokens = NetCore.GetTokens(self.serverKey)
         return tokens.get(key, None)

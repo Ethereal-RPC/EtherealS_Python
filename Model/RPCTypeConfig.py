@@ -13,7 +13,7 @@ class RPCTypeConfig:
 
     def add(self, **kwargs):
         rpc_type = RPCType()
-        rpc_type.type = kwargs.get("types", None)
+        rpc_type.type = kwargs.get("type", None)
         rpc_type.name = kwargs.get("type_name", None)
 
         def deserializeFunc(_json):

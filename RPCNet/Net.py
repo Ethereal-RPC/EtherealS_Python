@@ -2,10 +2,13 @@ from Model.BaseUserToken import BaseUserToken
 from Model.ClientRequestModel import ClientRequestModel
 from Model.ClientResponseModel import ClientResponseModel
 from Model.RPCException import RPCException, ErrorCode
+from Model.RPCLog import RPCLog
 from Model.RPCType import RPCType
 from NativeServer import SocketListener
 from RPCNet.NetConfig import NetConfig
 from RPCService.Service import Service
+from Model.RPCTypeConfig import RPCTypeConfig
+from Utils.Event import Event
 
 
 class Net:
@@ -19,6 +22,8 @@ class Net:
         self.config: NetConfig = None
         self.services = dict()
         self.requests = dict()
+        self.exception_event = Event()
+        self.log_event = Event()
 
     def ClientRequestReceiveProcess(self, token: BaseUserToken, request: ClientRequestModel):
         service: Service = self.services.get(request.Service)
@@ -34,14 +39,16 @@ class Net:
                         if rpc_type is None:
                             raise RPCException(ErrorCode.Core, "RPC中的{0}类型中尚未被注册"
                                                .format(params_id[i]))
-                        params_id[i] = rpc_type.deserialize(params_id[i])
-                    if method.__annotations__.__len__() == request.Params.__len__():
+                        request.Params[i] = rpc_type.deserialize(request.Params[i])
+                    if method.__annotations__.get("return") is not None:
+                        params = list(method.__annotations__.values())[:-1:]
+                    if params.__len__() == request.Params.__len__():
                         request.Params[0] = token
                     elif request.Params.__len__() > 1:
                         request.Params = request.Params[1::]
                     result = method.__call__(*request.Params)
                     return_type = method.__annotations__.get('return', None)
-                    rpc_type = service.config.types.typesByType.get(type(return_type), None)
+                    rpc_type = service.config.types.typesByType.get(return_type, None)
                     response = ClientResponseModel()
                     response.init("2.0", rpc_type.serialize(result), rpc_type.name, request.Id, request.Service,
                                   None)
@@ -50,4 +57,30 @@ class Net:
                 raise RPCException(ErrorCode.Core,
                                    "未找到方法{0}-{1}-{2}".format(self.name, request.Service, request.MethodId))
         else:
-            self.config.OnException(exception=RPCException(ErrorCode.Core, "未找到服务{0}-{1}".format(self.name, request.Service)), net=self)
+            self.OnException(exception=RPCException(ErrorCode.Core, "未找到服务{0}-{1}".format(self.name, request.Service)), net=self)
+
+    def Publish(self):
+        if self.config.netNodeMode:
+            types: RPCTypeConfig = RPCTypeConfig()
+
+        self.server.start()
+        return True
+
+    def OnLog(self, **kwargs):
+        code = kwargs.get("code")
+        message = kwargs.get("message")
+        net = kwargs.get("net")
+        log = kwargs.get("log")
+        if log is None:
+            log = RPCLog(code, message)
+        self.log_event.OnEvent(log=log, net=net)
+
+    def OnException(self, **kwargs):
+        code = kwargs.get("code")
+        message = kwargs.get("message")
+        exception = kwargs.get("exception")
+        net = kwargs.get("net")
+        if exception is None:
+            exception = RPCException(code, message)
+        self.exception_event.OnEvent(exception=exception, net=net)
+        raise exception
