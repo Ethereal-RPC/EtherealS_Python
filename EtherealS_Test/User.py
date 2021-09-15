@@ -1,8 +1,8 @@
-from Model.BaseUserToken import BaseUserToken
+from NativeServer.BaseToken import BaseToken
 
 
-class User(BaseUserToken):
+class User(BaseToken):
     def __init__(self):
-        BaseUserToken.__init__(self)
+        BaseToken.__init__(self)
         self.id = None
         self.username = None

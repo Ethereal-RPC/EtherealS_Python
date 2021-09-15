@@ -1,4 +1,4 @@
-from Model.RPCException import RPCException, ErrorCode
+from Model.RPCException import RPCException, ExceptionCode
 from NativeServer.ServerConfig import ServerConfig
 from NativeServer.SocketListener import SocketListener
 from RPCNet import NetCore
@@ -19,26 +19,26 @@ def Get(**kwargs):
 
 def Register(**kwargs) -> SocketListener:
     net: Net = kwargs.get("net")
-    ip = kwargs.get("ip")
-    port = kwargs.get("port")
+    prefixes = kwargs.get("prefixes")
     create_method = kwargs.get("create_method")
     if create_method is not None:
         config = ServerConfig(create_method)
     else:
         config = kwargs.get("config")
     if net.server is None:
-        net.server = SocketListener(net, (ip, port), config)
+        net.server = SocketListener(net=net, prefixes=prefixes, config=config)
 
         def onLog(**kwargs):
             net.OnLog(**kwargs)
 
         def onException(**kwargs):
             net.OnException(**kwargs)
+
         net.server.log_event.Register(onLog)
         net.server.exception_event.Register(onException)
         return net.server
     else:
-        raise RPCException(ErrorCode.Core, "{0} Net 已经拥有Server".format(net.name))
+        raise RPCException(ExceptionCode.Core, "{0} Net 已经拥有Server".format(net.name))
 
 
 def UnRegister(**kwargs):
@@ -52,5 +52,4 @@ def UnRegister(**kwargs):
         net.serverRequestSend = None
         net.clientResponseSend = None
         net.server = None
-        return True
-    return False
+    return True

@@ -1,14 +1,14 @@
 from enum import Enum
 
 
-class ErrorCode(Enum):
-    Core = 1
+class ExceptionCode(Enum):
+    Core = 1,
     Runtime = 2
 
 
 class RPCException(Exception):
 
-    def __init__(self, code: ErrorCode, message):
+    def __init__(self, code: ExceptionCode, message):
         super().__init__(code, message)
-        self.ErrorCode = ErrorCode.Core
+        self.ErrorCode = ExceptionCode.Core
         self.message = message

@@ -2,7 +2,6 @@ from numbers import Number
 
 from Decorator import RPCService
 from EtherealS_Test.User import User
-from Model.BaseUserToken import BaseUserToken
 
 
 class UserService:

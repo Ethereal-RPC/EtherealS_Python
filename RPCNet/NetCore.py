@@ -1,19 +1,12 @@
-import json
-
-from Model.BaseUserToken import BaseUserToken
-from Model.ClientRequestModel import ClientRequestModel
-from Model.ClientResponseModel import ClientResponseModel
-from Model.RPCException import RPCException, ErrorCode
-from Model.RPCType import RPCType
+import RPCRequest.RequestCore
+import RPCService.ServiceCore
 from RPCNet.Net import Net
 from RPCNet.NetConfig import NetConfig
-from RPCService import ServiceCore
-from RPCService.Service import Service
 
 nets = dict()
 
 
-def Get(name):
+def Get(name) -> Net:
     return nets.get(name)
 
 
@@ -31,3 +24,15 @@ def Register(**kwargs) -> Net:
         return None
     return nets[name]
 
+
+def UnRegister(**kwargs):
+    name = kwargs.get("name")
+    if name is not None:
+        net = Get(name)
+        if net is not None:
+            for request in net.requests:
+                RPCRequest.RequestCore.UnRegister(net_name=net, service_name=request.name)
+            for service in net.services:
+                RPCService.ServiceCore.UnRegister(net_name=net, service_name=service.name)
+            del nets[name]
+    return True

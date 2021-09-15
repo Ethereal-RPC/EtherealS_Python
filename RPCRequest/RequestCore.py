@@ -1,5 +1,4 @@
-from Model.RPCException import RPCException, ErrorCode
-from Model.RPCTypeConfig import RPCTypeConfig
+from Model.RPCException import RPCException, ExceptionCode
 from RPCNet import NetCore
 from RPCNet.Net import Net
 from RPCRequest.Request import Request
@@ -8,7 +7,7 @@ from RPCRequest.RequestConfig import RequestConfig
 
 def Get(**kwargs) -> Request:
     net_name = kwargs.get("net_name")
-    request_name = kwargs.get("request_name")
+    request_name = kwargs.get("name")
     if net_name is not None:
         net: Net = NetCore.Get(net_name)
     else:
@@ -20,7 +19,7 @@ def Get(**kwargs) -> Request:
 
 def Register(**kwargs):
     instance = kwargs.get("instance")
-    service_name = kwargs.get("service_name")
+    service_name = kwargs.get("name")
     net: Net = kwargs.get("net")
     if kwargs.get("config") is None:
         config: RequestConfig = RequestConfig(kwargs.get("type_config"))
@@ -33,20 +32,18 @@ def Register(**kwargs):
         request.log_event.Register(net.OnLog)
         request.exception_event.Register(net.OnException)
     else:
-        raise RPCException(ErrorCode.Core, "{0}-{1}已注册，无法重复注册！".format(net.name, service_name))
+        raise RPCException(ExceptionCode.Core, "{0}-{1}已注册，无法重复注册！".format(net.name, service_name))
     return instance
 
 
 def UnRegister(**kwargs):
     net_name = kwargs.get("net_name")
-    service_name = kwargs.get("service_name")
+    service_name = kwargs.get("name")
     if net_name is not None:
         net: Net = NetCore.Get(net_name)
     else:
         net: Net = kwargs.get("net")
-    if net is None:
-        raise RPCException(ErrorCode.Runtime, "{0}Net未注册！".format(net_name))
-    if net.requests.get(service_name, None) is not None:
-        del net.requests[service_name]
-        return True
-    return False
+    if net is not None:
+        if net.requests.get(service_name, None) is not None:
+            del net.requests[service_name]
+    return True

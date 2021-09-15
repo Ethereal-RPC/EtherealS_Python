@@ -1,6 +1,6 @@
 import json
 
-from Model.RPCException import RPCException, ErrorCode
+from Model.RPCException import RPCException, ExceptionCode
 from Model.RPCType import RPCType
 from Utils import JsonTool
 
@@ -18,7 +18,11 @@ class RPCTypeConfig:
 
         def deserializeFunc(_json):
             instance = rpc_type.type()
-            di = json.loads(_json)
+            di = None
+            try:
+                di = json.loads(_json)
+            except:
+                di = _json
             try:
                 instance.__dict__ = di
             except:
@@ -36,6 +40,6 @@ class RPCTypeConfig:
 
     def detect(self, _type, type_name):
         if self.typesByName.get(type_name, None) is not None:
-            raise RPCException(ErrorCode.Core, "真实类中已包含" + type_name)
+            raise RPCException(ExceptionCode.Core, "真实类中已包含" + type_name)
         if self.typesByType.get(_type, None) is not None:
-            raise RPCException(ErrorCode.Core, "抽象类中已包含" + type_name)
+            raise RPCException(ExceptionCode.Core, "抽象类中已包含" + type_name)

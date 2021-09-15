@@ -1,9 +1,5 @@
-from Model.BaseUserToken import BaseUserToken
-from Model.RPCException import RPCException
-from Model.RPCLog import RPCLog
 from Model.RPCTypeConfig import RPCTypeConfig
 from RPCService import Service
-from Utils.Event import Event
 
 
 class ServiceConfig:
@@ -13,7 +9,7 @@ class ServiceConfig:
         self.interceptorEvent = list()
         self.authoritable = False
 
-    def OnInterceptor(self, service: Service, method: classmethod, token: BaseUserToken) -> bool:
+    def OnInterceptor(self, service: Service, method: classmethod, token) -> bool:
         for item in self.interceptorEvent:
             item: method
             if not item.__call__(service, method, token):

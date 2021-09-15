@@ -2,10 +2,8 @@ import json
 
 from Model.ClientRequestModel import ClientRequestModel
 from Model.ClientResponseModel import ClientResponseModel
-from Model.RPCException import RPCException
-from Model.RPCLog import RPCLog
 from Model.ServerRequestModel import ServerRequestModel
-from Utils.Event import Event
+from Utils.JsonTool import JSONClientResponseModel
 
 
 class ServerConfig:
@@ -19,7 +17,7 @@ class ServerConfig:
         self.encode = "utf-8"
 
         def serverRequestModelSerializeFunc(obj: ServerRequestModel) -> str:
-            return json.dumps(obj.__dict__)
+            return json.dumps(obj.__dict__, ensure_ascii=False)
 
         self.serverRequestModelSerialize = serverRequestModelSerializeFunc
 
@@ -29,13 +27,12 @@ class ServerConfig:
             try:
                 instance.__dict__ = di
             except:
-                instance = di
+                instance = None
             return instance
 
         self.clientRequestModelDeserialize = clientRequestModelDeserializeFunc
 
         def clientResponseModelSerializeFunc(obj: ClientResponseModel) -> str:
-            return json.dumps(obj.__dict__)
+            return json.dumps(obj.__dict__, cls=JSONClientResponseModel, ensure_ascii=False)
 
         self.clientResponseModelSerialize = clientResponseModelSerializeFunc
-

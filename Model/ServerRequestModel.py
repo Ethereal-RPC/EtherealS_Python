@@ -1,8 +1,7 @@
 class ServerRequestModel:
 
-    def __init__(self, json_rpc, method_id, params, service) -> None:
-        super().__init__()
-        self.JsonRpc = json_rpc
-        self.MethodId = method_id
-        self.Params = params
-        self.Service = service
+    def __init__(self, **kwargs) -> None:
+        self.Type = "ER-1.0-ServerRequest"
+        self.MethodId = kwargs.get("method_id")
+        self.Params = kwargs.get("params")
+        self.Service = kwargs.get("service")
