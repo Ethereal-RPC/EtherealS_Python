@@ -1,8 +1,8 @@
 import json
 from typing import Any
 
-from Model.ClientResponseModel import ClientResponseModel
-from Model.Error import Error
+from Core.Model.ClientResponseModel import ClientResponseModel
+from Core.Model.Error import Error
 
 
 class JSONEncoder(json.JSONEncoder):

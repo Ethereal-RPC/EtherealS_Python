@@ -1,8 +1,8 @@
-from NativeServer.BaseToken import BaseToken
+from Server.WebSocket.WebSocketBaseToken import WebSocketBaseToken
 
 
-class User(BaseToken):
+class User(WebSocketBaseToken):
     def __init__(self):
-        BaseToken.__init__(self)
+        super().__init__()
         self.id = None
         self.username = None

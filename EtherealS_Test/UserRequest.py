@@ -1,8 +1,8 @@
-from Decorator import RPCRequest
+from Request.Decorator import Request
 from EtherealS_Test.User import User
 
 
 class UserRequest:
-    @RPCRequest.RPCRequest()
+    @Request.RPCRequest()
     def Say(self, user: User, sender: User, message: str) -> None:
         pass

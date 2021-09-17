@@ -2,11 +2,12 @@ from numbers import Number
 
 from EtherealS_Test.User import User
 from EtherealS_Test.UserService import UserService
-from Model.RPCTypeConfig import RPCTypeConfig
-from NativeServer import ServerCore
-from RPCNet import NetCore
-from RPCRequest import RequestCore
-from RPCService import ServiceCore
+from Core.Model.AbstractTypes import AbstractTypes
+from Net.Abstract.Net import NetType
+from Server import ServerCore
+from Net import NetCore
+from Request import RequestCore
+from Service import ServiceCore
 
 
 def OnException(**kwargs):
@@ -39,14 +40,14 @@ def Single():
     else:
         port = mode
     print("Server-{0}".format(prefixes))
-    types = RPCTypeConfig()
+    types = AbstractTypes()
     types.add(type=int, type_name="Int")
     types.add(type=type(User()), type_name="User")
     types.add(type=Number, type_name="Number")
     types.add(type=str, type_name="String")
     types.add(type=bool, type_name="Bool")
     # 建立网关
-    net = NetCore.Register(name="demo")
+    net = NetCore.Register(name="demo", type=NetType.WebSocket)
     net.exception_event.Register(OnException)
     net.log_event.Register(OnLog)
     # 注册服务
