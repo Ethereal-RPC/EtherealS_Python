@@ -15,6 +15,7 @@ class Service(ABC):
         self.name = None
         self.exception_event: Event = Event.Event()
         self.log_event: Event = Event.Event()
+        self.interceptorEvent = list()
 
     @abstractmethod
     def register(self, net_name, service_name, instance, config: ServiceConfig):
@@ -31,3 +32,9 @@ class Service(ABC):
             exception = TrackException(code=code, message=message)
         exception.server = self
         self.exception_event.OnEvent(exception=exception)
+
+    def OnInterceptor(self, net, method, token) -> bool:
+        for item in self.interceptorEvent:
+            if not item.__call__(net, self, method, token):
+                return False
+        return True

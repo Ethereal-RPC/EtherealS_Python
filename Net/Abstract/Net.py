@@ -27,6 +27,7 @@ class Net(ABC):
         self.requests = dict()
         self.exception_event = Event()
         self.log_event = Event()
+        self.interceptorEvent = list()
         self.type = None
 
     def ClientRequestReceiveProcess(self, token, request: ClientRequestModel):
@@ -34,9 +35,7 @@ class Net(ABC):
         if service is not None:
             method: classmethod = service.methods.get(request.MethodId, None)
             if method is not None:
-                if service.config.OnInterceptor(service, method, token) and service.config.OnInterceptor(service,
-                                                                                                         method,
-                                                                                                         token):
+                if self.OnInterceptor(service, method, token) and service.OnInterceptor(self, method, token):
                     params_id = request.MethodId.split("-")
                     for i in range(1, params_id.__len__()):
                         rpc_type: AbstrackType = service.config.types.typesByName.get(params_id[i], None)
@@ -84,3 +83,9 @@ class Net(ABC):
             exception = TrackException(code=code, message=message)
         exception.server = self
         self.exception_event.OnEvent(exception=exception)
+
+    def OnInterceptor(self, service: Service, method, token) -> bool:
+        for item in self.interceptorEvent:
+            if not item.__call__(self, service, method, token):
+                return False
+        return True
