@@ -1,3 +1,2 @@
-# EtherealS_Python
+# Initial page
 
-跨平台RPC网络框架服务端_Python版本
