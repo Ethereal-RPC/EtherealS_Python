@@ -1,6 +1,6 @@
 from types import MethodType
 
-from Core.Model.TrackException import ExceptionCode
+from Core.Model.TrackException import TrackException,ExceptionCode
 from Service.Abstract.Service import Service
 from Service.Decorator.Service import ServiceAnnotation
 from Extension.Authority.IAuthoritable import IAuthoritable
@@ -55,11 +55,3 @@ class WebSocketService(Service):
                 if self.methods.get(method_id, None) is not None:
                     raise TrackException(code=ExceptionCode.Core, message="服务方法{name}已存在，无法重复注册！".format(name=method_id))
                 self.methods[method_id] = func
-
-    def OnLog(self, log: TrackLog):
-        log.service = self
-        self.log_event.OnEvent(log=log)
-
-    def OnException(self, exception: TrackException):
-        exception.service = self
-        self.exception_event.OnEvent(exception=exception)

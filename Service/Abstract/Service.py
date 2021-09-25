@@ -12,7 +12,7 @@ class Service(ABC):
         self.methods = dict()
         self.instance = None
         self.net_name = None
-        self.name = None
+        self.service_name = None
         self.exception_event: Event = Event.Event()
         self.log_event: Event = Event.Event()
         self.interceptorEvent = list()

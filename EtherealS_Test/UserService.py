@@ -8,13 +8,13 @@ class UserService:
     def __init__(self):
         self.userRequest = None
 
-    @Service.RPCService()
+    @Service.Service()
     def Register(self, user: User, username: str, id: Number) -> bool:
         user.username = username
         user.id = id
         return user.Register()
 
-    @Service.RPCService()
+    @Service.Service()
     def SendSay(self, sender: User, listener_id: Number, message: str) -> bool:
         listener = sender.GetToken(listener_id)
         if listener is not None:
@@ -23,6 +23,6 @@ class UserService:
         else:
             return False
 
-    @Service.RPCService()
+    @Service.Service()
     def Add(self, a: int, b: int) -> int:
         return a + b

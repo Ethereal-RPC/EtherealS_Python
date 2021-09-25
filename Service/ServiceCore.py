@@ -9,7 +9,7 @@ from Service.WebSocket.WebSocketServiceConfig import WebSocketServiceConfig
 
 def Get(**kwargs) -> Service:
     net_name = kwargs.get("net_name")
-    service_name = kwargs.get("name")
+    service_name = kwargs.get("service_name")
     if net_name is not None:
         net: Net = NetCore.Get(net_name)
     else:
@@ -33,18 +33,18 @@ def Register(instance, net, service_name, types=None, config=None):
             service = WebSocketService()
         else:
             raise TrackException(ExceptionCode.Core, "未有针对{0}的Service-Register处理".format(net.type))
-        service.register(net.name, service_name, instance, config)
+        service.register(net.service_name, service_name, instance, config)
         net.services[service_name] = service
         service.log_event.Register(net.OnLog)
         service.exception_event.Register(net.OnException)
         return service
     else:
-        raise TrackException(ExceptionCode.Core, "{0}-{1}Service已经注册".format(net.name, service_name))
+        raise TrackException(ExceptionCode.Core, "{0}-{1}Service已经注册".format(net.service_name, service_name))
 
 
 def UnRegister(**kwargs):
     net_name = kwargs.get("net_name")
-    service_name = kwargs.get("name")
+    service_name = kwargs.get("service_name")
     if net_name is not None:
         net: Net = NetCore.Get(net_name)
     else:

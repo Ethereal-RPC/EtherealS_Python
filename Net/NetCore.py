@@ -14,7 +14,7 @@ def Get(name) -> Net:
 
 
 def Register(**kwargs) -> Net:
-    name = kwargs.get("name")
+    name = kwargs.get("service_name")
     config: NetConfig = kwargs.get("config")
     net_type: NetType = kwargs.get("type")
     if net_type == NetType.WebSocket:
@@ -37,13 +37,13 @@ def Register(**kwargs) -> Net:
 
 
 def UnRegister(**kwargs):
-    name = kwargs.get("name")
+    name = kwargs.get("service_name")
     if name is not None:
         net = Get(name)
         if net is not None:
             for request in net.requests:
-                Request.RequestCore.UnRegister(net_name=net, service_name=request.name)
+                Request.RequestCore.UnRegister(net_name=net, service_name=request.service_name)
             for service in net.services:
-                Service.ServiceCore.UnRegister(net_name=net, service_name=service.name)
+                Service.ServiceCore.UnRegister(net_name=net, service_name=service.service_name)
             del nets[name]
     return True

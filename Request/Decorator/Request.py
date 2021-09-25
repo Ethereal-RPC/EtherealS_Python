@@ -1,4 +1,4 @@
-def RPCRequest(**top_args):
+def Request(**top_args):
     paramters = top_args.get("paramters", None)
 
     def getFunc(func):

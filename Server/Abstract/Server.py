@@ -13,7 +13,7 @@ class Server(ABC, WebSocketServerFactory):
     def __init__(self, net, config: ServerConfig):
         super().__init__()
         self.config = config
-        self.net_name = net.name
+        self.net_name = net.service_name
         self.exception_event = Event()
         self.log_event = Event()
 

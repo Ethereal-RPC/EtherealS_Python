@@ -6,7 +6,7 @@ from twisted.internet import reactor
 
 from Server.Abstract.Server import Server
 from Server.Abstract.ServerConfig import ServerConfig
-
+from Core.Model.TrackException import TrackException
 
 class WebSocketServer(Server, WebSocketServerFactory):
 
@@ -30,7 +30,7 @@ class WebSocketServer(Server, WebSocketServerFactory):
             reactor.listenTCP(urlparse("ws://" + self.prefixes).port, self)
             reactor.run()
         except Exception as e:
-            self.OnException(exception=e)
+            self.OnException(exception=TrackException(exception=e))
 
     def Close(self):
         pass

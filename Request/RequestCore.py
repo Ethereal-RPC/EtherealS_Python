@@ -9,7 +9,7 @@ from Request.WebSocket.WebSocketRequestConfig import WebSocketRequestConfig
 
 def Get(**kwargs) -> Request:
     net_name = kwargs.get("net_name")
-    request_name = kwargs.get("name")
+    request_name = kwargs.get("service_name")
     if net_name is not None:
         net: Net = NetCore.Get(net_name)
     else:
@@ -21,7 +21,7 @@ def Get(**kwargs) -> Request:
 
 def Register(**kwargs):
     instance = kwargs.get("instance")
-    service_name = kwargs.get("name")
+    service_name = kwargs.get("service_name")
     net: Net = kwargs.get("net")
     if kwargs.get("config") is None:
         if net.type == NetType.WebSocket:
@@ -46,7 +46,7 @@ def Register(**kwargs):
 
 def UnRegister(**kwargs):
     net_name = kwargs.get("net_name")
-    service_name = kwargs.get("name")
+    service_name = kwargs.get("service_name")
     if net_name is not None:
         net: Net = NetCore.Get(net_name)
     else:

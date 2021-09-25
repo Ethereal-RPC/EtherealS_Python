@@ -3,6 +3,6 @@ from EtherealS_Test.User import User
 
 
 class UserRequest:
-    @Request.RPCRequest()
+    @Request.Request()
     def Say(self, user: User, sender: User, message: str) -> None:
         pass

@@ -14,7 +14,7 @@ class Request(ABC):
 
     def __init__(self, config: RequestConfig):
         self.config = config
-        self.name = None
+        self.service_name = None
         self.net_name = None
         self.exception_event = Event()
         self.log_event = Event()
@@ -24,7 +24,7 @@ class Request(ABC):
         from Server.Abstract.BaseToken import BaseToken
         self.config = config
         self.net_name = net_name
-        self.name = request_name
+        self.service_name = request_name
         for method_name in dir(instance):
             func = getattr(instance, method_name)
             if isinstance(func.__doc__, RequestAnnotation):
@@ -61,20 +61,20 @@ class Request(ABC):
                             method_id += "-" + abstract_name
 
                     def invoke(*args, **kwargs):
-                        for param in args[1::]:
-                            parameters = list()
-                            rpc_type: AbstrackType = self.config.types.typesByType.get(type(param), None)
-                            if rpc_type is None:
+                        parameters = list()
+                        for arg in args[1::]:
+                            abstract_type: AbstrackType = self.config.types.typesByType.get(type(arg), None)
+                            if abstract_type is None:
                                 raise TrackException(code=ExceptionCode.Core, message="对应的{0}类型的抽象类型尚未注册"
-                                                     .format(param.__name__))
-                            parameters.append(rpc_type.serialize(param))
-                            request = ServerRequestModel(method_id=method_id, params=parameters, service=request_name)
-                            token: BaseToken = args.__getitem__(0)
-                            if token is None:
-                                raise TrackException(code=ExceptionCode.Core, message="{0}-{1}-{2}方法BaseToken为None!"
-                                                     .format(net_name, request_name, func.__name__))
-                            token.SendServerRequest(request)
-                            return None
+                                                     .format(arg.__name__))
+                            parameters.append(abstract_type.serialize(arg))
+                        request = ServerRequestModel(method_id=method_id, params=parameters, service=request_name)
+                        token: BaseToken = args.__getitem__(0)
+                        if token is None:
+                            raise TrackException(code=ExceptionCode.Core, message="{0}-{1}-{2}方法BaseToken为None!"
+                                                 .format(net_name, request_name, func.__name__))
+                        token.SendServerRequest(request)
+                        return None
 
                     invoke.__annotations__ = func.__annotations__
                     invoke.__doc__ = func.__doc__

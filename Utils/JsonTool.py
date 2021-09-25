@@ -15,5 +15,5 @@ class JSONEncoder(json.JSONEncoder):
 class JSONClientResponseModel(json.JSONEncoder):
     def default(self, obj: ClientResponseModel) -> Any:
         if isinstance(obj, Error):
-            obj.Code = obj.Code.name
+            obj.Code = obj.Code.service_name
             return obj.__dict__
