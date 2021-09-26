@@ -24,5 +24,10 @@ class UserService:
             return False
 
     @Service.Service()
-    def Add(self, a: int, b: int) -> int:
+    def Add(self, sender: User, a: int, b: int) -> int:
+        from Request import RequestCore
+        from EtherealS_Test.UserRequest import UserRequest
+        request: UserRequest = RequestCore.Get(net_name="demo", service_name="Client")
+        sender.username = "M"
+        request.Say(sender, sender, "你好呀")
         return a + b

@@ -14,8 +14,12 @@ from Server.Abstract.BaseToken import BaseToken
 
 
 class WebSocketBaseToken(BaseToken, WebSocketServerProtocol):
+    def serialize(self):
+        return None
+
     def __init__(self):
-        super().__init__()
+        super(BaseToken, self).__init__()
+        super(WebSocketServerProtocol, self).__init__()
         self.prefixes = None
 
     def processHandshake(self):
@@ -113,7 +117,7 @@ class WebSocketBaseToken(BaseToken, WebSocketServerProtocol):
         Send HTML page HTTP response.
         """
         self.OnLog(code=LogCode.Runtime, message=request)
-        responseBody = self.config.serverRequestModelSerialize(request).encode(self.config.encode)
+        responseBody: str = self.config.serverRequestModelSerialize(request)
         self.sendMessage(responseBody.encode(self.config.encode))
 
     def __SendHttpError(self, **kwargs):

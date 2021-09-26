@@ -1,12 +1,14 @@
 from numbers import Number
 
 from EtherealS_Test.User import User
+from EtherealS_Test.UserRequest import UserRequest
 from EtherealS_Test.UserService import UserService
 from Core.Model.AbstractTypes import AbstractTypes
 from Net.Abstract.Net import NetType
 from Server import ServerCore
 from Net import NetCore
 from Request import RequestCore
+from Server.WebSocket.WebSocketBaseToken import WebSocketBaseToken
 from Service import ServiceCore
 
 
@@ -16,8 +18,9 @@ def OnException(**kwargs):
 
 
 def OnLog(**kwargs):
-    exception = kwargs.get("log")
-    print(exception)
+    from Core.Model.TrackLog import TrackLog
+    log: TrackLog = kwargs.get("log")
+    print(log.message)
 
 
 def CreateMethod():
@@ -47,13 +50,13 @@ def Single():
     types.add(type=str, type_name="String")
     types.add(type=bool, type_name="Bool")
     # 建立网关
-    net = NetCore.Register(name="demo", type=NetType.WebSocket)
+    net = NetCore.Register(net_name="demo", type=NetType.WebSocket)
     net.exception_event.Register(OnException)
     net.log_event.Register(OnLog)
     # 注册服务
     service = ServiceCore.Register(instance=UserService(), net=net, service_name="Server", types=types)
     # 注册请求
-    request = RequestCore.Register(net=net, service_name="Client", types=types)
+    request = RequestCore.Register(net=net, instance=UserRequest(), service_name="Client", types=types)
     # 突出Service为正常类
     service.instance.userRequest = request
     # 注册连接
@@ -73,4 +76,7 @@ def Single():
 
 
 if __name__ == '__main__':
+    user = User()
+    if isinstance(user, WebSocketBaseToken):
+        print("shi")
     Single()

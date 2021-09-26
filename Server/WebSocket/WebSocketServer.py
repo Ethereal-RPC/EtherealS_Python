@@ -8,10 +8,11 @@ from Server.Abstract.Server import Server
 from Server.Abstract.ServerConfig import ServerConfig
 from Core.Model.TrackException import TrackException
 
+
 class WebSocketServer(Server, WebSocketServerFactory):
 
-    def __init__(self, net, prefixes, config: ServerConfig):
-        super().__init__(net, config)
+    def __init__(self, net_name, prefixes, config: ServerConfig):
+        super().__init__(net_name, config)
         self.setProtocolOptions()
         self.prefixes = prefixes
         self.protocol = self.getProtocol

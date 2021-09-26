@@ -14,7 +14,7 @@ from Net.Abstract.Net import Net
 from Core.Event import Event
 
 
-class BaseToken(ABC, WebSocketServerProtocol):
+class BaseToken(ABC):
     def __init__(self):
         super().__init__()
         self.key = None
@@ -71,3 +71,7 @@ class BaseToken(ABC, WebSocketServerProtocol):
             exception = TrackException(code=code, message=message)
         exception.server = self
         self.exception_event.OnEvent(exception=exception)
+
+    @abstractmethod
+    def serialize(self):
+        pass

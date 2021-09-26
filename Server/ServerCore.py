@@ -32,7 +32,7 @@ def Register(**kwargs) -> Server:
         config = kwargs.get("config")
     if net.server is None:
         if net.type == NetType.WebSocket:
-            net.server = WebSocketServer(net=net, prefixes=prefixes, config=config)
+            net.server = WebSocketServer(net_name=net.net_name, prefixes=prefixes, config=config)
         else:
             raise TrackException(ExceptionCode.Core, "未有针对{0}的Server-Register处理".format(net.type))
 
@@ -46,7 +46,7 @@ def Register(**kwargs) -> Server:
         net.server.exception_event.Register(onException)
         return net.server
     else:
-        raise TrackException(ExceptionCode.Core, "{0} Net 已经拥有Server".format(net.name))
+        raise TrackException(ExceptionCode.Core, "{0} Net 已经拥有Server".format(net.net_name))
 
 
 def UnRegister(**kwargs):

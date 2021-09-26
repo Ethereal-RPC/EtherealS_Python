@@ -18,7 +18,7 @@ class WebSocketService(Service):
         self.config: ServiceConfig = config
         self.instance = instance
         self.net_name = net_name
-        self.name = service_name
+        self.service_name = service_name
         if config.authoritable and issubclass(instance, IAuthoritable) is False:
             raise TrackException(code=ExceptionCode.Runtime, message="%s服务已开启权限系统，但尚未实现权限接口".format(instance.__name__))
         for method_name in dir(instance):
@@ -34,8 +34,8 @@ class WebSocketService(Service):
                         raise TrackException(code=ExceptionCode.Core,
                                              message="%s-%s方法中的返回值未定义！".format(net_name, func.__name__))
                     start = 0
-                    from Server.Abstract.BaseToken import BaseToken
-                    if params.__len__() > 0 and isinstance(params[0], BaseToken) and func.__doc__.token:
+                    from Server.WebSocket.WebSocketBaseToken import WebSocketBaseToken
+                    if params.__len__() > 0 and isinstance(params[0], type(WebSocketBaseToken)):
                         start = 1
                     for param in params[start::]:
                         rpc_type: AbstrackType = self.config.types.typesByType.get(param, None)

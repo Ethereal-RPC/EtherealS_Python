@@ -7,7 +7,21 @@ from Service.WebSocket.WebSocketService import WebSocketService
 from Service.WebSocket.WebSocketServiceConfig import WebSocketServiceConfig
 
 
-def Get(**kwargs) -> Service:
+def Get(**kwargs):
+    net_name = kwargs.get("net_name")
+    service_name = kwargs.get("service_name")
+    if net_name is not None:
+        net: Net = NetCore.Get(net_name)
+    else:
+        net: Net = kwargs.get("net")
+    if net is None:
+        return None
+    service = net.services.get(service_name, None)
+    if service is not None:
+        return service.instance
+
+
+def GetService(**kwargs) -> Service:
     net_name = kwargs.get("net_name")
     service_name = kwargs.get("service_name")
     if net_name is not None:
@@ -33,7 +47,7 @@ def Register(instance, net, service_name, types=None, config=None):
             service = WebSocketService()
         else:
             raise TrackException(ExceptionCode.Core, "未有针对{0}的Service-Register处理".format(net.type))
-        service.register(net.service_name, service_name, instance, config)
+        service.register(net.net_name, service_name, instance, config)
         net.services[service_name] = service
         service.log_event.Register(net.OnLog)
         service.exception_event.Register(net.OnException)

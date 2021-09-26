@@ -18,9 +18,9 @@ class NetType(Enum):
 
 
 class Net(ABC):
-    def __init__(self):
+    def __init__(self, net_name):
         self.tokens = dict()
-        self.name = None
+        self.net_name = net_name
         self.server: Server = None
         self.config = None
         self.services = dict()
@@ -54,19 +54,19 @@ class Net(ABC):
                     result = method.__call__(*request.Params)
                     return_type = method.__annotations__.get('return', None)
                     rpc_type = service.config.types.typesByType.get(return_type, None)
-                    response = ClientResponseModel(result=rpc_type.serialize(result), rpc_type=rpc_type.name,
+                    response = ClientResponseModel(result=rpc_type.serialize(result), result_type=rpc_type.name,
                                                    request_id=request.Id,
                                                    service=request.Service, error=None)
                     return response
             else:
                 return ClientResponseModel(result=None, result_type=None, request_id=request.Id, service=service,
                                            error=Error(code=ErrorCode.NotFoundService,
-                                                       message="未找到方法{0}-{1}-{2}".format(self.name, request.Service,
+                                                       message="未找到方法{0}-{1}-{2}".format(self.net_name, request.Service,
                                                                                          request.MethodId)))
         else:
             return ClientResponseModel(result=None, result_type=None, request_id=request.Id, service=service,
                                        error=Error(code=ErrorCode.NotFoundService,
-                                                   message="未找到服务{0}-{1}".format(self.name, request.Service)))
+                                                   message="未找到服务{0}-{1}".format(self.net_name, request.Service)))
 
     @abstractmethod
     def Publish(self):
