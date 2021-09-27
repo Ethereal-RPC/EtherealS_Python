@@ -1,6 +1,6 @@
 from numbers import Number
 
-from Service.Decorator import Service
+from EtherealS.Service.Decorator import Service
 from EtherealS_Test.User import User
 
 
@@ -25,7 +25,7 @@ class UserService:
 
     @Service.Service()
     def Add(self, sender: User, a: int, b: int) -> int:
-        from Request import RequestCore
+        from EtherealS.Request import RequestCore
         from EtherealS_Test.UserRequest import UserRequest
         request: UserRequest = RequestCore.Get(net_name="demo", service_name="Client")
         sender.username = "M"

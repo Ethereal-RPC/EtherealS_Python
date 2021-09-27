@@ -3,13 +3,12 @@ from numbers import Number
 from EtherealS_Test.User import User
 from EtherealS_Test.UserRequest import UserRequest
 from EtherealS_Test.UserService import UserService
-from Core.Model.AbstractTypes import AbstractTypes
-from Net.Abstract.Net import NetType
-from Server import ServerCore
-from Net import NetCore
-from Request import RequestCore
-from Server.WebSocket.WebSocketBaseToken import WebSocketBaseToken
-from Service import ServiceCore
+from EtherealS.Core.Model.AbstractTypes import AbstractTypes
+from EtherealS.Net.Abstract.Net import NetType
+from EtherealS.Server import ServerCore
+from EtherealS.Net import NetCore
+from EtherealS.Request import RequestCore
+from EtherealS.Service import ServiceCore
 
 
 def OnException(**kwargs):
@@ -18,7 +17,7 @@ def OnException(**kwargs):
 
 
 def OnLog(**kwargs):
-    from Core.Model.TrackLog import TrackLog
+    from EtherealS.Core.Model.TrackLog import TrackLog
     log: TrackLog = kwargs.get("log")
     print(log.message)
 
@@ -58,7 +57,7 @@ def Single():
     # 注册请求
     request = RequestCore.Register(net=net, instance=UserRequest(), service_name="Client", types=types)
     # 突出Service为正常类
-    service.instance.userRequest = request
+    service.userRequest = request
     # 注册连接
     server = ServerCore.Register(net=net, prefixes=prefixes, create_method=CreateMethod)
     ips = list()
@@ -76,7 +75,5 @@ def Single():
 
 
 if __name__ == '__main__':
-    user = User()
-    if isinstance(user, WebSocketBaseToken):
-        print("shi")
     Single()
+

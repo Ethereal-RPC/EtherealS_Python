@@ -1,4 +1,4 @@
-from Request.Decorator import Request
+from EtherealS.Request.Decorator import Request
 from EtherealS_Test.User import User
 
 
