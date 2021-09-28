@@ -6,6 +6,7 @@ from EtherealS.Service.Abstract.ServiceConfig import ServiceConfig
 from EtherealS.Service.WebSocket.WebSocketService import WebSocketService
 from EtherealS.Service.WebSocket.WebSocketServiceConfig import WebSocketServiceConfig
 
+
 def Get(**kwargs):
     net_name = kwargs.get("net_name")
     service_name = kwargs.get("service_name")
@@ -15,9 +16,7 @@ def Get(**kwargs):
         net: Net = kwargs.get("net")
     if net is None:
         return None
-    service = net.services.get(service_name, None)
-    if service is not None:
-        return service
+    return net.services.get(service_name, None)
 
 
 def Register(instance, net, service_name, types=None, config=None):
