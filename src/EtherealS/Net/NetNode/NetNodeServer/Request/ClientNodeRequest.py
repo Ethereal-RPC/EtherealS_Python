@@ -1,3 +1,6 @@
-class ClientNodeRequest:
+from EtherealS.Request.WebSocket.WebSocketRequest import WebSocketRequest
+
+
+class ClientNodeRequest(WebSocketRequest):
     def __init__(self):
-        pass
+        super().__init__()

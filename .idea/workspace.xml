@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4347f87-ef34-416b-9252-3ebe096a1668" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Request/Decorator/InvokeTypeFlags.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/ServiceCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/ServiceCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/NetNode/NetNodeClient/Request/ServerNodeRequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/NetNode/NetNodeClient/Request/ServerNodeRequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/NetNode/NetNodeClient/Service/ClientNodeService.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/NetNode/NetNodeClient/Service/ClientNodeService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/NetNode/NetNodeServer/Request/ClientNodeRequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/NetNode/NetNodeServer/Request/ClientNodeRequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/NetNode/NetNodeServer/Service/ServerNodeService.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/NetNode/NetNodeServer/Service/ServerNodeService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/Abstract/Request.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/Abstract/Request.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/Decorator/Request.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/Decorator/Request.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequest.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,7 +250,7 @@
       <workItem from="1632655721704" duration="7033000" />
       <workItem from="1632740817180" duration="2149000" />
       <workItem from="1632791721733" duration="55000" />
-      <workItem from="1632811651587" duration="3810000" />
+      <workItem from="1632811651587" duration="5742000" />
     </task>
     <task id="LOCAL-00001" summary="Net Request Server Model 四个部分完成&#10;还缺NativeServer">
       <created>1617889941782</created>
@@ -357,7 +364,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632814084721</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="核心类与注册类合为一体，用户不再需要分门别类的Get，注册类可以直接获取核心类的所有公开属性">
+      <created>1632816364890</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1632816364890</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

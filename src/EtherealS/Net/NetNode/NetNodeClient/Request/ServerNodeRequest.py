@@ -1,8 +1,9 @@
-from EtherealS.Net.NetNodeClient.Model.NetNode import NetNode
-from EtherealS.Request.Decorator.Request import Request
+from EtherealC.Request.Decorator.Request import Request
+from EtherealC.Request.WebSocket.WebSocketRequest import WebSocketRequest
+from EtherealS.Net.NetNode.Model.NetNode import NetNode
 
 
-class ServerNodeRequest:
+class ServerNodeRequest(WebSocketRequest):
     @Request()
     def Register(self, node: NetNode):
         pass

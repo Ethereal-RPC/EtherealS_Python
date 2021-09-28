@@ -1,12 +1,13 @@
 import random
 
-from EtherealS.Net.NetNodeClient.Model.NetNode import NetNode
+from EtherealS.Net.NetNode.Model.NetNode import NetNode
 
 from EtherealS.Server.Abstract.BaseToken import BaseToken
 from EtherealS.Service.Decorator.Service import Service
+from EtherealS.Service.WebSocket.WebSocketService import WebSocketService
 
 
-class ServerNodeService:
+class ServerNodeService(WebSocketService):
     def __init__(self):
         self.netNodes = dict()
         self.random = random.Random()
