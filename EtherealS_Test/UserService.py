@@ -1,11 +1,13 @@
 from numbers import Number
 
 from EtherealS.Service.Decorator import Service
+from EtherealS.Service.WebSocket.WebSocketService import WebSocketService
 from EtherealS_Test.User import User
 
 
-class UserService:
+class UserService(WebSocketService):
     def __init__(self):
+        super().__init__()
         self.userRequest = None
 
     @Service.Service()

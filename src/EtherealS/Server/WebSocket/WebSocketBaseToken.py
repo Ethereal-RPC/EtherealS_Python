@@ -54,7 +54,7 @@ class WebSocketBaseToken(BaseToken, WebSocketServerProtocol):
                     result = net.ClientRequestReceiveProcess(self, request)
                     self.__SendHttp(result)
                 except Exception as e:
-                    self.__SendHttpError(request=request, code=ErrorCode.Common, message=e.args)
+                    self.__SendHttpError(request=request, code=ErrorCode.Common, message="异常:\n".join(e.args))
                 self.dropConnection(abort=False)
             else:
                 WebSocketServerProtocol.processHandshake(self)
@@ -82,7 +82,7 @@ class WebSocketBaseToken(BaseToken, WebSocketServerProtocol):
                 result = net.ClientRequestReceiveProcess(self, request)
                 self.SendClientResponse(result)
             except Exception as e:
-                self.SendErrorResponse(request=request, code=ErrorCode.Common, message=e)
+                self.SendErrorResponse(request=request, code=ErrorCode.Common, message="异常:\n".join(e.args))
 
     def onClose(self, wasClean, code, reason):
         self.__OnDisConnect()

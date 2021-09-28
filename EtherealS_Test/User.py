@@ -4,7 +4,7 @@ from EtherealS.Server.WebSocket.WebSocketBaseToken import WebSocketBaseToken
 class User(WebSocketBaseToken):
     def __init__(self):
         super(WebSocketBaseToken, self).__init__()
-        self.id = None
+        self.id = -1
         self.username = None
 
     def serialize(self):
