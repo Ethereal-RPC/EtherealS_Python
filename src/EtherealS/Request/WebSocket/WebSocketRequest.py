@@ -3,6 +3,7 @@ from EtherealS.Core.Model.ServerRequestModel import ServerRequestModel
 from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
 from EtherealS.Request.Abstract.Request import Request
 from EtherealS.Request.Decorator.Request import RequestAnnotation
+from EtherealS.Request.WebSocket.WebSocketRequestConfig import WebSocketRequestConfig
 from EtherealS.Server.Abstract.BaseToken import BaseToken
 
 
@@ -10,6 +11,7 @@ class WebSocketRequest(Request):
 
     def __init__(self):
         super().__init__()
+        self.config = WebSocketRequestConfig()
 
     def getInvoke(self, func, method_id, annotation: RequestAnnotation):
         def invoke(*args, **kwargs):
@@ -18,7 +20,7 @@ class WebSocketRequest(Request):
             if (annotation.invokeType & InvokeTypeFlags.Local) == 0:
                 parameters = list()
                 for arg in args[1::]:
-                    abstract_type: AbstrackType = self.config.types.typesByType.get(type(arg), None)
+                    abstract_type: AbstrackType = self.types.typesByType.get(type(arg), None)
                     if abstract_type is None:
                         raise TrackException(code=ExceptionCode.Core, message="对应的{0}类型的抽象类型尚未注册"
                                              .format(arg.__name__))

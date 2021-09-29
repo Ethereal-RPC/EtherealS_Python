@@ -9,12 +9,13 @@ from EtherealS.Service.WebSocket.WebSocketService import WebSocketService
 
 class ServerNodeService(WebSocketService):
     def __init__(self):
+        super(ServerNodeService, self).__init__()
         self.netNodes = dict()
         self.random = random.Random()
 
     @Service()
-    def Register(self, token: BaseToken, node: NetNode):
-        token.key = "{0}-{1}".format(node.Name, "::".join(node.Prefixes))
+    def Register(self, token: BaseToken, node: NetNode) -> bool:
+        token.key = "{0}-{1}".format(node.Name, node.Prefixes)
         value = self.netNodes.get(token.key, None)
         if value is not None:
             old_token: BaseToken = value[0]
@@ -26,7 +27,7 @@ class ServerNodeService(WebSocketService):
         return True
 
     @Service()
-    def GetNetNode(self,token: BaseToken, service_name:str):
+    def GetNetNode(self,token: BaseToken, service_name: str) -> NetNode:
         nodes = list()
         for item in self.netNodes.values():
             node: NetNode = item[1]

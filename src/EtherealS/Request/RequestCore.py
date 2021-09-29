@@ -21,20 +21,10 @@ def Get(**kwargs):
     return None
 
 
-def Register(**kwargs):
-    instance = kwargs.get("instance")
-    service_name = kwargs.get("service_name")
-    net: Net = kwargs.get("net")
-    if kwargs.get("config") is None:
-        if net.type == NetType.WebSocket:
-            config: RequestConfig = WebSocketRequestConfig(kwargs.get("types"))
-        else:
-            raise TrackException(ExceptionCode.Core, "未有针对{0}的Request-Register处理".format(net.type))
-    else:
-        config: RequestConfig = kwargs.get("config")
+def Register(instance, net, service_name, types, config=None):
     if net.requests.get(service_name, None) is None:
         from EtherealS.Request import Abstract
-        Abstract.Request.register(instance, net.net_name, service_name, config)
+        Abstract.Request.register(instance, net.net_name, service_name, types, config)
         net.requests[service_name] = instance
         instance.log_event.Register(net.OnLog)
         instance.exception_event.Register(net.OnException)

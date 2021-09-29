@@ -6,8 +6,7 @@ from EtherealS.Service.Abstract import Service
 
 class ServiceConfig(ABC):
 
-    def __init__(self, _type: AbstractTypes):
-        self.types: AbstractTypes = _type
+    def __init__(self):
         self.interceptorEvent = list()
         self.authoritable = False
 

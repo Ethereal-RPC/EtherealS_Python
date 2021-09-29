@@ -27,7 +27,6 @@ def CreateMethod():
 
 
 def Single():
-    prefixes = "127.0.0.1:28015/NetDemo/"
     port = "28015"
     print("请选择端口(0-3)")
     mode = input()
@@ -41,6 +40,7 @@ def Single():
         port = "28018"
     else:
         port = mode
+    prefixes = "127.0.0.1:28015/NetDemo/".replace("28015", port)
     print("Server-{0}".format(prefixes))
     types = AbstractTypes()
     types.add(type=int, type_name="Int")
@@ -61,19 +61,57 @@ def Single():
     # 注册连接
     server = ServerCore.Register(net=net, prefixes=prefixes, create_method=CreateMethod)
     ips = list()
-    # 分布式这里需要引用客户端框架，但是目前Python还没有客户端版本，暂且搁置.
-    # EtherealC.NativeClient.ClientConfig clientConfig = new EtherealC.NativeClient.ClientConfig();
-    net.config.netNodeMode = False
-    config = None
-    ips.append(dict(prefixes=prefixes.replace("28015", "28015"), config=config))
-    ips.append(dict(prefixes=prefixes.replace("28015", "28016"), config=config))
-    ips.append(dict(prefixes=prefixes.replace("28015", "28017"), config=config))
-    ips.append(dict(prefixes=prefixes.replace("28015", "28018"), config=config))
+    net.Publish()
+    print("服务器初始化完成....")
+
+
+def NetNode():
+    port = "28015"
+    print("请选择端口(0-3)")
+    mode = input()
+    if mode == "0":
+        port = "28015"
+    elif mode == "1":
+        port = "28016"
+    elif mode == "2":
+        port = "28017"
+    elif mode == "3":
+        port = "28018"
+    else:
+        port = mode
+    prefixes = "127.0.0.1:28015/NetDemo/".replace("28015", port)
+    print("Server-{0}".format(prefixes))
+    types = AbstractTypes()
+    types.add(type=int, type_name="Int")
+    types.add(type=type(User()), type_name="User")
+    types.add(type=Number, type_name="Number")
+    types.add(type=str, type_name="String")
+    types.add(type=bool, type_name="Bool")
+    # 建立网关
+    net = NetCore.Register(net_name="demo", type=NetType.WebSocket)
+    net.exception_event.Register(OnException)
+    net.log_event.Register(OnLog)
+    # 注册服务
+    service = ServiceCore.Register(net=net, instance=UserService(), service_name="Server", types=types)
+    # 注册请求
+    request = RequestCore.Register(net=net, instance=UserRequest(), service_name="Client", types=types)
+    # 突出Service为正常类
+    service.userRequest = request
+    # 注册连接
+    server = ServerCore.Register(net=net, prefixes=prefixes, create_method=CreateMethod)
+    ips = list()
+    net.config.netNodeMode = True
+    ips.append(dict(prefixes=prefixes.replace("28015", "28015"), config=None))
+    ips.append(dict(prefixes=prefixes.replace("28015", "28016"), config=None))
+    ips.append(dict(prefixes=prefixes.replace("28015", "28017"), config=None))
+    ips.append(dict(prefixes=prefixes.replace("28015", "28018"), config=None))
     net.config.netNodeIps = ips
     net.Publish()
     print("服务器初始化完成....")
 
 
 if __name__ == '__main__':
-    Single()
+    # Single()
+    NetNode()
+
 

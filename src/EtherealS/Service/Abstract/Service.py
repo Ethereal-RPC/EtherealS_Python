@@ -10,11 +10,13 @@ from EtherealS.Core import Event
 from EtherealS.Service.Decorator.Service import ServiceAnnotation
 
 
-def register(instance, net_name, service_name, config: ServiceConfig):
-    instance.config = config
+def register(instance, net_name, service_name, types, config: ServiceConfig):
+    if config is not None:
+        instance.config = config
     instance.net_name = net_name
     instance.service_name = service_name
-    if config.authoritable and issubclass(instance, IAuthoritable) is False:
+    instance.types = types
+    if instance.config.authoritable and issubclass(instance, IAuthoritable) is False:
         raise TrackException(code=ExceptionCode.Runtime, message="%s服务已开启权限系统，但尚未实现权限接口".format(instance.__name__))
     for method_name in dir(instance):
         func = getattr(instance, method_name)
@@ -33,7 +35,7 @@ def register(instance, net_name, service_name, config: ServiceConfig):
                 if params.__len__() > 0 and isinstance(params[0], type(WebSocketBaseToken)):
                     start = 1
                 for param in params[start::]:
-                    rpc_type: AbstrackType = instance.config.types.typesByType.get(param, None)
+                    rpc_type: AbstrackType = instance.types.typesByType.get(param, None)
                     if rpc_type is not None:
                         method_id = method_id + "-" + rpc_type.name
                     else:
@@ -41,7 +43,7 @@ def register(instance, net_name, service_name, config: ServiceConfig):
                                              .format(name=func.__name__, param=param.__name__))
             else:
                 for param in func.__doc__.paramters:
-                    rpc_type: AbstrackType = instance.config.types.abstractType.get(type(param), None)
+                    rpc_type: AbstrackType = instance.types.abstractType.get(type(param), None)
                     if rpc_type is not None:
                         method_id = method_id + "-" + rpc_type.name
                     else:
@@ -61,6 +63,7 @@ class Service(ABC):
         self.exception_event: Event = Event.Event()
         self.log_event: Event = Event.Event()
         self.interceptorEvent = list()
+        self.types = None
 
     def OnLog(self, log: TrackLog = None, code=None, message=None):
         if log is None:

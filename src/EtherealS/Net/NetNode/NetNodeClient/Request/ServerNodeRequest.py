@@ -5,5 +5,5 @@ from EtherealS.Net.NetNode.Model.NetNode import NetNode
 
 class ServerNodeRequest(WebSocketRequest):
     @Request()
-    def Register(self, node: NetNode):
+    def Register(self, node: NetNode) -> bool:
         pass
