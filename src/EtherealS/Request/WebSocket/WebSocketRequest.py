@@ -15,7 +15,7 @@ class WebSocketRequest(Request):
 
     def getInvoke(self, func, method_id, annotation: RequestAnnotation):
         def invoke(*args, **kwargs):
-            if args is None or args.__len__() == 0:
+            if args is None:
                 raise TrackException(code=ExceptionCode.Runtime,
                                      message="{0}-{1}-{2}方法未提供首参BaseToken".format(self.net_name, self.service_name,
                                                                                   func.__name__))

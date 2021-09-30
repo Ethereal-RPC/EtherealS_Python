@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4347f87-ef34-416b-9252-3ebe096a1668" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequest.py" afterDir="false" />
-    </list>
+    <list default="true" id="c4347f87-ef34-416b-9252-3ebe096a1668" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -251,7 +248,7 @@
       <workItem from="1632890892969" duration="19443000" />
       <workItem from="1632960334006" duration="9235000" />
       <workItem from="1632970800186" duration="2411000" />
-      <workItem from="1632982757195" duration="308000" />
+      <workItem from="1632982757195" duration="614000" />
     </task>
     <task id="LOCAL-00001" summary="Net Request Server Model 四个部分完成&#10;还缺NativeServer">
       <created>1617889941782</created>
@@ -393,7 +390,21 @@
       <option name="project" value="LOCAL" />
       <updated>1632973390339</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Request首参检测">
+      <created>1632983312483</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1632983312483</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Request首参检测">
+      <created>1632983376249</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1632983376249</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -440,7 +451,8 @@
     <MESSAGE value="Request增设请求类型，使用Flags，灵活配置本地方法与远程方法" />
     <MESSAGE value="分离了Config与Types，对Core进行了简化&#10;测试了NetNode" />
     <MESSAGE value="通过了NetNode测试" />
-    <option name="LAST_COMMIT_MESSAGE" value="通过了NetNode测试" />
+    <MESSAGE value="Request首参检测" />
+    <option name="LAST_COMMIT_MESSAGE" value="Request首参检测" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
