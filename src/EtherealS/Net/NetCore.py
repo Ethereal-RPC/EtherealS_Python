@@ -45,5 +45,7 @@ def UnRegister(**kwargs):
                 EtherealS.Request.RequestCore.UnRegister(net_name=net, service_name=request.service_name)
             for service in net.services:
                 EtherealS.Service.ServiceCore.UnRegister(net_name=net, service_name=service.service_name)
+            net.server.Close()
+            net.server = None
             del nets[name]
     return True

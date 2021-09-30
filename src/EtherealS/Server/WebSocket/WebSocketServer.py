@@ -1,8 +1,8 @@
+import threading
 from abc import abstractmethod
 from urllib.parse import urlparse
 
 from autobahn.twisted import WebSocketServerFactory
-from twisted.internet import reactor
 
 from EtherealS.Server.Abstract.Server import Server
 from EtherealS.Server.Abstract.ServerConfig import ServerConfig
@@ -28,10 +28,10 @@ class WebSocketServer(Server, WebSocketServerFactory):
 
     def Start(self):
         try:
+            from twisted.internet import reactor
             reactor.listenTCP(urlparse("ws://" + self.prefixes).port, self)
-            reactor.run()
         except Exception as e:
             self.OnException(exception=TrackException(exception=e))
 
     def Close(self):
-        pass
+        self.doStop()

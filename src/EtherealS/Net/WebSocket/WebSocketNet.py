@@ -1,5 +1,3 @@
-import threading
-
 import EtherealC.Service.ServiceCore
 
 from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
@@ -9,9 +7,20 @@ from EtherealS.Net.Abstract.Net import Net
 class WebSocketNet(Net):
     def __init__(self, net_name):
         super().__init__(net_name=net_name)
+        import threading
+
         self.connectSign = threading.Event()
 
     def Publish(self):
+        def reactorStart():
+            from twisted.internet import reactor
+            if not reactor.running:
+                reactor.suggestThreadPoolSize(10)
+                reactor.run(False)
+
+        import threading
+        threading.Thread(target=reactorStart).start()
+
         if self.config.netNodeMode:
             # 服务端
             from EtherealS.Core.Model.AbstractTypes import AbstractTypes
@@ -41,7 +50,6 @@ class WebSocketNet(Net):
             from EtherealS.Net.NetNode.NetNodeClient.Service.ClientNodeService import ClientNodeService
             from EtherealS.Net.NetNode.NetNodeClient.Request.ServerNodeRequest import ServerNodeRequest
             from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
-            from EtherealC.Request.WebSocket.WebSocketRequestConfig import WebSocketRequestConfig
             for item in self.config.netNodeIps:
                 prefixes = item["prefixes"]
                 config = item["config"]
@@ -50,55 +58,55 @@ class WebSocketNet(Net):
                 types.add(type=str, type_name="String")
                 types.add(type=bool, type_name="Bool")
                 types.add(type=type(NetNode()), type_name="NetNode")
-                if config is None:
-                    config = WebSocketRequestConfig(types)
                 net = NetCore.Register(net_name="NetNodeClient-{0}".format(prefixes), type=NetType.WebSocket)
                 net.config.netNodeMode = False
                 clientNodeService: ClientNodeService = EtherealC.Service.ServiceCore.Register(net=net,
                                                                                               service_name="ClientNetNodeService",
+                                                                                              types=types,
                                                                                               config=config,
                                                                                               instance=ClientNodeService())
                 clientNodeService.serverNodeRequest = EtherealC.Request.RequestCore.Register(net=net,
                                                                                              service_name="ServerNetNodeService",
+                                                                                             types=types,
                                                                                              config=config,
                                                                                              instance=ServerNodeRequest())
                 net.log_event.register(self.OnLog)
                 net.exception_event.register(self.OnException)
-                import threading
+            import threading
 
-                def recycle():
-                    while True:
-                        try:
-                            for tuple in self.config.netNodeIps:
-                                prefixes = tuple["prefixes"]
-                                clientConfig = tuple["config"]
-                                net = NetCore.Get("NetNodeClient-{0}".format(prefixes))
-                                if net is None:
-                                    raise TrackException(code=ExceptionCode.Runtime,
-                                                         message="未找到Net：NetNodeClient-{0}".format(prefixes))
-                                request = EtherealC.Request.RequestCore.Get(net=net,
-                                                                            service_name="ServerNetNodeService")
-                                if request is None:
-                                    raise TrackException(code=ExceptionCode.Runtime,
-                                                         message="未找到Request：{0}-{1}".format(net.net_name,
-                                                                                             "ServerNetNodeService"))
-                                if request.client is not None:
-                                    continue
+            def NetNodeSearchRunner():
+                from EtherealS.Net import NetCore as ServerNetCore
+                while ServerNetCore.Get(self.net_name) is not None:
+                    try:
+                        for tuple in self.config.netNodeIps:
+                            prefixes = tuple["prefixes"]
+                            clientConfig = tuple["config"]
+                            net = NetCore.Get("NetNodeClient-{0}".format(prefixes))
+                            if net is None:
+                                raise TrackException(code=ExceptionCode.Runtime,
+                                                     message="未找到Net：NetNodeClient-{0}".format(prefixes))
+                            request = EtherealC.Request.RequestCore.Get(net=net,
+                                                                        service_name="ServerNetNodeService")
+                            if request is None:
+                                raise TrackException(code=ExceptionCode.Runtime,
+                                                     message="未找到Request：{0}-{1}".format(net.net_name,
+                                                                                         "ServerNetNodeService"))
+                            if request.client is not None:
+                                continue
 
-                                client: Client = ClientCore.Register(net=net, request=request, prefixes=prefixes,
-                                                                     config=clientConfig)
-                                client.connectSuccess_event.register(self.ClientNodeConnectSuccess)
-                                client.connectFail_event.register(self.ClientNodeConnectFail)
-                                client.disconnect_event.register(self.ClientNodeDisConnect)
-                                net.Publish()
-                        except Exception as e:
-                            self.OnException(TrackException(code=ExceptionCode.Runtime, message=e.args, exception=e))
-                        finally:
-                            self.connectSign.wait(self.config.netNodeHeartbeatCycle/1000)
-                            self.connectSign.clear()
+                            client: Client = ClientCore.Register(net=net, request=request, prefixes=prefixes,
+                                                                 config=clientConfig)
+                            client.connectSuccess_event.register(self.ClientNodeConnectSuccess)
+                            client.connectFail_event.register(self.ClientNodeConnectFail)
+                            client.disconnect_event.register(self.ClientNodeDisConnect)
+                            net.Publish()
+                    except Exception as e:
+                        self.OnException(TrackException(code=ExceptionCode.Runtime, message=e.args, exception=e))
+                    finally:
+                        self.connectSign.wait(self.config.netNodeHeartbeatCycle / 1000)
+                        self.connectSign.clear()
 
-                thread = threading.Thread(target=recycle)
-                thread.start()
+            threading.Thread(target=NetNodeSearchRunner).start()
         self.server.Start()
         return True
 

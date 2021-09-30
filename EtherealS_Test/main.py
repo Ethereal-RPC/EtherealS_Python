@@ -101,10 +101,10 @@ def NetNode():
     server = ServerCore.Register(net=net, prefixes=prefixes, create_method=CreateMethod)
     ips = list()
     net.config.netNodeMode = True
-    ips.append(dict(prefixes=prefixes.replace("28015", "28015"), config=None))
-    ips.append(dict(prefixes=prefixes.replace("28015", "28016"), config=None))
-    ips.append(dict(prefixes=prefixes.replace("28015", "28017"), config=None))
-    ips.append(dict(prefixes=prefixes.replace("28015", "28018"), config=None))
+    ips.append(dict(prefixes="127.0.0.1:28015/NetDemo/".replace("28015", "28015"), config=None))
+    ips.append(dict(prefixes="127.0.0.1:28015/NetDemo/".replace("28015", "28016"), config=None))
+    ips.append(dict(prefixes="127.0.0.1:28015/NetDemo/".replace("28015", "28017"), config=None))
+    ips.append(dict(prefixes="127.0.0.1:28015/NetDemo/".replace("28015", "28018"), config=None))
     net.config.netNodeIps = ips
     net.Publish()
     print("服务器初始化完成....")

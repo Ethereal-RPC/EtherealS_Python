@@ -38,7 +38,7 @@ class Net(ABC):
                 if self.OnInterceptor(service, method, token) and service.OnInterceptor(self, method, token):
                     params_id = request.MethodId.split("-")
                     for i in range(1, params_id.__len__()):
-                        rpc_type: AbstrackType = service.config.types.typesByName.get(params_id[i], None)
+                        rpc_type: AbstrackType = service.types.typesByName.get(params_id[i], None)
                         if rpc_type is None:
                             return ClientResponseModel(result=None, result_type=None, request_id=request.Id,
                                                        service=service,
@@ -53,7 +53,7 @@ class Net(ABC):
                         request.Params = request.Params[1::]
                     result = method.__call__(*request.Params)
                     return_type = method.__annotations__.get('return', None)
-                    rpc_type = service.config.types.typesByType.get(return_type, None)
+                    rpc_type = service.types.typesByType.get(return_type, None)
                     response = ClientResponseModel(result=rpc_type.serialize(result), result_type=rpc_type.name,
                                                    request_id=request.Id,
                                                    service=request.Service, error=None)

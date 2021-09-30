@@ -37,7 +37,7 @@ class ServerNodeService(WebSocketService):
             return nodes[self.random.randint(0, nodes.__len__())]
         return None
 
-    def Sender_DisConnectEvent(self,token):
+    def Sender_DisConnectEvent(self, token):
         del self.netNodes[token.key]
         print("成功删除节点")
         self.printNetNodes()

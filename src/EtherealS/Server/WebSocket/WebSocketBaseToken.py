@@ -88,10 +88,10 @@ class WebSocketBaseToken(BaseToken, WebSocketServerProtocol):
         self.__OnDisConnect()
 
     def __OnConnect(self):
-        self.connect_event.OnEvent()
+        self.connect_event.OnEvent(token=self)
 
     def __OnDisConnect(self):
-        self.disconnect_event.OnEvent()
+        self.disconnect_event.OnEvent(token=self)
 
     def SendErrorResponse(self, code=None, data=None, message=None, service_name=None, request_id=None, request=None):
         error = Error()
