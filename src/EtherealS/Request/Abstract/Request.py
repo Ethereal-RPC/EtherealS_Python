@@ -9,14 +9,9 @@ from EtherealS.Core.Event import Event
 from EtherealS.Request.Decorator.Request import RequestAnnotation
 
 
-def register(instance, net_name, request_name: str, types, config: RequestConfig):
+def register(instance):
     from EtherealS.Core.Model.TrackException import ExceptionCode, TrackException
     from EtherealS.Server.Abstract.BaseToken import BaseToken
-    if config is not None:
-        instance.config = config
-    instance.net_name = net_name
-    instance.service_name = request_name
-    instance.types = types
     for method_name in dir(instance):
         func = getattr(instance, method_name)
         if isinstance(func.__doc__, RequestAnnotation):
@@ -61,13 +56,13 @@ def register(instance, net_name, request_name: str, types, config: RequestConfig
 
 class Request(ABC):
 
-    def __init__(self):
+    def __init__(self, name, types):
         self.config = None
-        self.service_name = None
+        self.name = name
         self.net_name = None
         self.exception_event = Event()
         self.log_event = Event()
-        self.types = None
+        self.types = types
 
     def OnLog(self, log: TrackLog = None, code=None, message=None):
         if log is None:

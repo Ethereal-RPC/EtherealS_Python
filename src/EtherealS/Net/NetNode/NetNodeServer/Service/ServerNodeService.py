@@ -8,8 +8,8 @@ from EtherealS.Service.WebSocket.WebSocketService import WebSocketService
 
 
 class ServerNodeService(WebSocketService):
-    def __init__(self):
-        super(ServerNodeService, self).__init__()
+    def __init__(self, name, types):
+        super().__init__(name, types)
         self.netNodes = dict()
         self.random = random.Random()
 

@@ -18,11 +18,11 @@ class NetType(Enum):
 
 
 class Net(ABC):
-    def __init__(self, net_name):
+    def __init__(self, name, config):
         self.tokens = dict()
-        self.net_name = net_name
+        self.name = name
         self.server: Server = None
-        self.config: NetConfig = None
+        self.config: NetConfig = config
         self.services = dict()
         self.requests = dict()
         self.exception_event = Event()
@@ -61,12 +61,12 @@ class Net(ABC):
             else:
                 return ClientResponseModel(result=None, result_type=None, request_id=request.Id, service=service,
                                            error=Error(code=ErrorCode.NotFoundService,
-                                                       message="未找到方法{0}-{1}-{2}".format(self.net_name, request.Service,
+                                                       message="未找到方法{0}-{1}-{2}".format(self.name, request.Service,
                                                                                          request.MethodId)))
         else:
             return ClientResponseModel(result=None, result_type=None, request_id=request.Id, service=service,
                                        error=Error(code=ErrorCode.NotFoundService,
-                                                   message="未找到服务{0}-{1}".format(self.net_name, request.Service)))
+                                                   message="未找到服务{0}-{1}".format(self.name, request.Service)))
 
     @abstractmethod
     def Publish(self):

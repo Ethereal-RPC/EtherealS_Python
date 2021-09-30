@@ -9,5 +9,5 @@ from EtherealS.Utils.JsonTool import JSONClientResponseModel
 
 class WebSocketServerConfig(ServerConfig):
 
-    def __init__(self, create_method):
-        super().__init__(create_method)
+    def __init__(self):
+        super().__init__()

@@ -8,7 +8,7 @@ from EtherealS.Request.WebSocket.WebSocketRequestConfig import WebSocketRequestC
 
 def Get(**kwargs):
     net_name = kwargs.get("net_name")
-    request_name = kwargs.get("service_name")
+    request_name = kwargs.get("request_name")
     if net_name is not None:
         net: Net = NetCore.Get(net_name)
     else:
@@ -21,16 +21,17 @@ def Get(**kwargs):
     return None
 
 
-def Register(instance, net, service_name, types, config=None):
-    if net.requests.get(service_name, None) is None:
+def Register(request: Request, net):
+    if net.requests.get(request.name, None) is None:
         from EtherealS.Request import Abstract
-        Abstract.Request.register(instance, net.net_name, service_name, types, config)
-        net.requests[service_name] = instance
-        instance.log_event.Register(net.OnLog)
-        instance.exception_event.Register(net.OnException)
+        Abstract.Request.register(net)
+        request.net_name = net.name
+        net.requests[request.name] = request
+        request.log_event.Register(net.OnLog)
+        request.exception_event.Register(net.OnException)
     else:
-        raise TrackException(ExceptionCode.Core, "{0}-{1}已注册，无法重复注册！".format(net.net_name, service_name))
-    return instance
+        raise TrackException(ExceptionCode.Core, "{0}-{1}已注册，无法重复注册！".format(net.name, request.name))
+    return request
 
 
 def UnRegister(**kwargs):

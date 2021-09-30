@@ -4,6 +4,6 @@ from EtherealS.Service.WebSocket.WebSocketServiceConfig import WebSocketServiceC
 
 
 class WebSocketService(Service):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name, types):
+        super().__init__(name, types)
         self.config = WebSocketServiceConfig()

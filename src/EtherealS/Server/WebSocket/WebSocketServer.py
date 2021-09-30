@@ -7,18 +7,18 @@ from autobahn.twisted import WebSocketServerFactory
 from EtherealS.Server.Abstract.Server import Server
 from EtherealS.Server.Abstract.ServerConfig import ServerConfig
 from EtherealS.Core.Model.TrackException import TrackException
+from EtherealS.Server.WebSocket.WebSocketServerConfig import WebSocketServerConfig
 
 
 class WebSocketServer(Server, WebSocketServerFactory):
 
-    def __init__(self, net_name, prefixes, config: ServerConfig):
-        super().__init__(net_name, config)
+    def __init__(self, prefixes, create_method):
+        super().__init__(prefixes=prefixes, create_method=create_method, config=WebSocketServerConfig())
         self.setProtocolOptions()
-        self.prefixes = prefixes
         self.protocol = self.getProtocol
 
     def getProtocol(self):
-        token = self.config.create_method()
+        token = self.create_method()
         token.config = self.config
         token.net_name = self.net_name
         token.prefixes = self.prefixes

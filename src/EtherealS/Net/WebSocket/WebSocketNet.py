@@ -2,13 +2,13 @@ import EtherealC.Service.ServiceCore
 
 from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
 from EtherealS.Net.Abstract.Net import Net
+from EtherealS.Net.WebSocket.WebSocketNetConfig import WebSocketNetConfig
 
 
 class WebSocketNet(Net):
-    def __init__(self, net_name):
-        super().__init__(net_name=net_name)
+    def __init__(self, name):
+        super().__init__(name=name, config=WebSocketNetConfig())
         import threading
-
         self.connectSign = threading.Event()
 
     def Publish(self):
@@ -34,10 +34,8 @@ class WebSocketNet(Net):
             types.add(type=str, type_name="String")
             types.add(type=bool, type_name="Bool")
             types.add(type=type(NetNode()), type_name="NetNode")
-            ServiceCore.Register(net=self, instance=ServerNodeService(), service_name="ServerNetNodeService",
-                                 types=types)
-            RequestCore.Register(net=self, instance=ClientNodeRequest(), service_name="ClientNetNodeService",
-                                 types=types)
+            ServiceCore.Register(net=self, service=ServerNodeService("ServerNetNodeService", types))
+            RequestCore.Register(net=self, request=ClientNodeRequest("ClientNetNodeService", types))
 
             # 客户端
             from EtherealC.Core.Model.AbstractTypes import AbstractTypes
@@ -45,8 +43,10 @@ class WebSocketNet(Net):
             from EtherealC.Request import RequestCore
             from EtherealC.Net import NetCore
             from EtherealC.Net.Abstract.Net import NetType
+            from EtherealC.Net.WebSocket.WebSocketNet import WebSocketNet
             from EtherealC.Client import ClientCore
             from EtherealC.Client.Abstract import Client
+            from EtherealC.Client.WebSocket.WebSocketClient import WebSocketClient
             from EtherealS.Net.NetNode.NetNodeClient.Service.ClientNodeService import ClientNodeService
             from EtherealS.Net.NetNode.NetNodeClient.Request.ServerNodeRequest import ServerNodeRequest
             from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
@@ -58,25 +58,19 @@ class WebSocketNet(Net):
                 types.add(type=str, type_name="String")
                 types.add(type=bool, type_name="Bool")
                 types.add(type=type(NetNode()), type_name="NetNode")
-                net = NetCore.Register(net_name="NetNodeClient-{0}".format(prefixes), type=NetType.WebSocket)
+                net = NetCore.Register(WebSocketNet(name="NetNodeClient-{0}".format(prefixes)))
                 net.config.netNodeMode = False
                 clientNodeService: ClientNodeService = EtherealC.Service.ServiceCore.Register(net=net,
-                                                                                              service_name="ClientNetNodeService",
-                                                                                              types=types,
-                                                                                              config=config,
-                                                                                              instance=ClientNodeService())
+                                                                                              service=ClientNodeService(name="ClientNetNodeService",types=types))
                 clientNodeService.serverNodeRequest = EtherealC.Request.RequestCore.Register(net=net,
-                                                                                             service_name="ServerNetNodeService",
-                                                                                             types=types,
-                                                                                             config=config,
-                                                                                             instance=ServerNodeRequest())
+                                                                                             request=ServerNodeRequest(name="ServerNetNodeService",types=types))
                 net.log_event.register(self.OnLog)
                 net.exception_event.register(self.OnException)
             import threading
 
             def NetNodeSearchRunner():
                 from EtherealS.Net import NetCore as ServerNetCore
-                while ServerNetCore.Get(self.net_name) is not None:
+                while ServerNetCore.Get(self.name) is not None:
                     try:
                         for tuple in self.config.netNodeIps:
                             prefixes = tuple["prefixes"]
@@ -119,16 +113,16 @@ class WebSocketNet(Net):
             from EtherealS.Net.NetNode.Model.NetNode import NetNode
             node = NetNode()
             node.Prefixes.append(self.server.prefixes)
-            node.Name = self.net_name
+            node.Name = self.name
             for service in self.services.values():
                 from EtherealS.Net.NetNode.Model.ServiceNode import ServiceNode
                 serviceNode = ServiceNode()
-                serviceNode.name = service.service_name
+                serviceNode.name = service.name
                 node.Services[serviceNode.name] = serviceNode
             for request in self.requests.values():
                 from EtherealS.Net.NetNode.Model.RequestNode import RequestNode
                 requestNode = RequestNode()
-                requestNode.name = request.service_name
+                requestNode.name = request.name
                 node.Requests[requestNode.name] = requestNode
             serverNodeRequest.Register(node)
         else:
@@ -137,11 +131,11 @@ class WebSocketNet(Net):
 
     def ClientNodeConnectFail(self, client):
         from EtherealC.Client import ClientCore
-        ClientCore.UnRegister(net_name=client.net_name,service_name=client.service_name)
+        ClientCore.UnRegister(net_name=client.net_name, service_name=client.service_name)
 
     def ClientNodeDisConnect(self, client):
         from EtherealC.Client import ClientCore
         self.connectSign.set()
-        ClientCore.UnRegister(net_name=client.net_name,service_name=client.service_name)
+        ClientCore.UnRegister(net_name=client.net_name, service_name=client.service_name)
 
 

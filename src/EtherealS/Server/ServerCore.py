@@ -19,34 +19,21 @@ def Get(**kwargs):
         return None
 
 
-def Register(**kwargs) -> Server:
-    net: Net = kwargs.get("net")
-    prefixes = kwargs.get("prefixes")
-    create_method = kwargs.get("create_method")
-    if create_method is not None:
-        if net.type == NetType.WebSocket:
-            config = WebSocketServerConfig(create_method)
-        else:
-            raise TrackException(ExceptionCode.Core, "未有针对{0}的Server-Register处理".format(net.type))
-    else:
-        config = kwargs.get("config")
+def Register(net: Net, server: Server) -> Server:
     if net.server is None:
-        if net.type == NetType.WebSocket:
-            net.server = WebSocketServer(net_name=net.net_name, prefixes=prefixes, config=config)
-        else:
-            raise TrackException(ExceptionCode.Core, "未有针对{0}的Server-Register处理".format(net.type))
-
         def onLog(**kwargs):
             net.OnLog(**kwargs)
 
         def onException(**kwargs):
             net.OnException(**kwargs)
 
+        net.server = server
+        server.net_name = net.name
         net.server.log_event.Register(onLog)
         net.server.exception_event.Register(onException)
         return net.server
     else:
-        raise TrackException(ExceptionCode.Core, "{0} Net 已经拥有Server".format(net.net_name))
+        raise TrackException(ExceptionCode.Core, "{0} Net 已经拥有Server".format(net.name))
 
 
 def UnRegister(**kwargs):

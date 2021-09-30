@@ -18,6 +18,7 @@ class WebSocketBaseToken(BaseToken, WebSocketServerProtocol):
         super(BaseToken, self).__init__()
         super(WebSocketServerProtocol, self).__init__()
         self.prefixes = None
+        self.net_name = None
 
     def processHandshake(self):
         # only proceed when we have fully received the HTTP request line and all headers

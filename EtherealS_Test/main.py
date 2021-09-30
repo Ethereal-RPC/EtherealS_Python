@@ -1,5 +1,7 @@
 from numbers import Number
 
+from EtherealS.Net.WebSocket.WebSocketNet import WebSocketNet
+from EtherealS.Server.WebSocket.WebSocketServer import WebSocketServer
 from EtherealS_Test.User import User
 from EtherealS_Test.UserRequest import UserRequest
 from EtherealS_Test.UserService import UserService
@@ -49,17 +51,17 @@ def Single():
     types.add(type=str, type_name="String")
     types.add(type=bool, type_name="Bool")
     # 建立网关
-    net = NetCore.Register(net_name="demo", type=NetType.WebSocket)
+    net = NetCore.Register(WebSocketNet("demo"))
     net.exception_event.Register(OnException)
     net.log_event.Register(OnLog)
     # 注册服务
-    service = ServiceCore.Register(instance=UserService(), net=net, service_name="Server", types=types)
+    service = ServiceCore.Register(net=net, service=UserService("Server", types))
     # 注册请求
-    request = RequestCore.Register(net=net, instance=UserRequest(), service_name="Client", types=types)
+    request = RequestCore.Register(net=net, request=UserRequest("Server", types))
     # 突出Service为正常类
     service.userRequest = request
     # 注册连接
-    server = ServerCore.Register(net=net, prefixes=prefixes, create_method=CreateMethod)
+    server = ServerCore.Register(net=net, server=WebSocketServer(prefixes, CreateMethod))
     ips = list()
     net.Publish()
     print("服务器初始化完成....")
@@ -88,17 +90,17 @@ def NetNode():
     types.add(type=str, type_name="String")
     types.add(type=bool, type_name="Bool")
     # 建立网关
-    net = NetCore.Register(net_name="demo", type=NetType.WebSocket)
+    net = NetCore.Register(WebSocketNet("demo"))
     net.exception_event.Register(OnException)
     net.log_event.Register(OnLog)
     # 注册服务
-    service = ServiceCore.Register(net=net, instance=UserService(), service_name="Server", types=types)
+    service = ServiceCore.Register(net=net, service=UserService("Server", types))
     # 注册请求
-    request = RequestCore.Register(net=net, instance=UserRequest(), service_name="Client", types=types)
+    request = RequestCore.Register(net=net, request=UserRequest("Server", types))
     # 突出Service为正常类
     service.userRequest = request
     # 注册连接
-    server = ServerCore.Register(net=net, prefixes=prefixes, create_method=CreateMethod)
+    server = ServerCore.Register(net=net,server=WebSocketServer(prefixes,CreateMethod))
     ips = list()
     net.config.netNodeMode = True
     ips.append(dict(prefixes="127.0.0.1:28015/NetDemo/".replace("28015", "28015"), config=None))

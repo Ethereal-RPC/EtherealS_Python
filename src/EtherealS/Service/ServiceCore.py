@@ -19,16 +19,17 @@ def Get(**kwargs):
     return net.services.get(service_name, None)
 
 
-def Register(instance, net, service_name, types, config=None):
-    if net.services.get(service_name, None) is None:
+def Register(service: Service, net: Net):
+    if net.services.get(service.name, None) is None:
         from EtherealS.Service import Abstract
-        Abstract.Service.register(instance, net.net_name, service_name, types, config)
-        net.services[service_name] = instance
-        instance.log_event.Register(net.OnLog)
-        instance.exception_event.Register(net.OnException)
-        return instance
+        Abstract.Service.register(service)
+        service.net_name = net.name
+        net.services[service.name] = service
+        service.log_event.Register(net.OnLog)
+        service.exception_event.Register(net.OnException)
+        return service
     else:
-        raise TrackException(ExceptionCode.Core, "{0}-{1}Service已经注册".format(net.service_name, service_name))
+        raise TrackException(ExceptionCode.Core, "{0}-{1}Service已经注册".format(net.name, service_name))
 
 
 def UnRegister(**kwargs):

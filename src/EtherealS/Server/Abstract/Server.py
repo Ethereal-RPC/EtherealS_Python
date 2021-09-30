@@ -10,12 +10,14 @@ from EtherealS.Core.Event import Event
 
 class Server(ABC, WebSocketServerFactory):
 
-    def __init__(self, net_name, config: ServerConfig):
+    def __init__(self, prefixes, create_method, config):
         super().__init__()
         self.config = config
-        self.net_name = net_name
+        self.net_name = None
         self.exception_event = Event()
         self.log_event = Event()
+        self.prefixes = prefixes
+        self.create_method = create_method
 
     @abstractmethod
     def Start(self):

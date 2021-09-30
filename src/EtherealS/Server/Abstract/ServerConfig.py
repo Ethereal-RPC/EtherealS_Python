@@ -9,8 +9,7 @@ from EtherealS.Utils.JsonTool import JSONClientResponseModel
 
 class ServerConfig(ABC):
 
-    def __init__(self, create_method):
-        self.create_method = create_method
+    def __init__(self):
         self.auto_manage_token = True
         self.encode = "utf-8"
 
