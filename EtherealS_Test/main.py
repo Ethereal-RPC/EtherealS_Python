@@ -42,7 +42,8 @@ def Single():
         port = "28018"
     else:
         port = mode
-    prefixes = "ethereal://127.0.0.1:28015/NetDemo/".replace("28015", port)
+    prefixes = list()
+    prefixes.append("ethereal://127.0.0.1:28015/NetDemo/".replace("28015", port))
     print("Server-{0}".format(prefixes))
     types = AbstractTypes()
     types.add(type=int, type_name="Int")
@@ -57,12 +58,11 @@ def Single():
     # 注册服务
     service = ServiceCore.Register(net=net, service=UserService("Server", types))
     # 注册请求
-    request = RequestCore.Register(net=net, request=UserRequest("Server", types))
+    request = RequestCore.Register(net=net, request=UserRequest("Client", types))
     # 突出Service为正常类
     service.userRequest = request
     # 注册连接
     server = ServerCore.Register(net=net, server=WebSocketServer(prefixes, CreateMethod))
-    ips = list()
     net.Publish()
     print("服务器初始化完成....")
 
@@ -81,7 +81,8 @@ def NetNode():
         port = "28018"
     else:
         port = mode
-    prefixes = "ethereal://127.0.0.1:28015/NetDemo/".replace("28015", port)
+    prefixes = list()
+    prefixes.append("ethereal://127.0.0.1:28015/NetDemo/".replace("28015", port))
     print("Server-{0}".format(prefixes))
     types = AbstractTypes()
     types.add(type=int, type_name="Int")
@@ -96,11 +97,11 @@ def NetNode():
     # 注册服务
     service = ServiceCore.Register(net=net, service=UserService("Server", types))
     # 注册请求
-    request = RequestCore.Register(net=net, request=UserRequest("Server", types))
+    request = RequestCore.Register(net=net, request=UserRequest("Client", types))
     # 突出Service为正常类
     service.userRequest = request
     # 注册连接
-    server = ServerCore.Register(net=net,server=WebSocketServer(prefixes,CreateMethod))
+    server = ServerCore.Register(net=net,server=WebSocketServer(prefixes, CreateMethod))
     ips = list()
     net.config.netNodeMode = True
     ips.append(dict(prefixes="ethereal://127.0.0.1:28015/NetDemo/".replace("28015", "28015"), config=None))

@@ -8,14 +8,14 @@ from EtherealS.Request.WebSocket.WebSocketRequestConfig import WebSocketRequestC
 
 def Get(**kwargs):
     net_name = kwargs.get("net_name")
-    request_name = kwargs.get("request_name")
+    service_name = kwargs.get("service_name")
     if net_name is not None:
         net: Net = NetCore.Get(net_name)
     else:
         net: Net = kwargs.get("net")
     if net is None:
         return None
-    request = net.requests.get(request_name)
+    request = net.requests.get(service_name)
     if request is not None:
         return request
     return None

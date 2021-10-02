@@ -17,7 +17,7 @@ class ServerNodeService(WebSocketService):
 
     @Service()
     def Register(self, token: BaseToken, node: NetNode) -> bool:
-        token.key = "{0}-{1}".format(node.Name, node.Prefixes)
+        token.key = "{0}-{1}".format(node.Name, node.Prefixes[0])
         value = self.netNodes.get(token.key, None)
         if value is not None:
             old_token: BaseToken = value[0]

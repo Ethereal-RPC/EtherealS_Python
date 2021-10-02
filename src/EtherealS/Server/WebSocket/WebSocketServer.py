@@ -12,8 +12,9 @@ from EtherealS.Server.WebSocket.WebSocketServerConfig import WebSocketServerConf
 
 class WebSocketServer(Server, WebSocketServerFactory):
 
-    def __init__(self, prefixes, create_method):
-        super().__init__(prefixes=prefixes, create_method=create_method, config=WebSocketServerConfig())
+    def __init__(self, prefixes: list, create_method):
+        super().__init__(prefixes=prefixes, create_method=create_method)
+        self.config = WebSocketServerConfig()
         self.setProtocolOptions()
         self.protocol = self.getProtocol
 
@@ -29,7 +30,7 @@ class WebSocketServer(Server, WebSocketServerFactory):
     def Start(self):
         try:
             from twisted.internet import reactor
-            reactor.listenTCP(urlparse(self.prefixes.replace("ethereal://", "ws://")).port, self)
+            reactor.listenTCP(urlparse(self.prefixes[0].replace("ethereal://", "ws://")).port, self)
         except Exception as e:
             self.OnException(exception=TrackException(exception=e))
 

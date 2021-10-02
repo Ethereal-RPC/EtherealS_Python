@@ -20,7 +20,7 @@ class WebSocketNet(Net):
 
         import threading
         threading.Thread(target=reactorStart).start()
-
+        self.server.Start()
         if self.config.netNodeMode:
             # 服务端
             from EtherealS.Core.Model.AbstractTypes import AbstractTypes
@@ -42,7 +42,6 @@ class WebSocketNet(Net):
             from EtherealC.Service import ServiceCore
             from EtherealC.Request import RequestCore
             from EtherealC.Net import NetCore
-            from EtherealC.Net.Abstract.Net import NetType
             from EtherealC.Net.WebSocket.WebSocketNet import WebSocketNet
             from EtherealC.Client import ClientCore
             from EtherealC.Client.Abstract import Client
@@ -88,7 +87,6 @@ class WebSocketNet(Net):
                         self.connectSign.clear()
 
             threading.Thread(target=NetNodeSearchRunner).start()
-        self.server.Start()
         return True
 
     def ClientNodeConnectSuccess(self, client):
@@ -99,7 +97,7 @@ class WebSocketNet(Net):
         if serverNodeRequest is not None:
             from EtherealS.Net.NetNode.Model.NetNode import NetNode
             node = NetNode()
-            node.Prefixes.append(self.server.prefixes)
+            node.Prefixes = self.server.prefixes
             node.Name = self.name
             for service in self.services.values():
                 from EtherealS.Net.NetNode.Model.ServiceNode import ServiceNode

@@ -8,5 +8,5 @@ class NetConfig(ABC):
     def __init__(self):
         self.netNodeMode = False
         self.netNodeIps = None
-        self.netNodeHeartbeatCycle = 60000
+        self.netNodeHeartbeatCycle = 20000
 
