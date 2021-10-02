@@ -8,7 +8,6 @@ def Request(parameters=None, timeout=None, invokeType=None):
 
         annotation = RequestAnnotation()
         annotation.parameters = parameters
-        annotation.timeout = timeout
         if invokeType is not None:
             annotation.invokeType = invokeType
         Func.__doc__ = annotation
@@ -21,4 +20,5 @@ def Request(parameters=None, timeout=None, invokeType=None):
 
 class RequestAnnotation:
     def __init__(self):
+        self.parameters = None
         self.invokeType = InvokeTypeFlags.Remote

@@ -2,6 +2,7 @@ from abc import ABC
 from types import MethodType
 
 from EtherealS.Core.Model.AbstractType import AbstrackType
+from EtherealS.Core.Model.AbstractTypes import AbstractTypes
 from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
 from EtherealS.Core.Model.TrackLog import TrackLog
 from EtherealS.Request.Abstract.RequestConfig import RequestConfig
@@ -28,7 +29,7 @@ def register(instance):
 
                 if types.__len__() == 0 or not issubclass(types[0], BaseToken):
                     raise TrackException(code=ExceptionCode.Core, message=
-                    "{0}-{1}-{2}方法首参非BaseToken!".format(net_name, request_name,
+                    "{0}-{1}-{2}方法首参非BaseToken!".format(instance.net_name, instance.request_name,
                                                         func.__name__))
 
                 if annotation.parameters is None:
@@ -41,7 +42,7 @@ def register(instance):
                                                      .format(param.__name__))
                             method_id += "-" + rpc_type.name
                 else:
-                    for abstract_name in annotation.paramters:
+                    for abstract_name in annotation.parameters:
                         if instance.types.typesByName.get(abstract_name, None) is None:
                             raise TrackException(code=ExceptionCode.Core, message="对应的{0}抽象类型对应的实际类型尚未注册"
                                                  .format(abstract_name))
@@ -56,13 +57,14 @@ def register(instance):
 
 class Request(ABC):
 
-    def __init__(self, name, types):
+    def __init__(self):
         self.config = None
-        self.name = name
+        self.name = None
         self.net_name = None
         self.exception_event = Event()
         self.log_event = Event()
-        self.types = types
+        self.types = AbstractTypes()
+
 
     def OnLog(self, log: TrackLog = None, code=None, message=None):
         if log is None:

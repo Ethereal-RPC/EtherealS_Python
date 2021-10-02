@@ -16,7 +16,7 @@ class Server(ABC, WebSocketServerFactory):
         self.net_name = None
         self.exception_event = Event()
         self.log_event = Event()
-        self.prefixes = prefixes
+        self.prefixes: str = prefixes
         self.create_method = create_method
 
     @abstractmethod

@@ -15,7 +15,7 @@ class TrackException(Exception):
         super().__init__(code, message)
         self.code = ExceptionCode.Core
         self.message = message
-        self.exception = exception
+        self.exception: Exception = exception
         self.client = client
         self.net = net
         self.request = request

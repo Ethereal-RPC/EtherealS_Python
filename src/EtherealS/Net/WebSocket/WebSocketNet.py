@@ -50,22 +50,7 @@ class WebSocketNet(Net):
             from EtherealS.Net.NetNode.NetNodeClient.Service.ClientNodeService import ClientNodeService
             from EtherealS.Net.NetNode.NetNodeClient.Request.ServerNodeRequest import ServerNodeRequest
             from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
-            for item in self.config.netNodeIps:
-                prefixes = item["prefixes"]
-                config = item["config"]
-                types: AbstractTypes = AbstractTypes()
-                types.add(type=int, type_name="Int")
-                types.add(type=str, type_name="String")
-                types.add(type=bool, type_name="Bool")
-                types.add(type=type(NetNode()), type_name="NetNode")
-                net = NetCore.Register(WebSocketNet(name="NetNodeClient-{0}".format(prefixes)))
-                net.config.netNodeMode = False
-                clientNodeService: ClientNodeService = EtherealC.Service.ServiceCore.Register(net=net,
-                                                                                              service=ClientNodeService(name="ClientNetNodeService",types=types))
-                clientNodeService.serverNodeRequest = EtherealC.Request.RequestCore.Register(net=net,
-                                                                                             request=ServerNodeRequest(name="ServerNetNodeService",types=types))
-                net.log_event.register(self.OnLog)
-                net.exception_event.register(self.OnException)
+
             import threading
 
             def NetNodeSearchRunner():
@@ -77,23 +62,25 @@ class WebSocketNet(Net):
                             clientConfig = tuple["config"]
                             net = NetCore.Get("NetNodeClient-{0}".format(prefixes))
                             if net is None:
-                                raise TrackException(code=ExceptionCode.Runtime,
-                                                     message="未找到Net：NetNodeClient-{0}".format(prefixes))
-                            request = EtherealC.Request.RequestCore.Get(net=net,
-                                                                        service_name="ServerNetNodeService")
-                            if request is None:
-                                raise TrackException(code=ExceptionCode.Runtime,
-                                                     message="未找到Request：{0}-{1}".format(net.net_name,
-                                                                                         "ServerNetNodeService"))
-                            if request.client is not None:
-                                continue
+                                net = NetCore.Register(WebSocketNet(name="NetNodeClient-{0}".format(prefixes)))
+                                net.config.netNodeMode = False
+                                net.log_event.register(self.OnLog)
+                                net.exception_event.register(self.OnException)
+                            serverNodeRequest = EtherealC.Request.RequestCore.Get(net=net, service_name="ServerNetNodeService")
+                            if serverNodeRequest is None:
+                                serverNodeRequest = EtherealC.Request.RequestCore.Register(net=net, request=ServerNodeRequest())
+                            clientNodeService = EtherealC.Service.ServiceCore.Get(net=net, service_name="ClientNetNodeService")
+                            if clientNodeService is None:
+                                clientNodeService: ClientNodeService = EtherealC.Service.ServiceCore.Register(net=net, service=ClientNodeService())
 
-                            client: Client = ClientCore.Register(net=net, request=request, prefixes=prefixes,
-                                                                 config=clientConfig)
-                            client.connectSuccess_event.register(self.ClientNodeConnectSuccess)
-                            client.connectFail_event.register(self.ClientNodeConnectFail)
-                            client.disconnect_event.register(self.ClientNodeDisConnect)
-                            net.Publish()
+                            if serverNodeRequest.client is None:
+                                client: Client = ClientCore.Register(request=serverNodeRequest,client=WebSocketClient(prefixes))
+                                if clientConfig is not None:
+                                    client.config = clientConfig
+                                client.connectSuccess_event.register(self.ClientNodeConnectSuccess)
+                                client.connectFail_event.register(self.ClientNodeConnectFail)
+                                client.disconnect_event.register(self.ClientNodeDisConnect)
+                                net.Publish()
                     except Exception as e:
                         self.OnException(TrackException(code=ExceptionCode.Runtime, message=e.args, exception=e))
                     finally:

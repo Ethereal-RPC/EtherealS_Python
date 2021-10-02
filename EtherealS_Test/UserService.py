@@ -7,7 +7,9 @@ from EtherealS_Test.User import User
 
 class UserService(WebSocketService):
     def __init__(self, name, types):
-        super().__init__(name, types)
+        super().__init__()
+        self.name = name
+        self.types = types
         self.userRequest = None
 
     @Service.Service()

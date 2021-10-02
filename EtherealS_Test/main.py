@@ -1,5 +1,6 @@
 from numbers import Number
 
+from EtherealS.Core.Model.TrackException import TrackException
 from EtherealS.Net.WebSocket.WebSocketNet import WebSocketNet
 from EtherealS.Server.WebSocket.WebSocketServer import WebSocketServer
 from EtherealS_Test.User import User
@@ -13,8 +14,7 @@ from EtherealS.Request import RequestCore
 from EtherealS.Service import ServiceCore
 
 
-def OnException(**kwargs):
-    exception = kwargs.get("exception")
+def OnException(exception: TrackException):
     print(exception)
 
 
@@ -42,7 +42,7 @@ def Single():
         port = "28018"
     else:
         port = mode
-    prefixes = "127.0.0.1:28015/NetDemo/".replace("28015", port)
+    prefixes = "ethereal://127.0.0.1:28015/NetDemo/".replace("28015", port)
     print("Server-{0}".format(prefixes))
     types = AbstractTypes()
     types.add(type=int, type_name="Int")
@@ -81,7 +81,7 @@ def NetNode():
         port = "28018"
     else:
         port = mode
-    prefixes = "127.0.0.1:28015/NetDemo/".replace("28015", port)
+    prefixes = "ethereal://127.0.0.1:28015/NetDemo/".replace("28015", port)
     print("Server-{0}".format(prefixes))
     types = AbstractTypes()
     types.add(type=int, type_name="Int")
@@ -103,10 +103,10 @@ def NetNode():
     server = ServerCore.Register(net=net,server=WebSocketServer(prefixes,CreateMethod))
     ips = list()
     net.config.netNodeMode = True
-    ips.append(dict(prefixes="127.0.0.1:28015/NetDemo/".replace("28015", "28015"), config=None))
-    ips.append(dict(prefixes="127.0.0.1:28015/NetDemo/".replace("28015", "28016"), config=None))
-    ips.append(dict(prefixes="127.0.0.1:28015/NetDemo/".replace("28015", "28017"), config=None))
-    ips.append(dict(prefixes="127.0.0.1:28015/NetDemo/".replace("28015", "28018"), config=None))
+    ips.append(dict(prefixes="ethereal://127.0.0.1:28015/NetDemo/".replace("28015", "28015"), config=None))
+    ips.append(dict(prefixes="ethereal://127.0.0.1:28015/NetDemo/".replace("28015", "28016"), config=None))
+    ips.append(dict(prefixes="ethereal://127.0.0.1:28015/NetDemo/".replace("28015", "28017"), config=None))
+    ips.append(dict(prefixes="ethereal://127.0.0.1:28015/NetDemo/".replace("28015", "28018"), config=None))
     net.config.netNodeIps = ips
     net.Publish()
     print("服务器初始化完成....")

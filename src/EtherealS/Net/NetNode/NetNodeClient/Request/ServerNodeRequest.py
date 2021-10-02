@@ -4,8 +4,15 @@ from EtherealS.Net.NetNode.Model.NetNode import NetNode
 
 
 class ServerNodeRequest(WebSocketRequest):
-    def __init__(self,name,types):
-        super(ServerNodeRequest, self).__init__(name,types)
+    def __init__(self):
+        super().__init__()
+        self.name = "ServerNetNodeService"
+        self.types.add(type=int, type_name="Int")
+        self.types.add(type=str, type_name="String")
+        self.types.add(type=bool, type_name="Bool")
+        self.types.add(type=type(NetNode()), type_name="NetNode")
+
+
     @Request()
     def Register(self, node: NetNode) -> bool:
         pass

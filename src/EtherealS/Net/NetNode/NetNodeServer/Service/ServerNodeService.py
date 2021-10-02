@@ -9,7 +9,9 @@ from EtherealS.Service.WebSocket.WebSocketService import WebSocketService
 
 class ServerNodeService(WebSocketService):
     def __init__(self, name, types):
-        super().__init__(name, types)
+        super().__init__()
+        self.name = name
+        self.types = types
         self.netNodes = dict()
         self.random = random.Random()
 

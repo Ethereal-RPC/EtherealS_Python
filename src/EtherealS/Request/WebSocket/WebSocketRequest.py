@@ -9,8 +9,8 @@ from EtherealS.Server.Abstract.BaseToken import BaseToken
 
 class WebSocketRequest(Request):
 
-    def __init__(self, name, types):
-        super().__init__(name=name, types=types)
+    def __init__(self):
+        super().__init__()
         self.config = WebSocketRequestConfig()
 
     def getInvoke(self, func, method_id, annotation: RequestAnnotation):

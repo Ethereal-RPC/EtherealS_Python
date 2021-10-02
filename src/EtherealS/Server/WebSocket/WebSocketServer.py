@@ -29,7 +29,7 @@ class WebSocketServer(Server, WebSocketServerFactory):
     def Start(self):
         try:
             from twisted.internet import reactor
-            reactor.listenTCP(urlparse("ws://" + self.prefixes).port, self)
+            reactor.listenTCP(urlparse(self.prefixes.replace("ethereal://", "ws://")).port, self)
         except Exception as e:
             self.OnException(exception=TrackException(exception=e))
 
