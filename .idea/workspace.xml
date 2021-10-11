@@ -5,15 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4347f87-ef34-416b-9252-3ebe096a1668" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EtherealS_Test/UserService.py" beforeDir="false" afterPath="$PROJECT_DIR$/EtherealS_Test/UserService.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EtherealS_Test/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/EtherealS_Test/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/Abstract/NetConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/Abstract/NetConfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EtherealS_Test/User.py" beforeDir="false" afterPath="$PROJECT_DIR$/EtherealS_Test/User.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/guan-fang-wen-dang/untitled-1.md" beforeDir="false" afterPath="$PROJECT_DIR$/guan-fang-wen-dang/untitled-1.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Core/Model/ClientResponseModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Core/Model/ClientResponseModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/Abstract/Net.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/Abstract/Net.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/NetCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/NetCore.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/NetNode/NetNodeServer/Service/ServerNodeService.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/NetNode/NetNodeServer/Service/ServerNodeService.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/WebSocket/WebSocketNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/WebSocket/WebSocketNet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/Abstract/Request.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/Abstract/Request.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/Decorator/Request.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/Decorator/Request.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/RequestCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/RequestCore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketServer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/BaseToken.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Token.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketBaseToken.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketBaseToken.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/Abstract/Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/Abstract/Service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/Decorator/Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/Decorator/Service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/ServiceCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/ServiceCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Utils/JsonTool.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Utils/JsonTool.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +69,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../EtherealC_Python/dist/com-ethereal-client-0.1.2.tar.gz" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -72,11 +81,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python" />
       <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Net\NetNodeClient\Model" />
       <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Net" />
       <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Core\Model" />
       <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Service\WebSocket" />
-      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Service\Abstract" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\src\EtherealS" />
@@ -258,7 +267,9 @@
       <workItem from="1632982757195" duration="918000" />
       <workItem from="1632993013212" duration="5769000" />
       <workItem from="1633073533635" duration="445000" />
-      <workItem from="1633144405486" duration="17740000" />
+      <workItem from="1633144405486" duration="18069000" />
+      <workItem from="1633872825224" duration="4207000" />
+      <workItem from="1633918591783" duration="3280000" />
     </task>
     <task id="LOCAL-00001" summary="Net Request Server Model 四个部分完成&#10;还缺NativeServer">
       <created>1617889941782</created>
@@ -435,7 +446,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633158486603</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="1.通过了混合编程NetNode测试！">
+      <created>1633174197615</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1633174197615</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -485,7 +503,8 @@
     <MESSAGE value="Request首参检测" />
     <MESSAGE value="第五轮大型重构" />
     <MESSAGE value="1.通过了NetNode测试&#10;2.增加了协议头ethereal://" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.通过了NetNode测试&#10;2.增加了协议头ethereal://" />
+    <MESSAGE value="1.通过了混合编程NetNode测试！" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.通过了混合编程NetNode测试！" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

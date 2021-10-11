@@ -9,6 +9,7 @@ from EtherealS.Core.Model.TrackLog import TrackLog
 from EtherealS.Core.Model.AbstractType import AbstrackType
 from EtherealS.Server.Abstract import Server
 from EtherealS.Net.Abstract.NetConfig import NetConfig
+from EtherealS.Server.Abstract.Token import Token
 from EtherealS.Service.Abstract.Service import Service
 from EtherealS.Core.Event import Event
 
@@ -36,35 +37,30 @@ class Net(ABC):
             method: classmethod = service.methods.get(request.MethodId, None)
             if method is not None:
                 if self.OnInterceptor(service, method, token) and service.OnInterceptor(self, method, token):
-                    params_id = request.MethodId.split("-")
-                    for i in range(1, params_id.__len__()):
-                        rpc_type: AbstrackType = service.types.typesByName.get(params_id[i], None)
-                        if rpc_type is None:
-                            return ClientResponseModel(result=None, result_type=None, request_id=request.Id,
-                                                       service=service,
-                                                       error=Error(code=ErrorCode.NotFoundService,
-                                                                   message="RPC中的{0}类型中尚未被注册".format(params_id[i])))
-                        request.Params[i] = rpc_type.deserialize(request.Params[i])
-                    if method.__annotations__.get("return") is not None:
-                        params = list(method.__annotations__.values())[:-1:]
-                    if params.__len__() == request.Params.__len__():
-                        request.Params[0] = token
-                    elif request.Params.__len__() > 1:
-                        request.Params = request.Params[1::]
-                    result = method.__call__(*request.Params)
+                    parameters = list()
+                    parameterInfos = list(method.__annotations__.values())[:-1:]
+                    i = 0
+                    for parameterInfo in parameterInfos:
+                        if issubclass(parameterInfo, Token):
+                            parameters.append(token)
+                        else:
+                            abstractType: AbstrackType = service.types.typesByType.get(parameterInfo, None)
+                            parameters.append(abstractType.deserialize(request.Params[i]))
+                            i = i + 1
+                    result = method.__call__(*parameters)
                     return_type = method.__annotations__.get('return', None)
                     rpc_type = service.types.typesByType.get(return_type, None)
-                    response = ClientResponseModel(result=rpc_type.serialize(result), result_type=rpc_type.name,
+                    response = ClientResponseModel(result=rpc_type.serialize(result),
                                                    request_id=request.Id,
                                                    service=request.Service, error=None)
                     return response
             else:
-                return ClientResponseModel(result=None, result_type=None, request_id=request.Id, service=service,
+                return ClientResponseModel(result=None, request_id=request.Id, service=service,
                                            error=Error(code=ErrorCode.NotFoundService,
                                                        message="未找到方法{0}-{1}-{2}".format(self.name, request.Service,
                                                                                          request.MethodId)))
         else:
-            return ClientResponseModel(result=None, result_type=None, request_id=request.Id, service=service,
+            return ClientResponseModel(result=None, request_id=request.Id, service=service,
                                        error=Error(code=ErrorCode.NotFoundService,
                                                    message="未找到服务{0}-{1}".format(self.name, request.Service)))
 

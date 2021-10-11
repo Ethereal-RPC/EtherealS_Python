@@ -2,7 +2,7 @@ import random
 
 from EtherealS.Net.NetNode.Model.NetNode import NetNode
 
-from EtherealS.Server.Abstract.BaseToken import BaseToken
+from EtherealS.Server.Abstract.Token import Token
 from EtherealS.Service.Decorator.Service import Service
 from EtherealS.Service.WebSocket.WebSocketService import WebSocketService
 
@@ -16,11 +16,11 @@ class ServerNodeService(WebSocketService):
         self.random = random.Random()
 
     @Service()
-    def Register(self, token: BaseToken, node: NetNode) -> bool:
+    def Register(self, token: Token, node: NetNode) -> bool:
         token.key = "{0}-{1}".format(node.Name, node.Prefixes[0])
         value = self.netNodes.get(token.key, None)
         if value is not None:
-            old_token: BaseToken = value[0]
+            old_token: Token = value[0]
             old_token.disconnect_event.UnRegister(self.Sender_DisConnectEvent)
         self.netNodes[token.key] = (token, node)
         token.disconnect_event.Register(self.Sender_DisConnectEvent)
@@ -29,7 +29,7 @@ class ServerNodeService(WebSocketService):
         return True
 
     @Service()
-    def GetNetNode(self,token: BaseToken, service_name: str) -> NetNode:
+    def GetNetNode(self, token: Token, service_name: str) -> NetNode:
         nodes = list()
         for item in self.netNodes.values():
             node: NetNode = item[1]

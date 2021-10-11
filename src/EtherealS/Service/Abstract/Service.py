@@ -6,45 +6,30 @@ from EtherealS.Core.Model.AbstractTypes import AbstractTypes
 from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
 from EtherealS.Core.Model.TrackLog import TrackLog
 from EtherealS.Extension.Authority.IAuthoritable import IAuthoritable
-from EtherealS.Service.Abstract import ServiceConfig
 from EtherealS.Core import Event
-from EtherealS.Service.Decorator.Service import ServiceAnnotation
 
 
 def register(service):
-    if service.config.authoritable and issubclass(service, IAuthoritable) is False:
-        raise TrackException(code=ExceptionCode.Runtime, message="%s服务已开启权限系统，但尚未实现权限接口".format(service.__name__))
     for method_name in dir(service):
         func = getattr(service, method_name)
-        if isinstance(func.__doc__, ServiceAnnotation):
-            assert isinstance(func, MethodType)
+        from EtherealS.Service.Decorator.Service import Service
+        if isinstance(func.__doc__, Service):
             method_id = func.__name__
-            if func.__doc__.paramters is None:
-
-                if func.__annotations__.get("return") is not None:
-                    params = list(func.__annotations__.values())[:-1:]
-                else:
-                    raise TrackException(code=ExceptionCode.Core,
-                                         message="%s-%s方法中的返回值未定义！".format(net_name, func.__name__))
-                start = 0
-                from EtherealS.Server.WebSocket.WebSocketBaseToken import WebSocketBaseToken
-                if params.__len__() > 0 and isinstance(params[0], type(WebSocketBaseToken)):
-                    start = 1
-                for param in params[start::]:
-                    rpc_type: AbstrackType = service.types.typesByType.get(param, None)
-                    if rpc_type is not None:
-                        method_id = method_id + "-" + rpc_type.name
-                    else:
-                        raise TrackException(code=ExceptionCode.Core, message="{name}方法中的{param}类型参数尚未注册"
-                                             .format(name=func.__name__, param=param.__name__))
+            if func.__annotations__.get("return") is not None:
+                parameterInfos = list(func.__annotations__.values())[:-1:]
             else:
-                for param in func.__doc__.paramters:
-                    rpc_type: AbstrackType = service.types.abstractType.get(type(param), None)
-                    if rpc_type is not None:
-                        method_id = method_id + "-" + rpc_type.name
-                    else:
-                        raise TrackException(code=ExceptionCode.Core,
-                                             message="%s方法中的%s抽象类型参数尚未注册".format(func.__name__, param))
+                raise TrackException(code=ExceptionCode.Core,
+                                     message="%s-%s方法中的返回值未定义！".format(service, func.__name__))
+            from EtherealS.Server.Abstract.Token import Token
+            for parameterInfo in parameterInfos:
+                if issubclass(parameterInfo, Token):
+                    continue
+                else:
+                    abstractType: AbstrackType = service.types.typesByType.get(parameterInfo, None)
+                    if abstractType is None:
+                        raise TrackException(code=ExceptionCode.Core, message="对应的{0}类型的抽象类型尚未注册"
+                                             .format(parameterInfo))
+                    method_id += "-" + abstractType.name
             if service.methods.get(method_id, None) is not None:
                 raise TrackException(code=ExceptionCode.Core, message="服务方法{name}已存在，无法重复注册！".format(name=method_id))
             service.methods[method_id] = func
@@ -60,7 +45,6 @@ class Service(ABC):
         self.log_event: Event = Event.Event()
         self.interceptorEvent = list()
         self.types = AbstractTypes()
-
 
     def OnLog(self, log: TrackLog = None, code=None, message=None):
         if log is None:

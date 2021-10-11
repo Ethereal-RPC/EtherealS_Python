@@ -1,19 +1,14 @@
 import EtherealS.Request.RequestCore
 import EtherealS.Service.ServiceCore
-from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
-from EtherealS.Net.Abstract.Net import Net, NetType
-from EtherealS.Net.Abstract.NetConfig import NetConfig
-from EtherealS.Net.WebSocket.WebSocketNet import WebSocketNet
-from EtherealS.Net.WebSocket.WebSocketNetConfig import WebSocketNetConfig
 
 nets = dict()
 
 
-def Get(name) -> Net:
+def Get(name):
     return nets.get(name)
 
 
-def Register(net: Net) -> Net:
+def Register(net):
     if nets.get(net.name, None) is None:
         nets[net.name] = net
     else:

@@ -7,15 +7,15 @@ from EtherealS.Core.Model.Error import Error, ErrorCode
 from EtherealS.Core.Model.TrackLog import LogCode
 from EtherealS.Core.Model import ServerRequestModel
 from EtherealS.Net import NetCore
-from EtherealS.Server.Abstract.BaseToken import BaseToken
+from EtherealS.Server.Abstract.Token import Token
 
 
-class WebSocketBaseToken(BaseToken, WebSocketServerProtocol):
+class WebSocketToken(Token, WebSocketServerProtocol):
     def serialize(self):
         return None
 
     def __init__(self):
-        super(BaseToken, self).__init__()
+        super(Token, self).__init__()
         super(WebSocketServerProtocol, self).__init__()
         self.prefixes = None
         self.net_name = None
@@ -102,7 +102,7 @@ class WebSocketBaseToken(BaseToken, WebSocketServerProtocol):
         if request is not None:
             request_id = request.Id
             service_name = request.Service
-        response = ClientResponseModel(result=None, result_type=None, request_id=request_id,
+        response = ClientResponseModel(result=None,request_id=request_id,
                                        service=service_name, error=error)
         self.SendClientResponse(response)
 
@@ -129,7 +129,7 @@ class WebSocketBaseToken(BaseToken, WebSocketServerProtocol):
         if request is not None:
             request_id = request.Id
             service = request.Service
-        response = ClientResponseModel(result=None, result_type=None, request_id=request_id,
+        response = ClientResponseModel(result=None,request_id=request_id,
                                        service=service, error=error)
         self.__SendHttp(response)
 

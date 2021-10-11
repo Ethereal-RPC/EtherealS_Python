@@ -5,11 +5,10 @@ from EtherealS.Core.Model.TrackException import TrackException
 from EtherealS.Core.Model.TrackLog import TrackLog
 from EtherealS.Core.Model import ServerRequestModel
 from EtherealS.Net import NetCore
-from EtherealS.Net.Abstract.Net import Net
 from EtherealS.Core.Event import Event
 
 
-class BaseToken(ABC):
+class Token(ABC):
     def __init__(self):
         super().__init__()
         self.key = None
@@ -21,6 +20,7 @@ class BaseToken(ABC):
         self.disconnect_event = Event()
 
     def Register(self, replace=False):
+        from EtherealS.Net.Abstract.Net import Net
         net: Net = NetCore.Get(self.net_name)
         tokens = net.tokens
         if tokens is not None:
@@ -31,6 +31,7 @@ class BaseToken(ABC):
             return True
 
     def UnRegister(self):
+        from EtherealS.Net.Abstract.Net import Net
         net: Net = NetCore.Get(self.net_name)
         tokens = net.tokens
         if tokens.get(self.key, None) is not None:
@@ -38,11 +39,13 @@ class BaseToken(ABC):
         return True
 
     def GetTokens(self):
+        from EtherealS.Net.Abstract.Net import Net
         net: Net = NetCore.Get(self.net_name)
         tokens = net.tokens
         return tokens
 
     def GetToken(self, key):
+        from EtherealS.Net.Abstract.Net import Net
         net: Net = NetCore.Get(self.net_name)
         tokens = net.tokens
         return tokens.get(key, None)

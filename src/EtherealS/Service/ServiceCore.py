@@ -1,13 +1,10 @@
 from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
 from EtherealS.Net import NetCore
-from EtherealS.Net.Abstract.Net import Net, NetType
 from EtherealS.Service.Abstract.Service import Service
-from EtherealS.Service.Abstract.ServiceConfig import ServiceConfig
-from EtherealS.Service.WebSocket.WebSocketService import WebSocketService
-from EtherealS.Service.WebSocket.WebSocketServiceConfig import WebSocketServiceConfig
 
 
 def Get(**kwargs):
+    from EtherealS.Net.Abstract.Net import Net
     net_name = kwargs.get("net_name")
     service_name = kwargs.get("service_name")
     if net_name is not None:
@@ -19,7 +16,7 @@ def Get(**kwargs):
     return net.services.get(service_name, None)
 
 
-def Register(service: Service, net: Net):
+def Register(service: Service, net):
     if net.services.get(service.name, None) is None:
         from EtherealS.Service import Abstract
         Abstract.Service.register(service)
@@ -29,10 +26,11 @@ def Register(service: Service, net: Net):
         service.exception_event.Register(net.OnException)
         return service
     else:
-        raise TrackException(ExceptionCode.Core, "{0}-{1}Service已经注册".format(net.name, service_name))
+        raise TrackException(ExceptionCode.Core, "{0}-{1}Service已经注册".format(net.name, service.name))
 
 
 def UnRegister(**kwargs):
+    from EtherealS.Net.Abstract.Net import Net
     net_name = kwargs.get("net_name")
     service_name = kwargs.get("service_name")
     if net_name is not None:

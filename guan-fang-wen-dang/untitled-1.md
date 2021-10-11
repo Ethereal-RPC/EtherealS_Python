@@ -287,10 +287,10 @@ BaseToken内含有唯一Key值属性，Ethereal通过用户给予的Key值属性
 
 ```text
 [Service]
-public bool Login(BaseToken token, string username,string password)
+public bool Login(Token token, string username,string password)
 {
     token.Key = username;//为该token设置键值属性
-    BaseToken.Register();//将token注册，受Ethereal管理其生命周期
+    Token.Register();//将token注册，受Ethereal管理其生命周期
 }
 ```
 
@@ -300,7 +300,7 @@ public bool Login(BaseToken token, string username,string password)
 public class ServerService
 {
     [Service]
-    public int Add(BaseToken token,int a,int b)
+    public int Add(Token token,int a,int b)
     {
         return a + b;
     }
@@ -461,7 +461,7 @@ public bool SendSay(User user, long recevier_key, string message)
     }
     else return false;
 }
-public class User:BaseToken,IAuthorityCheck
+public class User:Token,IAuthorityCheck
 {
     public bool Check(IAuthoritable authoritable){
         if(this.Authority >= authoritable.Authority)return true;
@@ -470,13 +470,13 @@ public class User:BaseToken,IAuthorityCheck
 }
 ```
 
-1. `BaseToken`类实现`IAuthorityCheck`接口，实现权限检查函数
+1. `Token`类实现`IAuthorityCheck`接口，实现权限检查函数
 2. 在方法注解中设置添加authority参数：`[Service(authority = 3)]`，这里3就是提供的权限信息
 3. 在拦截器中添加Ethereal权限检查函数
 
    `service.InterceptorEvent += Extension.Authority.AuthorityCheck.ServiceCheck;`
 
-   等待收到请求到达该方法，Ethereal会主动调用`BaseToken`类实现`IAuthorityCheck`接口中的Check函数，具体权限判断逻辑，用户可以根据自己的情况自行设计，最简单的就是大于该等级，即可通过。
+   等待收到请求到达该方法，Ethereal会主动调用`Token`类实现`IAuthorityCheck`接口中的Check函数，具体权限判断逻辑，用户可以根据自己的情况自行设计，最简单的就是大于该等级，即可通过。
 
 ## 关于我们
 

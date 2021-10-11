@@ -1,9 +1,9 @@
-from EtherealS.Server.WebSocket.WebSocketBaseToken import WebSocketBaseToken
+from EtherealS.Server.WebSocket.WebSocketBaseToken import WebSocketToken
 
 
-class User(WebSocketBaseToken):
+class User(WebSocketToken):
     def __init__(self):
-        super(WebSocketBaseToken, self).__init__()
+        super(WebSocketToken, self).__init__()
         self.id = -1
         self.username = None
 

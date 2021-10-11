@@ -7,8 +7,8 @@ from EtherealS.Core.Model.Error import Error
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, obj):
-        from EtherealS.Server.Abstract.BaseToken import BaseToken
-        if isinstance(obj, BaseToken):
+        from EtherealS.Server.Abstract.Token import Token
+        if isinstance(obj, Token):
             return obj.serialize()
         else:
             d = {}
