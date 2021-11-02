@@ -1,3 +1,5 @@
+from abc import ABC
+
 from EtherealS.Core.Model.AbstractType import AbstrackType
 from EtherealS.Core.Model.ServerRequestModel import ServerRequestModel
 from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
@@ -6,7 +8,7 @@ from EtherealS.Request.WebSocket.WebSocketRequestConfig import WebSocketRequestC
 from EtherealS.Server.Abstract.Token import Token
 
 
-class WebSocketRequest(Request):
+class WebSocketRequest(Request, ABC):
 
     def __init__(self):
         super().__init__()

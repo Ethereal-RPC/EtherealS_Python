@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="com-ethereal-server",
-    version="0.0.1",
+    version="0.0.2",
     author="BaiYang",
     author_email="839336369@qq.com",
     description="Ethereal PythonServer",

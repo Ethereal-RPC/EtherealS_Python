@@ -114,7 +114,7 @@ def NetNode():
 
 
 if __name__ == '__main__':
-    # Single()
-    NetNode()
+    Single()
+    # NetNode()
 
 

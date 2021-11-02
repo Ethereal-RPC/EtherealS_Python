@@ -12,8 +12,8 @@ from EtherealS.Core import Event
 def register(service):
     for method_name in dir(service):
         func = getattr(service, method_name)
-        from EtherealS.Service.Decorator.Service import Service
-        if isinstance(func.__doc__, Service):
+        from EtherealS.Service.Decorator.ServiceMethod import ServiceMethod
+        if isinstance(func.__doc__, ServiceMethod):
             method_id = func.__name__
             if func.__annotations__.get("return") is not None:
                 parameterInfos = list(func.__annotations__.values())[:-1:]
@@ -63,3 +63,11 @@ class Service(ABC):
             if not item.__call__(net, self, method, token):
                 return False
         return True
+
+    @abstractmethod
+    def Initialize(self):
+        pass
+
+    @abstractmethod
+    def UnInitialize(self):
+        pass

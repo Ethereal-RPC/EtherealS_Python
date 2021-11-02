@@ -32,7 +32,7 @@ class Net(ABC):
         self.type = None
 
     def ClientRequestReceiveProcess(self, token, request: ClientRequestModel):
-        service: Service = self.services.get(request.Service)
+        service: Service = self.services.get(request.ServiceMethod)
         if service is not None:
             method: classmethod = service.methods.get(request.MethodId, None)
             if method is not None:
@@ -52,17 +52,17 @@ class Net(ABC):
                     rpc_type = service.types.typesByType.get(return_type, None)
                     response = ClientResponseModel(result=rpc_type.serialize(result),
                                                    request_id=request.Id,
-                                                   service=request.Service, error=None)
+                                                   service=request.ServiceMethod, error=None)
                     return response
             else:
                 return ClientResponseModel(result=None, request_id=request.Id, service=service,
                                            error=Error(code=ErrorCode.NotFoundService,
-                                                       message="未找到方法{0}-{1}-{2}".format(self.name, request.Service,
+                                                       message="未找到方法{0}-{1}-{2}".format(self.name, request.ServiceMethod,
                                                                                          request.MethodId)))
         else:
             return ClientResponseModel(result=None, request_id=request.Id, service=service,
                                        error=Error(code=ErrorCode.NotFoundService,
-                                                   message="未找到服务{0}-{1}".format(self.name, request.Service)))
+                                                   message="未找到服务{0}-{1}".format(self.name, request.ServiceMethod)))
 
     @abstractmethod
     def Publish(self):

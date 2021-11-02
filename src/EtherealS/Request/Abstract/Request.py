@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from types import MethodType
 
 from EtherealS.Core.Model.AbstractType import AbstrackType
@@ -10,13 +10,13 @@ from EtherealS.Core.Event import Event
 
 
 def register(instance):
-    from EtherealS.Request.Decorator.Request import Request
+    from EtherealS.Request.Decorator.RequestMethod import RequestMethod
     from EtherealS.Core.Model.TrackException import ExceptionCode, TrackException
     from EtherealS.Server.Abstract.Token import Token
     for method_name in dir(instance):
         func = getattr(instance, method_name)
-        if isinstance(func.__doc__, Request):
-            annotation: Request = func.__doc__
+        if isinstance(func.__doc__, RequestMethod):
+            annotation: RequestMethod = func.__doc__
             if annotation is not None:
                 invoke = instance.getInvoke(func=func, annotation=annotation)
                 invoke.__annotations__ = func.__annotations__
@@ -47,3 +47,10 @@ class Request(ABC):
         exception.server = self
         self.exception_event.OnEvent(exception=exception)
 
+    @abstractmethod
+    def Initialize(self):
+        pass
+
+    @abstractmethod
+    def UnInitialize(self):
+        pass

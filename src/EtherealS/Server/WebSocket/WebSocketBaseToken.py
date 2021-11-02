@@ -37,7 +37,7 @@ class WebSocketToken(Token, WebSocketServerProtocol):
             except Exception as e:
                 return self.failHandshake("Error during parsing of HTTP status line / request headers : {0}".format(e))
 
-            # HTTP Request line : METHOD, VERSION
+            # HTTP RequestMethod line : METHOD, VERSION
             #
             rl = http_status_line.split()
             if rl[0].strip() == "POST":
@@ -101,7 +101,7 @@ class WebSocketToken(Token, WebSocketServerProtocol):
         error.Message = message
         if request is not None:
             request_id = request.Id
-            service_name = request.Service
+            service_name = request.ServiceMethod
         response = ClientResponseModel(result=None,request_id=request_id,
                                        service=service_name, error=error)
         self.SendClientResponse(response)

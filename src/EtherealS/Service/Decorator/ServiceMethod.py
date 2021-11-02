@@ -1,10 +1,8 @@
-from EtherealS.Request.Decorator import InvokeTypeFlags
+class ServiceMethod:
 
-
-class Service:
     def __init__(self):
-        pass
-    
+        self.timeout = -1
+
     def __call__(self, func):
         func.__doc__ = self
         return func
