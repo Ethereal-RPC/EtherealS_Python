@@ -28,7 +28,7 @@ def Register(net: Net, server: Server) -> Server:
             net.OnException(**kwargs)
 
         net.server = server
-        server.net_name = net.name
+        server.net = net
         net.server.log_event.Register(onLog)
         net.server.exception_event.Register(onException)
         return net.server
@@ -36,13 +36,8 @@ def Register(net: Net, server: Server) -> Server:
         raise TrackException(ExceptionCode.Core, "{0} Net 已经拥有Server".format(net.name))
 
 
-def UnRegister(**kwargs):
-    net_name = kwargs.get("net_name")
-    if net_name is not None:
-        net = NetCore.Get(net_name)
-    else:
-        net = kwargs.get("net")
-    if net.server is not None:
-        net.server.Close()
-        net.server = None
+def UnRegister(server: Server):
+    server.net.server = None
+    server.net = None
+    server.Close()
     return True

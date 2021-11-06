@@ -30,7 +30,7 @@ class Request(ABC):
     def __init__(self):
         self.config = None
         self.name = None
-        self.net_name = None
+        self.net = None
         self.exception_event = Event()
         self.log_event = Event()
         self.types = AbstractTypes()

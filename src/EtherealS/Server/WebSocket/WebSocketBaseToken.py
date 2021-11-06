@@ -43,16 +43,11 @@ class WebSocketToken(Token, WebSocketServerProtocol):
             if rl[0].strip() == "POST":
                 self.__OnConnect()
                 request = self.config.clientRequestModelDeserialize(body)
-                net = NetCore.Get(self.net_name)
                 if request is None:
                     self.__SendHttpError(request=request, code=ErrorCode.Common, message="RPC请求体格式错误")
                     return
-                if net is None:
-                    self.__SendHttpError(request=request, code=ErrorCode.Common,
-                                         message="{0}找不到Net".format(self.net_name))
-                    return
                 try:
-                    result = net.ClientRequestReceiveProcess(self, request)
+                    result = self.net.ClientRequestReceiveProcess(self, request)
                     self.__SendHttp(result)
                 except Exception as e:
                     self.__SendHttpError(request=request, code=ErrorCode.Common, message="异常:\n".join(e.args))
@@ -75,12 +70,8 @@ class WebSocketToken(Token, WebSocketServerProtocol):
             if request is None:
                 self.SendErrorResponse(request=request, code=ErrorCode.Common, message="RPC请求体格式错误")
                 return
-            net = NetCore.Get(self.net_name)
-            if net is None:
-                self.SendErrorResponse(request=request, code=ErrorCode.Common,
-                                       message="{0}找不到Net".format(self.net_name))
             try:
-                result = net.ClientRequestReceiveProcess(self, request)
+                result = self.net.ClientRequestReceiveProcess(self, request)
                 self.SendClientResponse(result)
             except Exception as e:
                 self.SendErrorResponse(request=request, code=ErrorCode.Common, message="异常:\n".join(e.args))
@@ -101,7 +92,7 @@ class WebSocketToken(Token, WebSocketServerProtocol):
         error.Message = message
         if request is not None:
             request_id = request.Id
-            service_name = request.ServiceMethod
+            service_name = request.Service
         response = ClientResponseModel(result=None,request_id=request_id,
                                        service=service_name, error=error)
         self.SendClientResponse(response)

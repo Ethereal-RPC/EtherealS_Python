@@ -13,7 +13,7 @@ class Server(ABC, WebSocketServerFactory):
     def __init__(self, prefixes, create_method):
         super().__init__()
         self.config = None
-        self.net_name = None
+        self.net = None
         self.exception_event = Event()
         self.log_event = Event()
         self.prefixes: list = prefixes

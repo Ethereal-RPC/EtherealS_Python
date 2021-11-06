@@ -40,7 +40,7 @@ class WebSocketRequest(Request, ABC):
                 request = ServerRequestModel(method_id=method_id, params=params, service=self.name)
                 if token is None:
                     raise TrackException(code=ExceptionCode.Core, message="{0}-{1}-{2}方法Token为None!"
-                                         .format(self.net_name, self.name, func.__name__))
+                                         .format(self.net.name, self.name, func.__name__))
                 token.SendServerRequest(request)
                 if (annotation.invokeType & InvokeTypeFlags.All) == 0:
                     localResult = func(*args, **kwargs)

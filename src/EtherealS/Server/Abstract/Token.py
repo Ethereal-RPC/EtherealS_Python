@@ -13,7 +13,7 @@ class Token(ABC):
         super().__init__()
         self.key = None
         self.config = None
-        self.net_name = None
+        self.net = None
         self.exception_event = Event()
         self.log_event = Event()
         self.connect_event = Event()

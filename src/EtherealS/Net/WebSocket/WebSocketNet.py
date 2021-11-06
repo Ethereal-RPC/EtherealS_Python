@@ -1,6 +1,3 @@
-import EtherealC.Service.ServiceCore
-
-from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
 from EtherealS.Net.Abstract.Net import Net
 from EtherealS.Net.WebSocket.WebSocketNetConfig import WebSocketNetConfig
 

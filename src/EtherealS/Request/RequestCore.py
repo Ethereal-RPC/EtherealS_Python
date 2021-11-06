@@ -23,7 +23,7 @@ def Register(request: Request, net):
     if net.requests.get(request.name, None) is None:
         from EtherealS.Request import Abstract
         Abstract.Request.register(net)
-        request.net_name = net.name
+        request.net = net
         net.requests[request.name] = request
         request.log_event.Register(net.OnLog)
         request.exception_event.Register(net.OnException)
@@ -32,15 +32,8 @@ def Register(request: Request, net):
     return request
 
 
-def UnRegister(**kwargs):
-    from EtherealS.Net.Abstract.Net import Net
-    net_name = kwargs.get("net_name")
-    service_name = kwargs.get("service_name")
-    if net_name is not None:
-        net: Net = NetCore.Get(net_name)
-    else:
-        net: Net = kwargs.get("net")
-    if net is not None:
-        if net.requests.get(service_name, None) is not None:
-            del net.requests[service_name]
+def UnRegister(request: Request):
+    if request.net.requests.get(request.name, None) is not None:
+        del request.net.requests[request.name]
+    request.net = None
     return True

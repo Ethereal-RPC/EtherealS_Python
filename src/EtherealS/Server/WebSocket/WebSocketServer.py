@@ -21,7 +21,7 @@ class WebSocketServer(Server, WebSocketServerFactory):
     def getProtocol(self):
         token = self.create_method()
         token.config = self.config
-        token.net_name = self.net_name
+        token.net = self.net
         token.prefixes = self.prefixes
         token.log_event.Register(self.OnLog)
         token.exception_event.Register(self.OnException)

@@ -7,6 +7,18 @@
     <list default="true" id="c4347f87-ef34-416b-9252-3ebe096a1668" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EtherealS_Test/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/EtherealS_Test/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/Abstract/Net.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/Abstract/Net.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/WebSocket/WebSocketNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/WebSocket/WebSocketNet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/Abstract/Request.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/Abstract/Request.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/RequestCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/RequestCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Token.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Token.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/ServerCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/ServerCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketBaseToken.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketBaseToken.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketServer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/Abstract/Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/Abstract/Service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/ServiceCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/ServiceCore.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +90,7 @@
       <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Net\Abstract" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.setup">
+  <component name="RunManager" selected="Python.main">
     <configuration name="Server" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EtherealS" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -149,9 +161,6 @@
       <module name="EtherealS" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/EtherealS_Test" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -213,8 +222,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.setup" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.setup" />
         <item itemvalue="Python.Server" />
         <item itemvalue="Python.Service" />
         <item itemvalue="Python.test1" />
@@ -284,7 +293,8 @@
       <workItem from="1635484671145" duration="786000" />
       <workItem from="1635844821810" duration="1192000" />
       <workItem from="1635846540344" duration="11000" />
-      <workItem from="1635846654085" duration="31000" />
+      <workItem from="1635846654085" duration="68000" />
+      <workItem from="1636183033261" duration="995000" />
     </task>
     <task id="LOCAL-00001" summary="Net Request Server Model 四个部分完成&#10;还缺NativeServer">
       <created>1617889941782</created>
@@ -482,7 +492,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635845641585</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="1.清理耦合的NetNode">
+      <created>1635846705297</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1635846705297</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -535,7 +552,8 @@
     <MESSAGE value="1.通过了混合编程NetNode测试！" />
     <MESSAGE value="1.更改了识参方式" />
     <MESSAGE value="1.Annotation分离出类和方法&#10;2.增设服务和请求类的Init\UnInit&#10;3.将NetNode分离，为后续Plugin开发做准备" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.Annotation分离出类和方法&#10;2.增设服务和请求类的Init\UnInit&#10;3.将NetNode分离，为后续Plugin开发做准备" />
+    <MESSAGE value="1.清理耦合的NetNode" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.清理耦合的NetNode" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
