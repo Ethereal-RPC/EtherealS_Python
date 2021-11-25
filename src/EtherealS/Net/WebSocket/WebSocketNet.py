@@ -8,15 +8,16 @@ class WebSocketNet(Net):
         import threading
         self.connectSign = threading.Event()
 
-    def Publish(self):
-        def reactorStart():
-            from twisted.internet import reactor
-            if not reactor.running:
-                reactor.suggestThreadPoolSize(10)
-                reactor.run(False)
+    def Publish(self,isStart=True):
+        if isStart:
+            def reactorStart():
+                from twisted.internet import reactor
+                if not reactor.running:
+                    reactor.suggestThreadPoolSize(10)
+                    reactor.run(False)
 
-        import threading
-        threading.Thread(target=reactorStart).start()
-        self.server.Start()
+            import threading
+            threading.Thread(target=reactorStart).start()
+            self.server.Start()
         return True
 

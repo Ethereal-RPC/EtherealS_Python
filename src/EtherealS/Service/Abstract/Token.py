@@ -1,28 +1,24 @@
 from abc import ABC, abstractmethod
 
+from EtherealS.Core.BaseCore.BaseCore import BaseCore
 from EtherealS.Core.Model.ClientResponseModel import ClientResponseModel
 from EtherealS.Core.Model.TrackException import TrackException
 from EtherealS.Core.Model.TrackLog import TrackLog
 from EtherealS.Core.Model import ServerRequestModel
-from EtherealS.Net import NetCore
+from EtherealS.Service import ServiceCore
 from EtherealS.Core.Event import Event
 
 
-class Token(ABC):
+class Token(ABC,BaseCore):
     def __init__(self):
         super().__init__()
         self.key = None
-        self.config = None
-        self.net = None
-        self.exception_event = Event()
-        self.log_event = Event()
+        self.service = None
         self.connect_event = Event()
         self.disconnect_event = Event()
 
     def Register(self, replace=False):
-        from EtherealS.Net.Abstract.Net import Net
-        net: Net = NetCore.Get(self.net_name)
-        tokens = net.tokens
+        tokens = self.service.tokens
         if tokens is not None:
             if replace is False:
                 if tokens.get(self.key, None) is not None:
@@ -31,23 +27,17 @@ class Token(ABC):
             return True
 
     def UnRegister(self):
-        from EtherealS.Net.Abstract.Net import Net
-        net: Net = NetCore.Get(self.net_name)
-        tokens = net.tokens
+        tokens = self.service.tokens
         if tokens.get(self.key, None) is not None:
             del tokens[self.key]
         return True
 
     def GetTokens(self):
-        from EtherealS.Net.Abstract.Net import Net
-        net: Net = NetCore.Get(self.net_name)
-        tokens = net.tokens
+        tokens = self.service.tokens
         return tokens
 
     def GetToken(self, key):
-        from EtherealS.Net.Abstract.Net import Net
-        net: Net = NetCore.Get(self.net_name)
-        tokens = net.tokens
+        tokens = self.service.tokens
         return tokens.get(key, None)
 
     @abstractmethod
@@ -58,18 +48,12 @@ class Token(ABC):
     def SendServerRequest(self, request: ServerRequestModel):
         pass
 
-    def OnLog(self, log: TrackLog = None, code=None, message=None):
-        if log is None:
-            log = TrackLog(code=code, message=message)
-        log.server = self
-        self.log_event.OnEvent(log=log)
-
-    def OnException(self, exception: TrackException = None, code=None, message=None):
-        if exception is None:
-            exception = TrackException(code=code, message=message)
-        exception.server = self
-        self.exception_event.OnEvent(exception=exception)
-
     @abstractmethod
     def serialize(self):
         pass
+
+    def OnSuccessConnect(self):
+        self.connect_event.OnEvent(token=self)
+
+    def OnDisConnect(self):
+        self.disconnect_event.OnEvent(token=self)

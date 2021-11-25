@@ -1,4 +1,3 @@
-from EtherealS.Core.Model.AbstractTypes import AbstractTypes
 from EtherealS.Request.Abstract.RequestConfig import RequestConfig
 
 

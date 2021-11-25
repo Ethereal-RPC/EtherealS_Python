@@ -1,4 +1,4 @@
-from EtherealS.Server.WebSocket.WebSocketBaseToken import WebSocketToken
+from EtherealS.Service.WebSocket.WebSocketToken import WebSocketToken
 
 
 class User(WebSocketToken):

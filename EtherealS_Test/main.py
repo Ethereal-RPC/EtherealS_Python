@@ -6,8 +6,6 @@ from EtherealS.Server.WebSocket.WebSocketServer import WebSocketServer
 from EtherealS_Test.User import User
 from EtherealS_Test.UserRequest import UserRequest
 from EtherealS_Test.UserService import UserService
-from EtherealS.Core.Model.AbstractTypes import AbstractTypes
-from EtherealS.Net.Abstract.Net import NetType
 from EtherealS.Server import ServerCore
 from EtherealS.Net import NetCore
 from EtherealS.Request import RequestCore
@@ -15,7 +13,7 @@ from EtherealS.Service import ServiceCore
 
 
 def OnException(exception: TrackException):
-    print(exception)
+    print(exception.exception)
 
 
 def OnLog(**kwargs):
@@ -45,24 +43,18 @@ def Single():
     prefixes = list()
     prefixes.append("ethereal://127.0.0.1:28015/NetDemo/".replace("28015", port))
     print("Server-{0}".format(prefixes))
-    types = AbstractTypes()
-    types.add(type=int, type_name="Int")
-    types.add(type=type(User()), type_name="User")
-    types.add(type=Number, type_name="Number")
-    types.add(type=str, type_name="String")
-    types.add(type=bool, type_name="Bool")
     # 建立网关
     net = NetCore.Register(WebSocketNet("demo"))
-    net.exception_event.Register(OnException)
-    net.log_event.Register(OnLog)
+    net.exception_event.Register(OnException )
+    net.log_event.Register(OnLog )
     # 注册服务
-    service = ServiceCore.Register(net=net, service=UserService("Server", types))
+    service = ServiceCore.Register(net=net, service=UserService())
     # 注册请求
-    request = RequestCore.Register(net=net, request=UserRequest("Client", types))
+    request = RequestCore.Register(request=UserRequest(), service=service)
     # 突出Service为正常类
     service.userRequest = request
     # 注册连接
-    server = ServerCore.Register(net=net, server=WebSocketServer(prefixes, CreateMethod))
+    server = ServerCore.Register(net=net, server=WebSocketServer(prefixes))
     net.Publish()
     print("服务器初始化完成....")
 

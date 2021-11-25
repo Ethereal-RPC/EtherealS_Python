@@ -7,37 +7,34 @@ from EtherealS.Server.WebSocket.WebSocketServer import WebSocketServer
 from EtherealS.Server.WebSocket.WebSocketServerConfig import WebSocketServerConfig
 
 
-def Get(**kwargs):
-    net_name = kwargs.get("net_name")
-    if net_name is not None:
-        net = NetCore.Get(net_name)
-    else:
-        net = kwargs.get("net")
+def Get(net_name):
+    net = NetCore.Get(net_name)
     if net is not None:
         return net.server
-    else:
-        return None
+    return None
 
 
-def Register(net: Net, server: Server) -> Server:
-    if net.server is None:
-        def onLog(**kwargs):
-            net.OnLog(**kwargs)
-
-        def onException(**kwargs):
-            net.OnException(**kwargs)
-
+def Register(net: Net, server: Server,isStart=True) -> Server:
+    if not server.isRegister:
+        server.isRegister = True
         net.server = server
         server.net = net
-        net.server.log_event.Register(onLog)
-        net.server.exception_event.Register(onException)
-        return net.server
+        server.log_event.Register(net.OnLog, )
+        server.exception_event.Register(net.OnException, )
+        if isStart:
+            server.Start()
+        return server
     else:
         raise TrackException(ExceptionCode.Core, "{0} Net 已经拥有Server".format(net.name))
 
 
 def UnRegister(server: Server):
-    server.net.server = None
-    server.net = None
-    server.Close()
-    return True
+    if server.isRegister:
+        if server.net is not None:
+            server.net.server = None
+            server.net = None
+        server.Close()
+        server.isRegister = False
+        return True
+    else:
+        raise TrackException(ExceptionCode.Core, "{0}已经UnRegister".format(server.name))

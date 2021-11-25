@@ -1,5 +1,4 @@
-import EtherealS.Request.RequestCore
-import EtherealS.Service.ServiceCore
+from EtherealS.Core.Model.TrackException import TrackException, ExceptionCode
 
 nets = dict()
 
@@ -9,23 +8,19 @@ def Get(name):
 
 
 def Register(net):
-    if nets.get(net.name, None) is None:
+    if not net.isRegister:
+        net.isRegister = True
         nets[net.name] = net
     else:
-        return None
-    return net
+        raise TrackException(code=ExceptionCode.Core, message="Net:{0}已注册".format(net.name))
+    return nets[net.name]
 
 
-def UnRegister(**kwargs):
-    name = kwargs.get("net_name")
-    if name is not None:
-        net = Get(name)
-        if net is not None:
-            for request in net.requests:
-                EtherealS.Request.RequestCore.UnRegister(net_name=net, service_name=request.name)
-            for service in net.services:
-                EtherealS.Service.ServiceCore.UnRegister(net_name=net, service_name=service.name)
-            net.server.Close()
-            net.server = None
-            del nets[name]
-    return True
+def UnRegister(net):
+    if net.isRegister:
+        if nets.__contains__(net.name):
+            del nets[net.name]
+        net.isRegister = False
+        return True
+    else:
+        raise TrackException(ExceptionCode.Core, "{0}已经UnRegister".format(net.name))

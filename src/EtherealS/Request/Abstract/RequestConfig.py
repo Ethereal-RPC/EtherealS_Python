@@ -1,5 +1,3 @@
-from EtherealS.Core.Model.AbstractTypes import AbstractTypes
-
 
 class RequestConfig:
 

@@ -5,20 +5,67 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4347f87-ef34-416b-9252-3ebe096a1668" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/EtherealS_Test/EventClass.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/BaseCore/BaseCore.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/BaseCore/MZCore.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/BaseCore/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/AbstractType/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Event/Decorator/AfterEvent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Event/Decorator/BeforeEvent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Event/Decorator/Event.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Event/Decorator/EventSender.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Event/Decorator/ExceptionEvent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Event/Decorator/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Event/EventManager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Event/Model/EventContext.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Event/Model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Event/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Ioc/IocManager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/Ioc/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Request/Abstract/RequestInterceptor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Request/Event/FailEvent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Request/Event/SuccessEvent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Request/Event/TimeoutEvent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Request/Event/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/TokenProtocol.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EtherealS_Test/User.py" beforeDir="false" afterPath="$PROJECT_DIR$/EtherealS_Test/User.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EtherealS_Test/UserRequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/EtherealS_Test/UserRequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EtherealS_Test/UserService.py" beforeDir="false" afterPath="$PROJECT_DIR$/EtherealS_Test/UserService.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EtherealS_Test/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/EtherealS_Test/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/guan-fang-wen-dang/untitled-1.md" beforeDir="false" afterPath="$PROJECT_DIR$/guan-fang-wen-dang/untitled-1.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Core/Model/AbstractType.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/AbstractType/AbstractType.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Core/Model/AbstractTypes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Core/Manager/AbstractType/AbstractTypeManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Core/Model/ClientRequestModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Core/Model/ClientRequestModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Core/Model/ClientResponseModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Core/Model/ClientResponseModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Core/Model/Error.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Core/Model/Error.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Core/Model/ServerRequestModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Core/Model/ServerRequestModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Core/Model/TrackException.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Core/Model/TrackException.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Core/Model/TrackLog.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Core/Model/TrackLog.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/Abstract/Net.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/Abstract/Net.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/NetCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/NetCore.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Net/WebSocket/WebSocketNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Net/WebSocket/WebSocketNet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/Abstract/Request.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/Abstract/Request.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/Abstract/RequestConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/Abstract/RequestConfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/Decorator/InvokeTypeFlags.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/Decorator/InvokeTypeFlags.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/Decorator/RequestMethod.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/Decorator/RequestMapping.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/RequestCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/RequestCore.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequestConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/WebSocket/WebSocketRequestConfig.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Token.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Token.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/ServerConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/ServerConfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/Abstract/Token.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/Abstract/Token.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/ServerCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/ServerCore.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketBaseToken.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketBaseToken.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketBaseToken.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/WebSocket/WebSocketToken.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/WebSocketServer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/Abstract/Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/Abstract/Service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/Abstract/ServiceConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/Abstract/ServiceConfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/Decorator/ServiceMethod.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/Decorator/ServiceMapping.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/ServiceCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/ServiceCore.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/WebSocket/WebSocketService.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/WebSocket/WebSocketService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/WebSocket/WebSocketServiceConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/WebSocket/WebSocketServiceConfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Utils/JsonTool.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Utils/JsonTool.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +112,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/EtherealS/Service/Decorator" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/EtherealS_Test" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -76,18 +123,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\EtherealS_Test" />
+      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\src\EtherealS\Request\Abstract" />
+      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\src\EtherealS\Request" />
+      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\src\EtherealS\Core" />
       <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\src\EtherealS\Service\Decorator" />
-      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\src\EtherealS\Request\Decorator" />
-      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python" />
-      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Net\NetNodeClient\Model" />
-      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Net" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\src\EtherealS\Service\WebSocket" />
+      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\src\EtherealS\Service\Abstract" />
       <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\src\EtherealS" />
       <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Service\Abstract" />
       <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Server\Abstract" />
-      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Request\Abstract" />
-      <recent name="C:\Users\mzh\PycharmProjects\EtherealS_Python\Net\Abstract" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
@@ -294,7 +341,12 @@
       <workItem from="1635844821810" duration="1192000" />
       <workItem from="1635846540344" duration="11000" />
       <workItem from="1635846654085" duration="68000" />
-      <workItem from="1636183033261" duration="995000" />
+      <workItem from="1636183033261" duration="1631000" />
+      <workItem from="1637679445300" duration="646000" />
+      <workItem from="1637758269851" duration="7109000" />
+      <workItem from="1637804900793" duration="3168000" />
+      <workItem from="1637808109159" duration="194000" />
+      <workItem from="1637808367523" duration="5238000" />
     </task>
     <task id="LOCAL-00001" summary="Net Request Server Model 四个部分完成&#10;还缺NativeServer">
       <created>1617889941782</created>
@@ -499,7 +551,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635846705297</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="1.name键值转为实体引用">
+      <created>1636184089896</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1636184089896</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -553,10 +612,18 @@
     <MESSAGE value="1.更改了识参方式" />
     <MESSAGE value="1.Annotation分离出类和方法&#10;2.增设服务和请求类的Init\UnInit&#10;3.将NetNode分离，为后续Plugin开发做准备" />
     <MESSAGE value="1.清理耦合的NetNode" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.清理耦合的NetNode" />
+    <MESSAGE value="1.name键值转为实体引用" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.name键值转为实体引用" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/EtherealS/Server/WebSocket/TokenProtocol.py</url>
+          <line>84</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -575,7 +642,7 @@
     <SUITE FILE_PATH="coverage/EtherealS$ServerCore.coverage" NAME="ServerCore Coverage Results" MODIFIED="1618649010163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
     <SUITE FILE_PATH="coverage/EtherealS$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1624434953319" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EtherealS_Test" />
     <SUITE FILE_PATH="coverage/EtherealS$DataToken.coverage" NAME="DataToken Coverage Results" MODIFIED="1618723516110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
-    <SUITE FILE_PATH="coverage/EtherealS_Python$main.coverage" NAME="main Coverage Results" MODIFIED="1633171871742" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EtherealS_Test" />
+    <SUITE FILE_PATH="coverage/EtherealS_Python$main.coverage" NAME="main Coverage Results" MODIFIED="1637813445995" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/EtherealS_Test" />
     <SUITE FILE_PATH="coverage/EtherealS$NetCore.coverage" NAME="NetCore Coverage Results" MODIFIED="1618655068099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RPCNet" />
     <SUITE FILE_PATH="coverage/EtherealS$jsondecode.coverage" NAME="jsondecode Coverage Results" MODIFIED="1618117782997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
     <SUITE FILE_PATH="coverage/EtherealS$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1618649070179" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NativeServer" />
