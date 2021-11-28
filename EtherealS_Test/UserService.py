@@ -1,7 +1,7 @@
 from numbers import Number
 
 from EtherealS.Core.Manager.Event.Decorator.AfterEvent import AfterEvent
-from EtherealS.Service.Decorator import ServiceMapping
+from EtherealS.Service.Decorator.ServiceMapping import ServiceMapping
 from EtherealS.Service.WebSocket.WebSocketService import WebSocketService
 from EtherealS_Test.EventClass import EventClass
 from EtherealS_Test.User import User
@@ -26,16 +26,27 @@ class UserService(WebSocketService):
     def UnInitialize(self):
         pass
 
-    @ServiceMapping.ServiceMapping("Add")
-    def Add(self, token: User, a: int, b: int) -> int:
-        from EtherealS.Request import RequestCore
-        from EtherealS_Test.UserRequest import UserRequest
-        request: UserRequest = RequestCore.Get(net_name="demo", service_name="Client")
-        token.username = "M"
-        request.Say(token, token, "你好呀")
+    @ServiceMapping("Add")
+    def Add(self, a: int, b: int) -> int:
         return a + b
 
-    @ServiceMapping.ServiceMapping("test")
+    @ServiceMapping("Login")
+    def Login(self, token: User,username: str) -> bool:
+        token.username = username
+        return True
+
+    @ServiceMapping("Hello")
+    def Hello(self, token: User) -> str:
+        return "Hello,{0}.".format(token.username)
+
+
+
+
+
+
+
+
+    @ServiceMapping("test")
     @AfterEvent(method="instance.after(s:s,d:d)")
     def Test(self, token: User, s: str, d: int, k: int) -> bool:
         print("Test")
