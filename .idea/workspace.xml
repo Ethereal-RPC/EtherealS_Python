@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4347f87-ef34-416b-9252-3ebe096a1668" name="Default Changelist" comment="1.抽离了Ioc\Event&#10;2.四大类向上抽象一层，BaseCore&#10;3.Request\Service 统一抽象于MzCore&#10;4.删除不必要的判空检测，注册检测放置于Register阶段&#10;5.调整了Request、Service、Net、Client\Server关系&#10;6.通过了测试用例">
+    <list default="true" id="c4347f87-ef34-416b-9252-3ebe096a1668" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EtherealS_Test/UserService.py" beforeDir="false" afterPath="$PROJECT_DIR$/EtherealS_Test/UserService.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EtherealS/Request/Decorator/Request.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Request/Decorator/Request.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/TokenProtocol.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/WebSocket/TokenProtocol.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EtherealS/Service/Decorator/Service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Service/Decorator/Service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EtherealS/Server/ServerCore.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EtherealS/Server/ServerCore.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -299,7 +296,13 @@
       <workItem from="1638075443645" duration="3209000" />
       <workItem from="1638079470744" duration="127000" />
       <workItem from="1638105331570" duration="1283000" />
-      <workItem from="1638107907294" duration="432000" />
+      <workItem from="1638107907294" duration="543000" />
+      <workItem from="1638108499870" duration="626000" />
+      <workItem from="1638421490690" duration="678000" />
+      <workItem from="1638522007009" duration="528000" />
+      <workItem from="1638666706252" duration="81000" />
+      <workItem from="1638961155002" duration="12000" />
+      <workItem from="1639618215613" duration="525000" />
     </task>
     <task id="LOCAL-00001" summary="Net Request Server Model 四个部分完成&#10;还缺NativeServer">
       <created>1617889941782</created>
@@ -518,7 +521,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637813965892</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="1.Service\Request装饰器类置入属性问题">
+      <created>1638108366874</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1638108366874</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -549,7 +559,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Net Request Server Model 四个部分完成&#10;还缺NativeServer" />
     <MESSAGE value="1.阶段性保存" />
     <MESSAGE value="1.架通了Ethereal-RPC&#10;2.RPCType Convert修复" />
     <MESSAGE value="1.修复了大数据传包异常" />
@@ -574,7 +583,8 @@
     <MESSAGE value="1.清理耦合的NetNode" />
     <MESSAGE value="1.name键值转为实体引用" />
     <MESSAGE value="1.抽离了Ioc\Event&#10;2.四大类向上抽象一层，BaseCore&#10;3.Request\Service 统一抽象于MzCore&#10;4.删除不必要的判空检测，注册检测放置于Register阶段&#10;5.调整了Request、Service、Net、Client\Server关系&#10;6.通过了测试用例" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.抽离了Ioc\Event&#10;2.四大类向上抽象一层，BaseCore&#10;3.Request\Service 统一抽象于MzCore&#10;4.删除不必要的判空检测，注册检测放置于Register阶段&#10;5.调整了Request、Service、Net、Client\Server关系&#10;6.通过了测试用例" />
+    <MESSAGE value="1.Service\Request装饰器类置入属性问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.Service\Request装饰器类置入属性问题" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

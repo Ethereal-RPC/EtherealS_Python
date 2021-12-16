@@ -14,15 +14,13 @@ def Get(net_name):
     return None
 
 
-def Register(net: Net, server: Server,isStart=True) -> Server:
+def Register(net: Net, server: Server) -> Server:
     if not server.isRegister:
         server.isRegister = True
         net.server = server
         server.net = net
-        server.log_event.Register(net.OnLog, )
-        server.exception_event.Register(net.OnException, )
-        if isStart:
-            server.Start()
+        server.log_event.Register(net.OnLog)
+        server.exception_event.Register(net.OnException)
         return server
     else:
         raise TrackException(ExceptionCode.Core, "{0} Net 已经拥有Server".format(net.name))
